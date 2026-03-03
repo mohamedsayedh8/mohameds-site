@@ -1,0 +1,663 @@
+:root {
+    --primary-color: #6366f1;
+    --primary-hover: #4f46e5;
+    --secondary-color: #8b5cf6;
+    --bg-dark: #0f172a;
+    --bg-light: #f8fafc;
+    --text-dark: #f1f5f9;
+    --text-light: #1e293b;
+    --card-bg-dark: rgba(30, 41, 59, 0.7);
+    --card-bg-light: rgba(255, 255, 255, 0.8);
+    --glass-border: rgba(255, 255, 255, 0.1);
+    --transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
+}
+
+* {
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
+}
+
+body {
+    font-family: 'Inter', sans-serif;
+    line-height: 1.6;
+    overflow-x: hidden;
+    transition: var(--transition);
+}
+
+body.dark-theme {
+    background-color: var(--bg-dark);
+    color: var(--text-dark);
+}
+
+body.light-theme {
+    background-color: var(--bg-light);
+    color: var(--text-light);
+}
+
+.container {
+    max-width: 1200px;
+    margin: 0 auto;
+    padding: 0 2rem;
+}
+
+/* Navigation */
+header {
+    padding: 1rem 0;
+    position: fixed;
+    width: 100%;
+    top: 0;
+    z-index: 1000;
+    background: rgba(15, 23, 42, 0.8);
+    backdrop-filter: blur(10px);
+}
+
+body.light-theme header {
+    background: rgba(248, 250, 252, 0.8);
+}
+
+nav {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    gap: 1rem;
+}
+
+.logo {
+    display: flex;
+    align-items: center;
+    gap: 0.75rem;
+    flex-shrink: 0;
+}
+
+.logo-img {
+    width: 32px;
+    height: 32px;
+    border-radius: 8px;
+    object-fit: cover;
+}
+
+.logo-text {
+    font-family: 'Outfit', sans-serif;
+    font-weight: 700;
+    font-size: 1.1rem;
+    white-space: nowrap;
+}
+
+.nav-controls {
+    display: flex;
+    align-items: center;
+    gap: 0.75rem;
+}
+
+.lang-selector {
+    display: flex;
+    gap: 0.25rem;
+    background: rgba(255, 255, 255, 0.05);
+    padding: 0.2rem;
+    border-radius: 8px;
+}
+
+body.light-theme .lang-selector {
+    background: rgba(0, 0, 0, 0.05);
+}
+
+.lang-btn {
+    background: none;
+    border: none;
+    color: inherit;
+    padding: 0.3rem 0.6rem;
+    border-radius: 6px;
+    cursor: pointer;
+    font-size: 0.75rem;
+    font-weight: 600;
+    transition: var(--transition);
+    opacity: 0.6;
+}
+
+.lang-btn.active {
+    background: var(--primary-color);
+    color: white;
+    opacity: 1;
+}
+
+#theme-toggle {
+    background: none;
+    border: none;
+    color: inherit;
+    font-size: 1.1rem;
+    cursor: pointer;
+    transition: var(--transition);
+    width: 36px;
+    height: 36px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    border-radius: 50%;
+}
+
+#theme-toggle:hover {
+    background: rgba(255, 255, 255, 0.1);
+}
+
+/* Hero Section */
+.hero {
+    padding-top: 8rem;
+    padding-bottom: 4rem;
+    text-align: center;
+}
+
+.hero h1 {
+    font-family: 'Outfit', sans-serif;
+    font-size: 3rem;
+    font-weight: 700;
+    margin-bottom: 1.5rem;
+    background: linear-gradient(135deg, #fff, #94a3b8);
+    -webkit-background-clip: text;
+    background-clip: text;
+    -webkit-text-fill-color: transparent;
+}
+
+body.light-theme .hero h1 {
+    background: linear-gradient(135deg, #1e293b, #64748b);
+}
+
+.hero p {
+    font-size: 1.1rem;
+    color: #94a3b8;
+    max-width: 600px;
+    margin: 0 auto 2.5rem;
+}
+
+body.light-theme .hero p {
+    color: #64748b;
+}
+
+.hero-buttons {
+    display: flex;
+    justify-content: center;
+    gap: 1rem;
+}
+
+.btn {
+    padding: 0.75rem 1.5rem;
+    border-radius: 12px;
+    text-decoration: none;
+    font-weight: 600;
+    transition: var(--transition);
+    border: none;
+    cursor: pointer;
+}
+
+.btn-primary {
+    background: var(--primary-color);
+    color: white;
+}
+
+.btn-primary:hover {
+    background: var(--primary-hover);
+    transform: translateY(-2px);
+    box-shadow: 0 10px 20px rgba(99, 102, 241, 0.3);
+}
+
+.btn-secondary {
+    background: rgba(255, 255, 255, 0.05);
+    color: inherit;
+    border: 1px solid var(--glass-border);
+}
+
+.btn-secondary:hover {
+    background: rgba(255, 255, 255, 0.1);
+}
+
+/* App Sections */
+.app-section {
+    padding: 4rem 0;
+}
+
+.app-card {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    gap: 3rem;
+    align-items: center;
+    background: var(--card-bg-dark);
+    padding: 2.5rem;
+    border-radius: 32px;
+    border: 1px solid var(--glass-border);
+    backdrop-filter: blur(20px);
+    transition: var(--transition);
+}
+
+body.light-theme .app-card {
+    background: var(--card-bg-light);
+    border: 1px solid rgba(0, 0, 0, 0.05);
+}
+
+.app-card.clickable {
+    cursor: pointer;
+}
+
+.app-card.clickable:hover {
+    transform: translateY(-5px);
+    box-shadow: 0 20px 40px rgba(0, 0, 0, 0.3);
+}
+
+.reverse .app-card>div:first-child {
+    order: 2;
+}
+
+.app-header {
+    display: flex;
+    align-items: center;
+    gap: 1rem;
+    margin-bottom: 1.5rem;
+}
+
+.app-icon {
+    width: 60px;
+    height: 60px;
+    border-radius: 14px;
+    object-fit: cover;
+}
+
+.app-info h2 {
+    font-family: 'Outfit', sans-serif;
+    font-size: 2.2rem;
+}
+
+.app-info p {
+    font-size: 1rem;
+    color: #94a3b8;
+    margin-bottom: 2rem;
+}
+
+body.light-theme .app-info p {
+    color: #64748b;
+}
+
+.store-buttons {
+    display: flex;
+    gap: 0.75rem;
+}
+
+.store-btn img {
+    height: 38px;
+    transition: var(--transition);
+}
+
+.store-btn:hover img {
+    opacity: 0.8;
+    transform: scale(1.05);
+}
+
+/* Phone Frame */
+.phone-frame {
+    width: 240px;
+    height: 480px;
+    background: #000;
+    border: 10px solid #1e293b;
+    border-radius: 36px;
+    position: relative;
+    overflow: hidden;
+    box-shadow: 0 30px 60px rgba(0, 0, 0, 0.5);
+    margin: 0 auto;
+}
+
+.phone-screen {
+    width: 100%;
+    height: 100%;
+    background: #000;
+    overflow: hidden;
+}
+
+.screen-img {
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
+    display: block;
+}
+
+/* WhatsApp Badge */
+.whatsapp-badge {
+    margin-top: 1.5rem;
+}
+
+.whatsapp-btn {
+    display: inline-flex;
+    align-items: center;
+    gap: 0.75rem;
+    background: #25d366;
+    color: white;
+    padding: 0.7rem 1.25rem;
+    border-radius: 12px;
+    text-decoration: none;
+    font-weight: 700;
+    transition: var(--transition);
+    font-size: 0.9rem;
+}
+
+.whatsapp-btn:hover {
+    background: #128c7e;
+    transform: translateY(-2px);
+    box-shadow: 0 5px 15px rgba(37, 211, 102, 0.4);
+}
+
+/* Details Section */
+.app-details-section {
+    display: none;
+    position: fixed;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    background: var(--bg-dark);
+    z-index: 2000;
+    overflow-y: auto;
+    padding: 6rem 0;
+}
+
+body.light-theme .app-details-section {
+    background: var(--bg-light);
+}
+
+.app-details-section.active {
+    display: block;
+    animation: slideUp 0.6s cubic-bezier(0.16, 1, 0.3, 1) forwards;
+}
+
+@keyframes slideUp {
+    from {
+        transform: translateY(100%);
+        opacity: 0;
+    }
+
+    to {
+        transform: translateY(0);
+        opacity: 1;
+    }
+}
+
+.close-btn {
+    position: fixed;
+    top: 1.5rem;
+    right: 1.5rem;
+    background: rgba(255, 255, 255, 0.1);
+    border: none;
+    color: inherit;
+    font-size: 1.2rem;
+    width: 44px;
+    height: 44px;
+    border-radius: 50%;
+    cursor: pointer;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    z-index: 2100;
+    transition: var(--transition);
+}
+
+.close-btn:hover {
+    background: rgba(255, 255, 255, 0.2);
+    transform: rotate(90deg);
+}
+
+.details-grid {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    gap: 5rem;
+    align-items: center;
+}
+
+.details-app-icon {
+    width: 90px;
+    height: 90px;
+    border-radius: 20px;
+    margin-bottom: 2rem;
+}
+
+.details-content h2 {
+    font-family: 'Outfit', sans-serif;
+    font-size: 2.8rem;
+    margin-bottom: 1rem;
+}
+
+.details-content p {
+    font-size: 1rem;
+    color: #94a3b8;
+    margin-bottom: 2.5rem;
+}
+
+.feature-list {
+    margin-bottom: 2.5rem;
+}
+
+.feature-item {
+    display: flex;
+    align-items: center;
+    gap: 1rem;
+    margin-bottom: 1rem;
+    font-size: 1rem;
+    font-weight: 600;
+}
+
+.feature-item i {
+    color: var(--primary-color);
+    font-size: 1.2rem;
+}
+
+.store-links {
+    display: flex;
+    gap: 1rem;
+}
+
+.store-badge img {
+    height: 42px;
+}
+
+.phone-frame-container {
+    position: relative;
+    padding-right: 60px;
+    display: flex;
+    justify-content: center;
+}
+
+.secondary-phone {
+    position: absolute;
+    top: 40px;
+    right: 0;
+    z-index: -1;
+    transform: scale(0.85);
+    opacity: 0.6;
+}
+
+/* Footer */
+footer {
+    padding: 2.5rem 0;
+    margin-top: 4rem;
+    border-top: 1px solid var(--glass-border);
+}
+
+.footer-content {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+}
+
+.footer-content p {
+    color: #64748b;
+    font-size: 0.85rem;
+}
+
+/* RTL Support for Arabic */
+[dir="rtl"] {
+    font-family: 'Inter', 'Noto Sans Arabic', sans-serif;
+}
+
+[dir="rtl"] .logo {
+    flex-direction: row-reverse;
+}
+
+[dir="rtl"] .details-content {
+    text-align: right;
+}
+
+[dir="rtl"] .feature-item {
+    flex-direction: row-reverse;
+}
+
+@media (max-width: 968px) {
+    .container {
+        padding: 0 1.25rem;
+    }
+
+    header {
+        padding: 1rem 0;
+    }
+
+    nav {
+        justify-content: space-between;
+        gap: 1.5rem;
+    }
+
+    .logo {
+        gap: 0.5rem;
+    }
+
+    .logo-img {
+        width: 30px;
+        height: 30px;
+    }
+
+    .logo-text {
+        font-size: 0.95rem;
+    }
+
+    .nav-controls {
+        gap: 0.75rem;
+    }
+
+    .lang-btn {
+        padding: 0.25rem 0.5rem;
+        font-size: 0.7rem;
+    }
+
+    /* Hide the partial app previews in the cards for a clean mobile look */
+    .app-card .app-preview-wrapper,
+    .app-card .app-preview,
+    .app-card .m-preview-placeholder {
+        display: none !important;
+    }
+
+    .app-card {
+        grid-template-columns: 1fr;
+        text-align: center;
+        gap: 1.5rem;
+        padding: 2.5rem 1.5rem;
+    }
+
+    .reverse .app-card>div:first-child {
+        order: 1;
+    }
+
+    .app-header {
+        justify-content: center;
+    }
+
+    .store-buttons {
+        justify-content: center;
+    }
+
+    .details-grid {
+        grid-template-columns: 1fr;
+        text-align: center;
+    }
+
+    .details-content {
+        display: flex;
+        flex-direction: column;
+        align-items: center;
+        order: 1;
+    }
+
+    .details-visual {
+        order: 2;
+    }
+
+    .phone-frame-container {
+        padding-right: 0;
+        margin-top: 3rem;
+        /* Espace pour le header */
+        width: 100%;
+        height: 380px;
+        position: relative;
+    }
+
+    .phone-frame {
+        width: 160px;
+        height: 320px;
+        position: absolute;
+        left: 50%;
+        transform: translateX(-75%);
+        z-index: 2;
+    }
+
+    .secondary-phone {
+        display: block !important;
+        position: absolute;
+        width: 160px;
+        height: 320px;
+        top: 25px;
+        left: 50%;
+        transform: translateX(-25%) scale(0.9);
+        opacity: 0.7;
+        z-index: 1;
+    }
+
+    .hero {
+        padding-top: 7rem;
+        padding-bottom: 6rem;
+        /* Plus d'espace sous les boutons Découvrir */
+    }
+
+    .app-section {
+        padding: 6rem 0;
+        /* Plus d'espace entre les blocs */
+    }
+
+    .app-section+.app-section {
+        margin-top: 2rem;
+        /* Séparation supplémentaire entre Zikr et M */
+    }
+
+    .hero h1 {
+        font-size: 2.2rem;
+    }
+
+    .hide-mobile {
+        display: none;
+    }
+
+    .details-content h2 {
+        font-size: 1.6rem;
+    }
+
+    .feature-item {
+        justify-content: center;
+        font-size: 0.9rem;
+    }
+
+    .store-links {
+        flex-direction: row;
+        justify-content: center;
+        width: 100%;
+        gap: 0.75rem;
+    }
+
+    .store-badge img {
+        height: 38px;
+    }
+
+    .app-details-section {
+        padding: 4rem 0.75rem 1.5rem;
+    }
+}
