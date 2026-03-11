@@ -1,0 +1,281 @@
+<!DOCTYPE html>
+<html lang="fr" dir="ltr">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Politique de Confidentialité — Zikr</title>
+    <link rel="stylesheet" href="style.css">
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link
+        href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;600;700&family=Outfit:wght@300;400;600;700&display=swap"
+        rel="stylesheet">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css">
+    <style>
+        .legal-page {
+            max-width: 800px;
+            margin: 0 auto;
+            padding: 100px 24px 80px;
+        }
+
+        .legal-page h1 {
+            font-size: 2rem;
+            font-weight: 700;
+            margin-bottom: 8px;
+        }
+
+        .legal-page .last-updated {
+            font-size: 0.85rem;
+            opacity: 0.5;
+            margin-bottom: 48px;
+        }
+
+        .legal-page h2 {
+            font-size: 1.2rem;
+            font-weight: 600;
+            margin: 36px 0 12px;
+            color: #C9A84C;
+        }
+
+        .legal-page p,
+        .legal-page li {
+            font-size: 0.97rem;
+            line-height: 1.8;
+            opacity: 0.85;
+            margin-bottom: 12px;
+        }
+
+        .legal-page ul {
+            padding-left: 20px;
+        }
+
+        [dir="rtl"] .legal-page ul {
+            padding-left: 0;
+            padding-right: 20px;
+        }
+
+        .legal-page a {
+            color: #C9A84C;
+            text-decoration: underline;
+        }
+
+        .back-link {
+            display: inline-flex;
+            align-items: center;
+            gap: 8px;
+            margin-bottom: 40px;
+            font-size: 0.9rem;
+            opacity: 0.7;
+            color: inherit;
+            text-decoration: none;
+            transition: opacity 0.2s;
+        }
+
+        .back-link:hover {
+            opacity: 1;
+        }
+    </style>
+</head>
+
+<body class="dark-theme">
+    <header>
+        <nav class="container">
+            <a href="index.html" style="text-decoration: none; color: inherit;">
+                <div class="logo">
+                    <img src="assets/images/m-icon-dark.png" alt="M Logo" class="logo-img m-dynamic-icon">
+                    <span class="logo-text">Studio Mohamed</span>
+                </div>
+            </a>
+            <div class="nav-controls">
+                <div class="lang-selector">
+                    <button class="lang-btn" onclick="setLanguage('fr')">FR</button>
+                    <button class="lang-btn" onclick="setLanguage('en')">EN</button>
+                    <button class="lang-btn" onclick="setLanguage('ar')">AR</button>
+                </div>
+            </div>
+        </nav>
+    </header>
+
+    <main>
+        <div class="legal-page">
+            <a href="index.html" class="back-link"><i class="fas fa-arrow-left"></i> <span
+                    data-i18n="back">Retour</span></a>
+
+            <h1 data-i18n="privacy_title">🔒 Politique de Confidentialité</h1>
+            <p class="last-updated" data-i18n="last_updated">Dernière mise à jour : 3 mars 2026</p>
+
+            <p data-i18n="privacy_intro">Bienvenue sur Zikr. Nous prenons la protection de vos données personnelles très
+                au sérieux. Cette politique explique comment nous collectons, utilisons et protégeons vos informations.
+            </p>
+
+            <h2 data-i18n="privacy_h1">1. Informations collectées</h2>
+            <p data-i18n="privacy_p1">Zikr collecte les informations suivantes :</p>
+            <ul>
+                <li data-i18n="privacy_li1"><strong>Localisation</strong> : utilisée uniquement pour calculer les
+                    horaires de prière et la direction de la Qibla. Jamais partagée.</li>
+                <li data-i18n="privacy_li2"><strong>Données d'utilisation anonymes</strong> : statistiques via Firebase
+                    Analytics, sans identification personnelle.</li>
+                <li data-i18n="privacy_li3"><strong>Préférences</strong> : thème, langue, paramètres — stockés
+                    localement sur l'appareil.</li>
+            </ul>
+
+            <h2 data-i18n="privacy_h2">2. Utilisation des données</h2>
+            <p data-i18n="privacy_p2">Vos données sont utilisées exclusivement pour :</p>
+            <ul>
+                <li data-i18n="privacy_li4">Fournir des horaires de prière précis selon votre localisation</li>
+                <li data-i18n="privacy_li5">Personnaliser votre expérience dans l'application</li>
+                <li data-i18n="privacy_li6">Améliorer les fonctionnalités de l'application</li>
+                <li data-i18n="privacy_li7">Envoyer des notifications de rappel (si activé)</li>
+            </ul>
+
+            <h2 data-i18n="privacy_h3">3. Données non collectées</h2>
+            <p data-i18n="privacy_p3">Zikr ne collecte <strong>jamais</strong> :</p>
+            <ul>
+                <li data-i18n="privacy_li8">Votre nom ou adresse e-mail</li>
+                <li data-i18n="privacy_li9">Vos contacts ou données d'autres applications</li>
+                <li data-i18n="privacy_li10">Vos données bancaires (gérées par Apple)</li>
+            </ul>
+
+            <h2 data-i18n="privacy_h4">4. Services tiers</h2>
+            <ul>
+                <li data-i18n="privacy_li11"><strong>Firebase (Google)</strong> : statistiques et synchronisation. <a
+                        href="https://policies.google.com/privacy" target="_blank">Politique Google</a></li>
+                <li data-i18n="privacy_li12"><strong>OpenAI</strong> : pour l'IA Imam. Les questions sont transmises à
+                    OpenAI. <a href="https://openai.com/privacy" target="_blank">Politique OpenAI</a></li>
+                <li data-i18n="privacy_li13"><strong>Apple StoreKit</strong> : gestion des abonnements via l'App Store.
+                </li>
+            </ul>
+
+            <h2 data-i18n="privacy_h5">5. Vos droits (RGPD)</h2>
+            <p data-i18n="privacy_p4">Vous avez le droit d'accéder, modifier ou supprimer vos données. Pour toute
+                demande :</p>
+            <p><a href="mailto:contact@mohameds.net">contact@mohameds.net</a></p>
+        </div>
+    </main>
+
+    <footer class="container">
+        <div class="footer-content">
+            <p>© 2026 Studio Mohamed — <a href="privacy.html" data-i18n="nav_privacy">Confidentialité</a> · <a
+                    href="terms.html" data-i18n="nav_terms">Conditions</a></p>
+        </div>
+    </footer>
+
+    <script>
+        const translations = {
+            fr: {
+                back: "Retour",
+                privacy_title: "🔒 Politique de Confidentialité",
+                last_updated: "Dernière mise à jour : 3 mars 2026",
+                privacy_intro: "Bienvenue sur <strong>Zikr</strong>. Nous prenons la protection de vos données personnelles très au sérieux. Cette politique explique comment nous collectons, utilisons et protégeons vos informations.",
+                privacy_h1: "1. Informations collectées",
+                privacy_p1: "Zikr collecte les informations suivantes :",
+                privacy_li1: "<strong>Localisation</strong> : utilisée uniquement pour les horaires de prière et la direction de la Qibla. Jamais partagée.",
+                privacy_li2: "<strong>Données d'utilisation anonymes</strong> : statistiques via Firebase Analytics, sans identification personnelle.",
+                privacy_li3: "<strong>Préférences</strong> : thème, langue, paramètres — stockés localement sur l'appareil.",
+                privacy_h2: "2. Utilisation des données",
+                privacy_p2: "Vos données sont utilisées exclusivement pour :",
+                privacy_li4: "Fournir des horaires de prière précis selon votre localisation",
+                privacy_li5: "Personnaliser votre expérience dans l'application",
+                privacy_li6: "Améliorer les fonctionnalités de l'application",
+                privacy_li7: "Envoyer des notifications de rappel (si activé)",
+                privacy_h3: "3. Données non collectées",
+                privacy_p3: "Zikr ne collecte <strong>jamais</strong> :",
+                privacy_li8: "Votre nom ou adresse e-mail",
+                privacy_li9: "Vos contacts ou données d'autres applications",
+                privacy_li10: "Vos données bancaires (gérées par Apple)",
+                privacy_h4: "4. Services tiers",
+                privacy_li11: "<strong>Firebase (Google)</strong> : statistiques et synchronisation. <a href='https://policies.google.com/privacy' target='_blank'>Politique Google</a>",
+                privacy_li12: "<strong>OpenAI</strong> : pour l'IA Imam. Les questions sont transmises à OpenAI. <a href='https://openai.com/privacy' target='_blank'>Politique OpenAI</a>",
+                privacy_li13: "<strong>Apple StoreKit</strong> : gestion des abonnements via l'App Store.",
+                privacy_h5: "5. Vos droits (RGPD)",
+                privacy_p4: "Vous avez le droit d'accéder, modifier ou supprimer vos données. Pour toute demande :",
+                nav_privacy: "Confidentialité",
+                nav_terms: "Conditions"
+            },
+            en: {
+                back: "Back",
+                privacy_title: "🔒 Privacy Policy",
+                last_updated: "Last updated: March 3, 2026",
+                privacy_intro: "Welcome to <strong>Zikr</strong>. We take the protection of your personal data very seriously. This policy explains how we collect, use, and protect your information.",
+                privacy_h1: "1. Information Collected",
+                privacy_p1: "Zikr collects the following information:",
+                privacy_li1: "<strong>Location</strong>: used only to calculate prayer times and Qibla direction. Never shared.",
+                privacy_li2: "<strong>Anonymous usage data</strong>: statistics via Firebase Analytics, with no personal identification.",
+                privacy_li3: "<strong>Preferences</strong>: theme, language, settings — stored locally on your device.",
+                privacy_h2: "2. Use of Data",
+                privacy_p2: "Your data is used exclusively to:",
+                privacy_li4: "Provide accurate prayer times based on your location",
+                privacy_li5: "Personalize your in-app experience",
+                privacy_li6: "Improve app features",
+                privacy_li7: "Send reminder notifications (if enabled)",
+                privacy_h3: "3. Data Not Collected",
+                privacy_p3: "Zikr <strong>never</strong> collects:",
+                privacy_li8: "Your name or email address",
+                privacy_li9: "Your contacts or data from other apps",
+                privacy_li10: "Your banking details (managed by Apple)",
+                privacy_h4: "4. Third-party Services",
+                privacy_li11: "<strong>Firebase (Google)</strong>: analytics and sync. <a href='https://policies.google.com/privacy' target='_blank'>Google Privacy Policy</a>",
+                privacy_li12: "<strong>OpenAI</strong>: for the AI Imam feature. Your questions are sent to OpenAI. <a href='https://openai.com/privacy' target='_blank'>OpenAI Policy</a>",
+                privacy_li13: "<strong>Apple StoreKit</strong>: subscription management via the App Store.",
+                privacy_h5: "5. Your Rights (GDPR)",
+                privacy_p4: "You have the right to access, modify, or delete your data. Contact us at:",
+                nav_privacy: "Privacy",
+                nav_terms: "Terms"
+            },
+            ar: {
+                back: "رجوع",
+                privacy_title: "🔒 سياسة الخصوصية",
+                last_updated: "آخر تحديث: 3 مارس 2026",
+                privacy_intro: "مرحباً بك في <strong>ذكر</strong>. نأخذ حماية بياناتك الشخصية على محمل الجد. توضح هذه السياسة كيفية جمعنا واستخدامنا وحمايتنا لمعلوماتك.",
+                privacy_h1: "١. المعلومات التي نجمعها",
+                privacy_p1: "يجمع تطبيق ذكر المعلومات التالية:",
+                privacy_li1: "<strong>الموقع الجغرافي</strong>: يُستخدم فقط لحساب مواقيت الصلاة واتجاه القبلة. لا يتم مشاركته أبداً.",
+                privacy_li2: "<strong>بيانات الاستخدام المجهولة</strong>: إحصاءات عبر Firebase Analytics، دون تعريف شخصي.",
+                privacy_li3: "<strong>التفضيلات</strong>: المظهر، اللغة، الإعدادات — مخزنة محلياً على جهازك.",
+                privacy_h2: "٢. استخدام البيانات",
+                privacy_p2: "تُستخدم بياناتك فقط لـ:",
+                privacy_li4: "توفير مواقيت صلاة دقيقة بناءً على موقعك",
+                privacy_li5: "تخصيص تجربتك في التطبيق",
+                privacy_li6: "تحسين ميزات التطبيق",
+                privacy_li7: "إرسال تذكيرات الصلاة (إذا كانت مفعّلة)",
+                privacy_h3: "٣. البيانات غير المجموعة",
+                privacy_p3: "لا يجمع ذكر <strong>أبداً</strong>:",
+                privacy_li8: "اسمك أو بريدك الإلكتروني",
+                privacy_li9: "جهات اتصالك أو بيانات تطبيقات أخرى",
+                privacy_li10: "بياناتك البنكية (تُدار بواسطة Apple)",
+                privacy_h4: "٤. الخدمات الخارجية",
+                privacy_li11: "<strong>Firebase (Google)</strong>: إحصاءات ومزامنة. <a href='https://policies.google.com/privacy' target='_blank'>سياسة Google</a>",
+                privacy_li12: "<strong>OpenAI</strong>: لميزة الإمام الذكاء الاصطناعي. تُرسل أسئلتك إلى OpenAI. <a href='https://openai.com/privacy' target='_blank'>سياسة OpenAI</a>",
+                privacy_li13: "<strong>Apple StoreKit</strong>: إدارة الاشتراكات عبر App Store.",
+                privacy_h5: "٥. حقوقك",
+                privacy_p4: "لديك الحق في الوصول إلى بياناتك وتعديلها أو حذفها. للتواصل:",
+                nav_privacy: "الخصوصية",
+                nav_terms: "الشروط"
+            }
+        };
+
+        let currentLanguage = localStorage.getItem('preferredLanguage') || 'fr';
+
+        function setLanguage(lang) {
+            currentLanguage = lang;
+            localStorage.setItem('preferredLanguage', lang);
+            document.querySelectorAll('.lang-btn').forEach(btn => {
+                btn.classList.remove('active');
+                if (btn.innerText.toLowerCase() === lang) btn.classList.add('active');
+            });
+            document.querySelectorAll('[data-i18n]').forEach(el => {
+                const key = el.getAttribute('data-i18n');
+                if (translations[lang] && translations[lang][key]) {
+                    el.innerHTML = translations[lang][key];
+                }
+            });
+            document.documentElement.dir = lang === 'ar' ? 'rtl' : 'ltr';
+            document.documentElement.lang = lang;
+        }
+
+        document.addEventListener('DOMContentLoaded', () => setLanguage(currentLanguage));
+    </script>
+</body>
+
+</html>
