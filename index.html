@@ -1,0 +1,263 @@
+<!DOCTYPE html>
+<html lang="fr" dir="ltr">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Studio Mohamed | Zikr & M</title>
+    <link rel="stylesheet" href="style.css">
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link
+        href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;600;700&family=Outfit:wght@300;400;600;700&display=swap"
+        rel="stylesheet">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css">
+</head>
+
+<body class="dark-theme">
+    <header>
+        <nav class="container">
+            <a href="index.html" style="text-decoration: none; color: inherit;">
+                <div class="logo">
+                    <img src="assets/images/m-icon-dark.png" alt="M Logo" class="logo-img m-dynamic-icon">
+                    <span class="logo-text" data-i18n="studio_name"><span class="hide-mobile">Studio
+                        </span>Mohamed</span>
+                </div>
+            </a>
+            <div class="nav-controls">
+                <div class="lang-selector">
+                    <button class="lang-btn active" onclick="setLanguage('fr')">FR</button>
+                    <button class="lang-btn" onclick="setLanguage('en')">EN</button>
+                    <button class="lang-btn" onclick="setLanguage('ar')">AR</button>
+                </div>
+                <button id="theme-toggle" onclick="toggleTheme()">
+                    <i class="fas fa-moon"></i>
+                </button>
+            </div>
+        </nav>
+    </header>
+
+    <main>
+        <section class="hero container">
+            <div class="hero-content">
+                <h1 data-i18n="hero_title">Des applications qui changent votre quotidien</h1>
+                <p data-i18n="hero_subtitle">Découvrez Zikr et M, conçues pour être simples, belles et utiles au
+                    quotidien.</p>
+                <div class="hero-buttons">
+                    <button onclick="showApp('zikr')" class="btn btn-primary" data-i18n="discover_zikr">Découvrir
+                        Zikr</button>
+                    <button onclick="showApp('m')" class="btn btn-secondary" data-i18n="discover_m">Découvrir M</button>
+                </div>
+            </div>
+        </section>
+
+        <section id="zikr-section" class="app-section container">
+            <div class="app-card clickable" onclick="showApp('zikr')">
+                <div class="app-info">
+                    <div class="app-header">
+                        <img src="assets/images/zikr-icon.png" alt="Zikr Icon" class="app-icon">
+                        <h2>Zikr</h2>
+                    </div>
+                    <p data-i18n="zikr_desc">L'application compagnon pour vos prières, le Coran et vos invocations
+                        quotidiennes. Une interface épurée pour une expérience spirituelle optimale.</p>
+                    <div class="whatsapp-badge">
+                        <a href="https://whatsapp.com/channel/0029Vb752xMLikg6fOzrxb2E" target="_blank"
+                            class="whatsapp-btn">
+                            <i class="fab fa-whatsapp"></i> <span data-i18n="whatsapp_channel">Canal WhatsApp
+                                Officiel</span>
+                        </a>
+                    </div>
+                </div>
+                <div class="app-preview-wrapper">
+                    <!-- Preview hidden on mobile via CSS for clean look -->
+                    <div class="phone-frame">
+                        <div class="phone-screen">
+                            <img src="assets/images/zikr_screen_1.png" alt="Zikr Screen" class="screen-img">
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+        <!-- Zikr Detailed Presentation Section -->
+        <section id="zikr-details" class="app-details-section">
+            <div class="container">
+                <button class="close-btn" onclick="hideApp('zikr')"><i class="fas fa-times"></i></button>
+                <div class="details-grid">
+                    <div class="details-content">
+                        <img src="assets/images/zikr-icon.png" alt="Zikr Icon" class="details-app-icon">
+                        <h2 data-i18n="zikr_full_title">Zikr : Votre Compagnon Spirituel</h2>
+                        <p data-i18n="zikr_long_desc">Découvrez une application complète pour vous accompagner dans
+                            votre pratique religieuse. Horaires de prières précis, Coran complet, invocations
+                            authentiques et notifications personnalisées.</p>
+
+                        <div class="feature-list">
+                            <div class="feature-item">
+                                <i class="fas fa-clock"></i>
+                                <span data-i18n="feature_prayers">Horaires de prières précis</span>
+                            </div>
+                            <div class="feature-item">
+                                <i class="fas fa-book-open"></i>
+                                <span data-i18n="feature_quran">Lecture du Coran intégrée</span>
+                            </div>
+                            <div class="feature-item">
+                                <i class="fas fa-bell"></i>
+                                <span data-i18n="feature_notifications">Notifications de rappels</span>
+                            </div>
+                        </div>
+
+                        <div class="store-links">
+                            <a href="https://apps.apple.com/fr/app/zikr/id6759991511" class="store-badge">
+                                <img src="https://upload.wikimedia.org/wikipedia/commons/3/3c/Download_on_the_App_Store_Badge.svg"
+                                    alt="App Store">
+                            </a>
+                            <a href="https://play.google.com/store/apps/details?id=com.mohamed.zikr"
+                                class="store-badge">
+                                <img src="https://upload.wikimedia.org/wikipedia/commons/7/78/Google_Play_Store_badge_EN.svg"
+                                    alt="Google Play">
+                            </a>
+                        </div>
+
+                        <!-- Legal links for Apple App Store compliance -->
+                        <div style="margin-top: 20px; display: flex; gap: 20px; flex-wrap: wrap;">
+                            <a href="privacy.html"
+                                style="font-size: 0.82rem; opacity: 0.6; color: inherit; text-decoration: underline; transition: opacity 0.2s;"
+                                onmouseover="this.style.opacity=1" onmouseout="this.style.opacity=0.6"
+                                data-i18n="nav_privacy">Politique de confidentialité</a>
+                            <a href="terms.html"
+                                style="font-size: 0.82rem; opacity: 0.6; color: inherit; text-decoration: underline; transition: opacity 0.2s;"
+                                onmouseover="this.style.opacity=1" onmouseout="this.style.opacity=0.6"
+                                data-i18n="nav_terms">Conditions d'utilisation</a>
+                        </div>
+                    </div>
+                    <div class="details-visual">
+                        <div class="phone-frame-container">
+                            <div class="phone-frame">
+                                <div class="phone-screen">
+                                    <img src="assets/images/zikr_screen_2.png" alt="Zikr Detail Screen"
+                                        class="screen-img">
+                                </div>
+                            </div>
+                            <div class="phone-frame secondary-phone">
+                                <div class="phone-screen">
+                                    <img src="assets/images/zikr_screen_3.png" alt="Zikr Detail Screen"
+                                        class="screen-img">
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+        <!-- M App Section -->
+        <section id="m-section" class="app-section container reverse">
+            <div class="app-card clickable" onclick="showApp('m')">
+                <div class="app-info">
+                    <div class="app-header">
+                        <img src="assets/images/m-icon-dark.png" alt="M Icon" class="app-icon m-dynamic-icon">
+                        <h2>M App</h2>
+                    </div>
+                    <p data-i18n="m_desc">Votre nouvel espace social et utilitaire. Restez connecté et gérez vos
+                        contacts avec simplicité et élégance.</p>
+                    <div class="store-buttons">
+                        <a href="#" class="store-btn">
+                            <img src="https://upload.wikimedia.org/wikipedia/commons/3/3c/Download_on_the_App_Store_Badge.svg"
+                                alt="App Store">
+                        </a>
+                        <a href="#" class="store-btn">
+                            <img src="https://upload.wikimedia.org/wikipedia/commons/7/78/Google_Play_Store_badge_EN.svg"
+                                alt="Google Play">
+                        </a>
+                    </div>
+                </div>
+                <div class="app-preview">
+                    <!-- Preview hidden on mobile via CSS -->
+                    <div class="phone-frame">
+                        <div class="phone-screen">
+                            <img src="assets/images/m_screen_1.png" alt="M Screen" class="screen-img">
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+        <!-- M Detailed Presentation Section -->
+        <section id="m-details" class="app-details-section">
+            <div class="container">
+                <button class="close-btn" onclick="hideApp('m')"><i class="fas fa-times"></i></button>
+                <div class="details-grid">
+                    <div class="details-content">
+                        <img src="assets/images/m-icon-dark.png" alt="M Icon" class="details-app-icon m-dynamic-icon">
+                        <h2 data-i18n="m_full_title">M App : Social & Vidéos</h2>
+                        <p data-i18n="m_long_desc">Restez connecté avec vos proches, passez des appels fluides et
+                            découvrez les contenus du moment. Une expérience sociale complète avec une section dédiée
+                            aux Reels et vidéos.</p>
+
+                        <div class="feature-list">
+                            <div class="feature-item">
+                                <i class="fas fa-video"></i>
+                                <span data-i18n="feature_reels">Vidéos & Reels (Real-time)</span>
+                            </div>
+                            <div class="feature-item">
+                                <i class="fas fa-comments"></i>
+                                <span data-i18n="feature_chats">Discussions fluides</span>
+                            </div>
+                            <div class="feature-item">
+                                <i class="fas fa-phone-alt"></i>
+                                <span data-i18n="feature_calls">Appels vocaux & vidéo</span>
+                            </div>
+                        </div>
+
+                        <div class="store-links">
+                            <a href="#" class="store-badge">
+                                <img src="https://upload.wikimedia.org/wikipedia/commons/3/3c/Download_on_the_App_Store_Badge.svg"
+                                    alt="App Store">
+                            </a>
+                            <a href="#" class="store-badge">
+                                <img src="https://upload.wikimedia.org/wikipedia/commons/7/78/Google_Play_Store_badge_EN.svg"
+                                    alt="Google Play">
+                            </a>
+                        </div>
+
+                        <!-- Legal links for Apple App Store compliance -->
+                        <div style="margin-top: 20px; display: flex; gap: 20px; flex-wrap: wrap;">
+                            <a href="m-privacy.html"
+                                style="font-size: 0.82rem; opacity: 0.6; color: inherit; text-decoration: underline; transition: opacity 0.2s;"
+                                onmouseover="this.style.opacity=1" onmouseout="this.style.opacity=0.6"
+                                data-i18n="nav_privacy">Politique de confidentialité</a>
+                            <a href="m-terms.html"
+                                style="font-size: 0.82rem; opacity: 0.6; color: inherit; text-decoration: underline; transition: opacity 0.2s;"
+                                onmouseover="this.style.opacity=1" onmouseout="this.style.opacity=0.6"
+                                data-i18n="nav_terms">Conditions d'utilisation</a>
+                        </div>
+                    </div>
+                    <div class="details-visual">
+                        <div class="phone-frame-container">
+                            <div class="phone-frame">
+                                <div class="phone-screen">
+                                    <img src="assets/images/m_screen_2.png" alt="M Detail Screen" class="screen-img">
+                                </div>
+                            </div>
+                            <div class="phone-frame secondary-phone">
+                                <div class="phone-screen">
+                                    <img src="assets/images/m_screen_3.png" alt="M Detail Screen" class="screen-img">
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </section>
+    </main>
+
+    <footer class="container">
+        <div class="footer-content">
+            <p>&copy; 2026 Studio Mohamed - <span data-i18n="all_rights">Tous droits réservés</span></p>
+        </div>
+    </footer>
+
+    <script src="script.js"></script>
+</body>
+
+</html>
