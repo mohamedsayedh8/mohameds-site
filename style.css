@@ -630,9 +630,8 @@ nav .container {
         padding-bottom: 0.25rem;
     }
 
-    /* Hide hamburger & lang switcher on mobile */
+    /* Hide hamburger on mobile */
     .hamburger { display: none !important; }
-    .lang-switcher { display: none; }
 
     .nav-container {
         justify-content: space-between;
