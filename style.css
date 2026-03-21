@@ -265,14 +265,39 @@ nav .container {
     gap: 0.5rem;
     transition: all 0.3s;
     cursor: pointer;
-    border: 1px solid var(--glass-border);
-    color: var(--text-main);
+    border: 1px solid rgba(255, 255, 255, 0.15);
+    color: #f8fafc;
+    background: transparent;
+    font-family: inherit;
+    font-size: 1rem;
+}
+
+.btn.glass {
+    background: rgba(255, 255, 255, 0.08);
+    border: 1px solid rgba(255, 255, 255, 0.2);
+    color: #f8fafc;
+}
+
+.btn.glass:hover {
+    background: rgba(255, 255, 255, 0.15);
+    transform: translateY(-2px);
+}
+
+.light-mode .btn.glass {
+    background: rgba(0, 0, 0, 0.06);
+    border: 1px solid rgba(0, 0, 0, 0.15);
+    color: #0f172a;
+}
+
+.light-mode .btn.glass:hover {
+    background: rgba(0, 0, 0, 0.1);
 }
 
 .btn-primary {
     background: var(--primary);
     color: white;
     box-shadow: 0 10px 20px var(--primary-glow);
+    border-color: transparent;
 }
 
 .btn-primary:hover {
