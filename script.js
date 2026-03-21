@@ -373,87 +373,72 @@ function openAppModal(appId) {
     const features = typeof app.features === 'object' ? app.features[currentLang] : app.features;
 
     modalData.innerHTML = `
-        <div style="display: grid; grid-template-columns: 1fr 1fr; gap: 3rem; align-items: center; min-height: 400px;">
+        <div class="modal-grid">
 
             <!-- LEFT COLUMN: Info -->
-            <div>
+            <div class="modal-info">
                 <!-- Header -->
-                <div style="display: flex; align-items: center; gap: 1.5rem; margin-bottom: 2rem;">
-                    <div style="width: 80px; height: 80px; border-radius: 20px; background: ${app.gradient}; overflow: hidden; flex-shrink: 0; box-shadow: 0 10px 30px rgba(0,0,0,0.3);">
+                <div class="modal-header-box">
+                    <div class="modal-app-icon" style="background: ${app.gradient};">
                         ${app.iconUrl
-                            ? `<img src="${app.iconUrl}" alt="${app.name}" style="width:100%;height:100%;object-fit:cover;border-radius:20px;">`
+                            ? `<img src="${app.iconUrl}" alt="${app.name}">`
                             : `<span style="font-size:2.5rem;display:flex;align-items:center;justify-content:center;height:100%;">${app.icon}</span>`
                         }
                     </div>
                     <div>
-                        <h2 style="font-size: 1.8rem; margin-bottom: 0.25rem;">${app.name}</h2>
-                        <p style="color: var(--primary); font-weight: 600;">${tagline}</p>
+                        <h2 class="modal-app-title">${app.name}</h2>
+                        <p class="modal-app-tagline">${tagline}</p>
                     </div>
                 </div>
 
                 <!-- Description -->
-                <p style="font-size: 1rem; line-height: 1.8; color: var(--text-muted); margin-bottom: 2rem;">${description}</p>
+                <p class="modal-description">${description}</p>
 
                 <!-- Features -->
-                <div style="margin-bottom: 2rem;">
-                    <h3 style="font-size: 1rem; text-transform: uppercase; letter-spacing: 0.08em; opacity: 0.5; margin-bottom: 1rem;">${t.modal_features}</h3>
-                    <div style="display: grid; grid-template-columns: 1fr 1fr; gap: 0.75rem;">
+                <div class="modal-features-section">
+                    <h3 class="modal-features-title">${t.modal_features}</h3>
+                    <div class="modal-features-list">
                         ${features.map(f => `
-                        <div style="display: flex; align-items: center; gap: 0.6rem; font-size: 0.95rem;">
-                            <i class="fas fa-check-circle" style="color: var(--primary); flex-shrink:0;"></i>
+                        <div class="modal-feature-item">
+                            <i class="fas fa-check-circle"></i>
                             <span>${f}</span>
                         </div>`).join('')}
                     </div>
                 </div>
 
                 <!-- Download buttons -->
-                <div style="display: flex; gap: 1rem; flex-wrap: wrap; margin-bottom: 1.5rem;">
-                    <a href="${app.appStore}" target="_blank" class="btn ${app.appStore === '#' ? 'glass' : 'btn-primary'}" style="flex:1; min-width:140px; justify-content:center; ${app.appStore === '#' ? 'pointer-events:none;opacity:0.4;' : ''}">
+                <div class="modal-actions">
+                    <a href="${app.appStore}" target="_blank" class="btn ${app.appStore === '#' ? 'glass' : 'btn-primary'}" style="${app.appStore === '#' ? 'pointer-events:none;opacity:0.4;' : ''}">
                         <i class="fab fa-apple"></i> App Store
                     </a>
-                    <a href="${app.playStore}" target="_blank" class="btn glass" style="flex:1; min-width:140px; justify-content:center; ${app.playStore === '#' ? 'pointer-events:none;opacity:0.4;' : ''}">
+                    <a href="${app.playStore}" target="_blank" class="btn glass" style="${app.playStore === '#' ? 'pointer-events:none;opacity:0.4;' : ''}">
                         <i class="fab fa-google-play"></i> Google Play
                     </a>
                     ${app.whatsapp ? `
-                    <a href="${app.whatsapp}" target="_blank" class="btn glass" style="flex:1; min-width:140px; justify-content:center; background:rgba(37,211,102,0.12); color:#25D366; border-color:rgba(37,211,102,0.25);">
+                    <a href="${app.whatsapp}" target="_blank" class="btn glass" style="background:rgba(37,211,102,0.12); color:#25D366; border-color:rgba(37,211,102,0.25);">
                         <i class="fab fa-whatsapp"></i> WhatsApp
                     </a>` : ''}
                 </div>
 
                 <!-- Legal -->
-                <div style="display:flex; gap:1.5rem; padding-top:1rem; border-top:1px solid var(--glass-border);">
-                    <a href="${app.privacy}" style="color:var(--primary);text-decoration:none;font-size:0.9rem;display:flex;align-items:center;gap:0.4rem;">
+                <div class="modal-legal-box">
+                    <a href="${app.privacy}" class="modal-legal-link">
                         <i class="fas fa-shield-alt"></i> ${t.modal_privacy}
                     </a>
-                    <a href="${app.terms}" style="color:var(--primary);text-decoration:none;font-size:0.9rem;display:flex;align-items:center;gap:0.4rem;">
+                    <a href="${app.terms}" class="modal-legal-link">
                         <i class="fas fa-file-alt"></i> ${t.modal_terms}
                     </a>
                 </div>
             </div>
 
             <!-- RIGHT COLUMN: iPhone Mockups -->
-            <div style="display: flex; justify-content: center; align-items: center; gap: -1rem; position: relative; height: 420px;">
+            <div class="modal-mockups">
                 ${app.screenshots && app.screenshots.length > 0 ? (() => {
                     const screens = app.screenshots.slice(0, 3);
-                    const positions = [
-                        'transform: rotate(-6deg) translateX(-80px) translateY(20px); z-index:1;',
-                        'transform: rotate(0deg) translateY(-15px); z-index:3;',
-                        'transform: rotate(6deg) translateX(80px) translateY(20px); z-index:1;'
-                    ];
                     return screens.map((s, i) => `
-                        <div style="position:absolute; ${positions[i] || ''}
-                            width: 140px; height: 290px;
-                            background: #1a1a2e;
-                            border-radius: 36px;
-                            border: 3px solid #333;
-                            box-shadow: 0 25px 60px rgba(0,0,0,0.5), inset 0 0 0 2px #222;
-                            overflow: hidden;
-                            flex-shrink: 0;">
-                            <!-- Notch -->
-                            <div style="position:absolute;top:8px;left:50%;transform:translateX(-50%);width:50px;height:10px;background:#1a1a2e;border-radius:6px;z-index:10;"></div>
-                            <!-- Screen -->
-                            <img src="${s}" alt="Screenshot ${i+1}"
-                                style="width:100%;height:100%;object-fit:cover;display:block;">
+                        <div class="iphone-device">
+                            <div class="iphone-notch"></div>
+                            <img src="${s}" alt="Screenshot ${i+1}" class="iphone-screen">
                         </div>
                     `).join('');
                 })() : `<div style="color:var(--text-muted);text-align:center;"><i class="fas fa-mobile-alt" style="font-size:4rem;opacity:0.3;"></i></div>`}
