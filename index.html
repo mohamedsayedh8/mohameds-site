@@ -27,10 +27,14 @@
                 <div class="logo-icon">M</div>
                 <span>Mohamed</span>
             </a>
-            <ul class="nav-links">
-                <li><a href="#hero" class="active" data-i18n="nav_home">Accueil</a></li>
-                <li><a href="#portfolio" data-i18n="nav_apps">Mes Apps</a></li>
-                <li><a href="#contact" data-i18n="nav_contact">Contact</a></li>
+            <!-- Hamburger (mobile only) -->
+            <button class="hamburger" id="hamburger" onclick="toggleMobileMenu()" aria-label="Menu">
+                <span></span><span></span><span></span>
+            </button>
+            <ul class="nav-links" id="nav-links">
+                <li><a href="#hero" class="active" data-i18n="nav_home" onclick="closeMobileMenu()">Accueil</a></li>
+                <li><a href="#portfolio" data-i18n="nav_apps" onclick="closeMobileMenu()">Mes Apps</a></li>
+                <li><a href="#contact" data-i18n="nav_contact" onclick="closeMobileMenu()">Contact</a></li>
             </ul>
             <div class="nav-controls">
                 <div class="lang-switcher">

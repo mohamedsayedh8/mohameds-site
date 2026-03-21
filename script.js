@@ -482,6 +482,18 @@ function openFAQ() {
     setLanguage(currentLang);
 }
 
+function toggleMobileMenu() {
+    const nav = document.getElementById('nav-links');
+    const btn = document.getElementById('hamburger');
+    nav.classList.toggle('open');
+    btn.classList.toggle('open');
+}
+
+function closeMobileMenu() {
+    document.getElementById('nav-links').classList.remove('open');
+    document.getElementById('hamburger').classList.remove('open');
+}
+
 function closeFAQ() {
     document.getElementById('faq-modal').classList.remove('active');
     document.body.style.overflow = 'auto';
