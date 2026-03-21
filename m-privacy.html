@@ -1,229 +1,109 @@
 <!DOCTYPE html>
-<html lang="fr" dir="ltr">
-
+<html lang="fr" class="dark-mode">
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Politique de Confidentialité — M App</title>
-    <link rel="stylesheet" href="style.css">
+    <title>Politique de Confidentialité — Mohamed Sayed</title>
+    
+    <!-- Fonts -->
     <link rel="preconnect" href="https://fonts.googleapis.com">
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-    <link
-        href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;600;700&family=Outfit:wght@300;400;600;700&display=swap"
-        rel="stylesheet">
-    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css">
-    <style>
-        .legal-page {
-            max-width: 800px;
-            margin: 0 auto;
-            padding: 100px 24px 80px;
-        }
-
-        .legal-page h1 {
-            font-size: 2rem;
-            font-weight: 700;
-            margin-bottom: 8px;
-        }
-
-        .legal-page .last-updated {
-            font-size: 0.85rem;
-            opacity: 0.5;
-            margin-bottom: 48px;
-        }
-
-        .legal-page h2 {
-            font-size: 1.2rem;
-            font-weight: 600;
-            margin: 36px 0 12px;
-            color: #6366f1;
-        }
-
-        .legal-page p,
-        .legal-page li {
-            font-size: 0.97rem;
-            line-height: 1.8;
-            opacity: 0.85;
-            margin-bottom: 12px;
-        }
-
-        .legal-page ul {
-            padding-left: 20px;
-        }
-
-        [dir="rtl"] .legal-page ul {
-            padding-left: 0;
-            padding-right: 20px;
-        }
-
-        .legal-page a {
-            color: #6366f1;
-            text-decoration: underline;
-        }
-
-        .back-link {
-            display: inline-flex;
-            align-items: center;
-            gap: 8px;
-            margin-bottom: 40px;
-            font-size: 0.9rem;
-            opacity: 0.7;
-            color: inherit;
-            text-decoration: none;
-            transition: opacity 0.2s;
-        }
-
-        .back-link:hover {
-            opacity: 1;
-        }
-    </style>
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600&family=Outfit:wght@700;800&display=swap" rel="stylesheet">
+    
+    <!-- Icons -->
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.1/css/all.min.css">
+    
+    <!-- Styles -->
+    <link rel="stylesheet" href="style.css">
 </head>
+<body class="dark-mode">
+    <!-- 3D Background -->
+    <div id="canvas-container"></div>
 
-<body class="dark-theme">
-    <header>
-        <nav class="scrolled">
-            <div class="container">
-                <a href="index.html" style="text-decoration: none; color: inherit;">
-                    <div class="logo">
-                        <img src="assets/images/m-icon-dark.png" alt="M Logo" class="logo-img m-dynamic-icon">
-                        <span class="logo-text">Studio Mohamed</span>
-                    </div>
-                </a>
-                <div class="nav-controls">
-                    <div class="social-nav">
-                        <a href="https://www.instagram.com/mohamedsayedh8?igsh=MWQyd2dsbDV5NDJnaw%3D%3D&utm_source=qr" target="_blank" class="social-nav-icon" title="Instagram">
-                            <i class="fab fa-instagram"></i>
-                        </a>
-                        <a href="mailto:contact@mohameds.net" class="social-nav-icon" title="Email">
-                            <i class="fas fa-envelope"></i>
-                        </a>
-                    </div>
-                    <div class="lang-selector">
-                        <button class="lang-btn" onclick="setLanguage('fr')">FR</button>
-                        <button class="lang-btn" onclick="setLanguage('en')">EN</button>
-                        <button class="lang-btn" onclick="setLanguage('ar')">AR</button>
-                    </div>
+    <!-- Navigation -->
+    <nav id="navbar" class="scrolled">
+        <div class="container">
+            <a href="index.html" class="logo">
+                <div class="logo-icon">M</div>
+                <span>Mohamed</span>
+            </a>
+            <div class="nav-controls">
+                <div class="lang-switcher">
+                    <button class="lang-btn active" onclick="setLanguage('fr')">FR</button>
+                    <button class="lang-btn" onclick="setLanguage('en')">EN</button>
+                    <button class="lang-btn" onclick="setLanguage('ar')">AR</button>
+                </div>
+                <!-- Theme Toggle -->
+                <button class="theme-btn" id="theme-toggle">
+                    <i class="fas fa-moon"></i>
+                </button>
+            </div>
+        </div>
+    </nav>
+
+    <main class="legal-page">
+        <div class="container">
+            <a href="index.html#portfolio" class="back-to-home">
+                <i class="fas fa-arrow-left"></i> <span data-i18n="back">Retour</span>
+            </a>
+
+            <div class="legal-card">
+                <h1 data-i18n="m_privacy_title">Politique de Confidentialité</h1>
+                <span class="last-updated" data-i18n="m_last_updated">Dernière mise à jour : 12 mars 2026</span>
+
+                <div class="legal-content">
+                    <p data-i18n="m_privacy_intro">Bienvenue sur <strong>M</strong>. La protection de votre vie privée est notre priorité absolue. Cette politique détaille comment nous traitons vos données personnelles dans notre application de messagerie.</p>
+
+                    <h2 data-i18n="m_privacy_h1"><i class="fas fa-database"></i> 1. Informations Collectées</h2>
+                    <ul>
+                        <li data-i18n="m_privacy_li1"><strong>Compte</strong> : Votre adresse e-mail, nom d'utilisateur et mot de passe (chiffré).</li>
+                        <li data-i18n="m_privacy_li2"><strong>Profil</strong> : Votre nom d'affichage et votre biographie si vous choisissez de les remplir.</li>
+                        <li data-i18n="m_privacy_li3"><strong>Médias</strong> : Les photos, vidéos et messages vocaux que vous envoyez sont stockés de manière sécurisée.</li>
+                    </ul>
+
+                    <h2 data-i18n="m_privacy_h2"><i class="fas fa-key"></i> 2. Permissions de l'Appareil</h2>
+                    <p data-i18n="m_privacy_p1">Pour fonctionner correctement, M peut demander l'accès à :</p>
+                    <ul>
+                        <li data-i18n="m_privacy_li4"><strong>Caméra & Micro</strong> : Indispensables pour les appels vidéo et l'envoi de médias.</li>
+                        <li data-i18n="m_privacy_li5"><strong>Galerie Photos</strong> : Pour partager vos images ou sauvegarder celles reçues.</li>
+                    </ul>
+
+                    <h2 data-i18n="m_privacy_h3"><i class="fas fa-user-shield"></i> 3. Utilisation de vos Données</h2>
+                    <p data-i18n="m_privacy_p2">Vos informations sont utilisées uniquement pour assurer le service de messagerie, sécuriser votre compte et améliorer l'expérience utilisateur. Nous ne vendons jamais vos données à des tiers.</p>
+
+                    <h2 data-i18n="m_privacy_h4"><i class="fas fa-server"></i> 4. Services Tiers</h2>
+                    <ul>
+                        <li data-i18n="m_privacy_li6"><strong>Supabase</strong> : Utilisé pour la base de données et l'authentification sécurisée.</li>
+                        <li data-i18n="m_privacy_li7"><strong>Firebase</strong> : Utilisé pour l'envoi de notifications push.</li>
+                    </ul>
+
+                    <h2 data-i18n="m_privacy_h5"><i class="fas fa-hand-holding-heart"></i> 5. Vos Droits</h2>
+                    <p data-i18n="m_privacy_p3">Vous pouvez modifier vos informations ou supprimer votre compte à tout moment depuis les réglages de l'application.</p>
+                    
+                    <h2 data-i18n="m_terms_h6"><i class="fas fa-envelope"></i> 6. Contact</h2>
+                    <p><a href="mailto:contact@mohameds.net" style="color: var(--primary); text-decoration: none;">contact@mohameds.net</a></p>
                 </div>
             </div>
-        </nav>
-    </header>
-
-    <main>
-        <div class="legal-page">
-            <a href="index.html" class="back-link"><i class="fas fa-arrow-left"></i> <span
-                    data-i18n="back">Retour</span></a>
-
-            <h1 data-i18n="m_privacy_title">🔒 Politique de Confidentialité — M</h1>
-            <p class="last-updated" data-i18n="m_last_updated">Dernière mise à jour : 12 mars 2026</p>
-
-            <p data-i18n="m_privacy_intro">Bienvenue sur <strong>M</strong>. La protection de votre vie privée est notre priorité absolue. Cette politique détaille comment nous traitons vos données personnelles dans notre application de messagerie.</p>
-
-            <h2 data-i18n="m_privacy_h1">1. Informations Collectées</h2>
-            <ul>
-                <li data-i18n="m_privacy_li1"><strong>Compte</strong> : Votre adresse e-mail, nom d'utilisateur et mot de passe (chiffré).</li>
-                <li data-i18n="m_privacy_li2"><strong>Profil</strong> : Votre nom d'affichage et votre biographie si vous choisissez de les remplir.</li>
-                <li data-i18n="m_privacy_li3"><strong>Médias</strong> : Les photos, vidéos et messages vocaux que vous envoyez sont stockés de manière sécurisée.</li>
-            </ul>
-
-            <h2 data-i18n="m_privacy_h2">2. Permissions de l'Appareil</h2>
-            <p data-i18n="m_privacy_p1">Pour fonctionner correctement, M peut demander l'accès à :</p>
-            <ul>
-                <li data-i18n="m_privacy_li4"><strong>Caméra & Micro</strong> : Indispensables pour les appels vidéo et l'envoi de médias.</li>
-                <li data-i18n="m_privacy_li5"><strong>Galerie Photos</strong> : Pour partager vos images ou sauvegarder celles reçues.</li>
-            </ul>
-
-            <h2 data-i18n="m_privacy_h3">3. Utilisation de vos Données</h2>
-            <p data-i18n="m_privacy_p2">Vos informations sont utilisées uniquement pour assurer le service de messagerie, sécuriser votre compte et améliorer l'expérience utilisateur. Nous ne vendons jamais vos données à des tiers.</p>
-
-            <h2 data-i18n="m_privacy_h4">4. Services Tiers</h2>
-            <ul>
-                <li data-i18n="m_privacy_li6"><strong>Supabase</strong> : Utilisé pour la base de données et l'authentification sécurisée.</li>
-                <li data-i18n="m_privacy_li7"><strong>Firebase</strong> : Utilisé pour l'envoi de notifications push.</li>
-            </ul>
-
-            <h2 data-i18n="m_privacy_h5">5. Vos Droits</h2>
-            <p data-i18n="m_privacy_p3">Vous pouvez modifier vos informations ou supprimer votre compte à tout moment depuis les réglages de l'application.</p>
-            <p><a href="/cdn-cgi/l/email-protection#543914393b3c35393130277a3a3120"><span class="__cf_email__" data-cfemail="ea87aa8785828b878f8e99c4848f9e">[email&#160;protected]</span></a></p>
         </div>
     </main>
 
-    <footer class="container">
-        <div class="footer-content">
-            <p>© 2026 Studio Mohamed — <a href="m-privacy.html" data-i18n="nav_privacy">Confidentialité</a> · <a
-                    href="m-terms.html" data-i18n="nav_terms">Conditions</a></p>
+    <footer style="padding: 4rem 0; text-align: center; background: transparent;">
+        <div class="container">
+            <p>&copy; 2026 Mohamed. <span data-i18n="footer_rights">Tous droits réservés.</span></p>
+            <div style="margin-top: 1rem; font-size: 0.9rem; opacity: 0.6;">
+                <a href="m-privacy.html" style="color: inherit; margin: 0 10px;" data-i18n="nav_privacy">Confidentialité</a>
+                <a href="m-terms.html" style="color: inherit; margin: 0 10px;" data-i18n="nav_terms">Conditions</a>
+            </div>
         </div>
     </footer>
 
-    <script data-cfasync="false" src="/cdn-cgi/scripts/5c5dd728/cloudflare-static/email-decode.min.js"></script><script>
-        const translations = {
-            fr: {
-                back: "Retour",
-                m_privacy_title: "🔒 Politique de Confidentialité — M",
-                m_last_updated: "Dernière mise à jour : 12 mars 2026",
-                m_privacy_intro: "Bienvenue sur <strong>M</strong>. La protection de votre vie privée est notre priorité absolue. Cette politique détaille comment nous traitons vos données personnelles dans notre application de messagerie.",
-                m_privacy_h1: "1. Informations Collectées",
-                m_privacy_li1: "<strong>Compte</strong> : Votre adresse e-mail, nom d'utilisateur et mot de passe (chiffré).",
-                m_privacy_li2: "<strong>Profil</strong> : Votre nom d'affichage et votre biographie si vous choisissez de les remplir.",
-                m_privacy_li3: "<strong>Médias</strong> : Les photos, vidéos et messages vocaux que vous envoyez sont stockés de manière sécurisée.",
-                m_privacy_h2: "2. Permissions de l'Appareil",
-                m_privacy_p1: "Pour fonctionner correctement, M peut demander l'accès à :",
-                m_privacy_li4: "<strong>Caméra & Micro</strong> : Indispensables pour les appels vidéo et l'envoi de médias.",
-                m_privacy_li5: "<strong>Galerie Photos</strong> : Pour partager vos images ou sauvegarder celles reçues.",
-                m_privacy_h3: "3. Utilisation de vos Données",
-                m_privacy_p2: "Vos informations sont utilisées uniquement pour assurer le service de messagerie, sécuriser votre compte et améliorer l'expérience utilisateur. Nous ne vendons jamais vos données à des tiers.",
-                m_privacy_h4: "4. Services Tiers",
-                m_privacy_li6: "<strong>Supabase</strong> : Utilisé pour la base de données et l'authentification sécurisée.",
-                m_privacy_li7: "<strong>Firebase</strong> : Utilisé pour l'envoi de notifications push.",
-                m_privacy_h5: "5. Vos Droits",
-                m_privacy_p3: "Vous pouvez modifier vos informations ou supprimer votre compte à tout moment depuis les réglages de l'application.",
-                nav_privacy: "Confidentialité",
-                nav_terms: "Conditions"
-            },
-            en: {
-                back: "Back",
-                m_privacy_title: "🔒 Privacy Policy — M",
-                m_last_updated: "Last updated: March 12, 2026",
-                m_privacy_intro: "Welcome to <strong>M</strong>. Your privacy is our top priority. This policy explains how we handle your personal data within our messaging app.",
-                m_privacy_h1: "1. Information Collected",
-                m_privacy_li1: "<strong>Account</strong>: Your email address, username, and password (encrypted).",
-                m_privacy_li2: "<strong>Profile</strong>: Your display name and biography if you choose to provide them.",
-                m_privacy_li3: "<strong>Media</strong>: Photos, videos, and voice messages you send are stored securely.",
-                m_privacy_h2: "2. Device Permissions",
-                m_privacy_p1: "To function correctly, M may request access to:",
-                m_privacy_li4: "<strong>Camera & Mic</strong>: Essential for video calls and sending media.",
-                m_privacy_li5: "<strong>Photo Gallery</strong>: To share your images or save those received.",
-                m_privacy_h3: "3. Use of Your Data",
-                m_privacy_p2: "Your information is used only to provide the messaging service, secure your account, and improve the user experience. We never sell your data to third parties.",
-                m_privacy_h4: "4. Third-party Services",
-                m_privacy_li6: "<strong>Supabase</strong>: Used for our database and secure authentication.",
-                m_privacy_li7: "<strong>Firebase</strong>: Used for sending push notifications.",
-                m_privacy_h5: "5. Your Rights",
-                m_privacy_p3: "You can modify your information or delete your account at any time from the app settings.",
-                nav_privacy: "Privacy",
-                nav_terms: "Terms"
-            },
-            ar: {
-                back: "رجوع",
-                m_privacy_title: "🔒 سياسة الخصوصية — M",
-                m_last_updated: "آخر تحديث: 12 مارس 2026",
-                m_privacy_intro: "مرحباً بك في <strong>M</strong>. حماية خصوصيتك هي أولويتنا القصوى. توضح هذه السياسة كيفية تعاملنا مع بياناتك الشخصية في تطبيق المراسلة الخاص بنا.",
-                m_privacy_h1: "١. المعلومات التي نجمعها",
-                m_privacy_li1: "<strong>الحساب</strong>: بريدك الإلكتروني، اسم المستخدم، وكلمة المرور (مشفرة).",
-                m_privacy_li2: "<strong>الملف الشخصي</strong>: اسم العرض والنبذة الشخصية إذا اخترت تقديمها.",
-                m_privacy_li3: "<strong>الوسائط</strong>: يتم تخزين الصور والفيديوهات والرسائل الصوتية التي ترسلها بشكل آمن.",
-                m_privacy_h2: "٢. أذونات الجهاز",
-                m_privacy_p1: "لكي يعمل بشكل صحيح، قد يطلب M الوصول إلى:",
-                m_privacy_li4: "<strong>الكاميرا والميكروفون</strong>: ضروريان لمكالمات الفيديو وإرسال الوسائط.",
-                m_privacy_li5: "<strong>معرض الصور</strong>: لمشاركة صورك أو حفظ الصور المستلمة.",
-                m_privacy_h3: "٣. كيفية استخدام بياناتك",
-                m_privacy_p2: "تُستخدم معلوماتك فقط لتوفير خدمة المراسلة، وتأمين حسابك، وتحسين تجربة المستخدم. نحن لا نبيع بياناتك أبداً لأطراف ثالثة.",
-                m_privacy_h4: "٤. خدمات الطرف الثالث",
-                m_privacy_li6: "<strong>Supabase</strong>: يُستخدم لقاعدة البيانات والمصادقة الآمنة.",
-                m_privacy_li7: "<strong>Firebase</strong>: يُستخدم لإرسال التنبيهات.",
-                m_privacy_h5: "٥. حقوقك",
-                m_privacy_p3: "يمكنك تعديل معلوماتك أو حذف حسابك في أي وقت من إعدادات التطبيق.",
-                nav_privacy: "الخصوصية",
-                nav_terms: "الشروط"
-            }
+    <!-- Scripts -->
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/three.js/r128/three.min.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/gsap/3.12.5/gsap.min.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/gsap/3.12.5/ScrollTrigger.min.js"></script>
+    <script src="script.js"></script>
+</body>
+</html>
         };
 
         let currentLanguage = localStorage.getItem('preferredLanguage') || 'fr';

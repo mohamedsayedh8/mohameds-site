@@ -209,36 +209,98 @@ nav .container {
 
 .apps-grid {
     display: grid;
-    grid-template-columns: repeat(auto-fit, minmax(320px, 1fr));
-    gap: 2rem;
+    grid-template-columns: repeat(auto-fit, minmax(340px, 1fr));
+    gap: 2.5rem;
 }
 
 .app-card {
-    border-radius: 1.5rem;
-    padding: 2rem;
+    border-radius: 2rem;
     background: var(--card-bg);
     border: 1px solid var(--card-border);
     transition: all 0.4s cubic-bezier(0.175, 0.885, 0.32, 1.275);
     cursor: pointer;
     position: relative;
     overflow: hidden;
+    padding: 0;
+    display: flex;
+    flex-direction: column;
 }
 
 .app-card:hover {
     transform: translateY(-10px);
     border-color: var(--primary);
-    box-shadow: 0 20px 40px rgba(0, 0, 0, 0.2);
+    box-shadow: 0 20px 40px rgba(0, 0, 0, 0.3);
 }
 
-.app-card .icon-box {
-    width: 64px;
-    height: 64px;
-    border-radius: 16px;
-    margin-bottom: 1.5rem;
+.app-card-hero {
+    height: 280px;
+    position: relative;
+    overflow: hidden;
     display: flex;
     align-items: center;
     justify-content: center;
-    font-size: 2rem;
+}
+
+/* Card Mockups (3 iPhones) */
+.card-mockups {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    position: relative;
+    width: 100%;
+    height: 100%;
+    transform: translateY(60px);
+    transition: transform 0.4s cubic-bezier(0.175, 0.885, 0.32, 1.275);
+}
+
+.app-card:hover .card-mockups {
+    transform: translateY(30px);
+}
+
+.iphone-device.card-mini {
+    position: absolute;
+    width: 100px;
+    height: 210px;
+    background: #1a1a2e;
+    border-radius: 22px;
+    border: 3px solid #333;
+    box-shadow: 0 15px 35px rgba(0,0,0,0.4);
+    overflow: hidden;
+    transition: transform 0.4s cubic-bezier(0.175, 0.885, 0.32, 1.275);
+}
+
+.iphone-device.card-mini:nth-child(1) { transform: rotate(-8deg) translateX(-45px) translateY(10px); z-index: 1; }
+.iphone-device.card-mini:nth-child(2) { transform: rotate(0deg) translateY(-5px); z-index: 2; border-color: rgba(255,255,255,0.1); }
+.iphone-device.card-mini:nth-child(3) { transform: rotate(8deg) translateX(45px) translateY(10px); z-index: 1; }
+
+.app-card:hover .iphone-device.card-mini:nth-child(1) { transform: rotate(-12deg) translateX(-60px) translateY(15px); }
+.app-card:hover .iphone-device.card-mini:nth-child(2) { transform: scale(1.05) translateY(-15px); }
+.app-card:hover .iphone-device.card-mini:nth-child(3) { transform: rotate(12deg) translateX(60px) translateY(15px); }
+
+.icon-box-mini {
+    position: absolute;
+    bottom: 1.5rem;
+    left: 1.5rem;
+    width: 56px;
+    height: 56px;
+    border-radius: 14px;
+    background: rgba(255,255,255,0.1);
+    backdrop-filter: blur(10px);
+    padding: 5px;
+    border: 1px solid rgba(255,255,255,0.2);
+    box-shadow: 0 8px 25px rgba(0,0,0,0.4);
+}
+
+.icon-box-mini img {
+    width: 100%;
+    height: 100%;
+    border-radius: 10px;
+    object-fit: cover;
+}
+
+.app-card-content {
+    padding: 2rem;
+    flex-grow: 1;
 }
 
 .app-card h3 {
@@ -961,6 +1023,93 @@ nav .container {
     height: 100%;
     object-fit: cover;
     display: block;
+}
+
+/* ===== Legal Pages Stylings ===== */
+.legal-page {
+    padding-top: 120px;
+    padding-bottom: 80px;
+    min-height: 100vh;
+    position: relative;
+    z-index: 1;
+}
+
+.legal-card {
+    background: var(--glass-bg);
+    backdrop-filter: blur(var(--glass-blur));
+    -webkit-backdrop-filter: blur(var(--glass-blur));
+    border: 1px solid var(--glass-border);
+    border-radius: 2rem;
+    padding: 3rem;
+    color: var(--text-main);
+    box-shadow: 0 20px 50px rgba(0,0,0,0.2);
+}
+
+.legal-card h1 {
+    font-size: 2.5rem;
+    font-weight: 800;
+    margin-bottom: 0.5rem;
+    background: linear-gradient(135deg, #fff, rgba(255,255,255,0.7));
+    -webkit-background-clip: text;
+    background-clip: text;
+    -webkit-text-fill-color: transparent;
+}
+
+.legal-card .last-updated {
+    font-size: 0.9rem;
+    color: var(--text-muted);
+    margin-bottom: 3rem;
+    display: block;
+}
+
+.legal-card h2 {
+    font-size: 1.4rem;
+    font-weight: 700;
+    margin: 2.5rem 0 1rem;
+    color: var(--primary);
+    display: flex;
+    align-items: center;
+    gap: 0.75rem;
+}
+
+.legal-card p, .legal-card li {
+    font-size: 1.05rem;
+    line-height: 1.8;
+    color: var(--text-muted);
+    margin-bottom: 1.25rem;
+}
+
+.legal-card ul {
+    padding-left: 1.5rem;
+    margin-bottom: 2rem;
+}
+
+.back-to-home {
+    display: inline-flex;
+    align-items: center;
+    gap: 0.5rem;
+    color: var(--text-muted);
+    text-decoration: none;
+    font-weight: 500;
+    margin-bottom: 2rem;
+    transition: all 0.3s;
+}
+
+.back-to-home:hover {
+    color: var(--primary);
+    transform: translateX(-5px);
+}
+
+@media (max-width: 768px) {
+    .legal-card {
+        padding: 2rem 1.5rem;
+        border-radius: 1.5rem;
+    }
+    .legal-card h1 { font-size: 2rem; }
+    .card-mockups { transform: translateY(40px); }
+    .iphone-device.card-mini { width: 80px; height: 165px; }
+    .iphone-device.card-mini:nth-child(1) { transform: rotate(-8deg) translateX(-35px) translateY(8px); }
+    .iphone-device.card-mini:nth-child(3) { transform: rotate(8deg) translateX(35px) translateY(8px); }
 }
 
 /* Light mode overrides for modal system */

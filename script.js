@@ -68,6 +68,7 @@ const apps = {
     locsy: {
         id: 'locsy',
         icon: '📍',
+        iconUrl: 'assets/images/locsy-icon.png',
         name: 'Locsy',
         tagline: {
             fr: 'L\'IA qui réinvente vos balades.',
@@ -86,6 +87,9 @@ const apps = {
         },
         appStore: '#',
         playStore: '#',
+        screenshots: [
+            'assets/images/locsy_screen_1.png'
+        ],
         privacy: 'locsy-privacy.html',
         terms: 'locsy-terms.html',
         gradient: 'linear-gradient(135deg, #f59e0b, #d97706)',
@@ -572,7 +576,11 @@ document.addEventListener('DOMContentLoaded', () => {
     });
 
     // Event Listeners for modal
-    document.getElementById('close-modal').addEventListener('click', closeModal);
+    const closeModalBtn = document.getElementById('close-modal');
+    if (closeModalBtn) {
+        closeModalBtn.addEventListener('click', closeModal);
+    }
+    
     window.addEventListener('click', (e) => {
         if (e.target.classList.contains('modal')) closeModal();
     });
