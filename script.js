@@ -28,8 +28,8 @@ const apps = {
             'assets/images/zikr_screen_2.png',
             'assets/images/zikr_screen_3.png'
         ],
-        privacy: 'privacy.html',
-        terms: 'terms.html',
+        privacy: 'zikr-privacy.html',
+        terms: 'zikr-terms.html',
         gradient: 'linear-gradient(135deg, #10b981, #059669)',
         status: 'Disponible'
     },
@@ -86,8 +86,8 @@ const apps = {
         },
         appStore: '#',
         playStore: '#',
-        privacy: 'privacy.html',
-        terms: 'terms.html',
+        privacy: 'locsy-privacy.html',
+        terms: 'locsy-terms.html',
         gradient: 'linear-gradient(135deg, #f59e0b, #d97706)',
         status: 'Nouveau'
     }
