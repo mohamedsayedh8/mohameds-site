@@ -233,15 +233,27 @@ nav .container {
 }
 
 .app-card-hero {
-    height: 280px;
+    height: 180px;
     position: relative;
     overflow: hidden;
     display: flex;
     align-items: center;
     justify-content: center;
+    transition: all 0.4s cubic-bezier(0.175, 0.885, 0.32, 1.275);
 }
 
-/* Card Mockups (3 iPhones) */
+/* Card Specific Hero Colors */
+.app-card-hero.card-zikr {
+    background: linear-gradient(135deg, #10b981, #059669) !important;
+}
+
+.app-card-hero.card-mapp {
+    background: linear-gradient(135deg, #1a1a1a, #000000) !important;
+}
+
+.app-card-hero.card-locsy {
+    background: linear-gradient(135deg, #262626, #0a0a0a) !important;
+}
 .card-mockups {
     display: flex;
     justify-content: center;
