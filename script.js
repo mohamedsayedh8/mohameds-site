@@ -68,7 +68,7 @@ const apps = {
     locsy: {
         id: 'locsy',
         icon: '📍',
-        iconUrl: 'assets/images/locsy-icon.png',
+        iconUrl: 'assets/images/locsy-icon-dark.png',
         name: 'Locsy',
         tagline: {
             fr: 'L\'IA qui réinvente vos balades.',
@@ -92,7 +92,7 @@ const apps = {
         ],
         privacy: 'locsy-privacy.html',
         terms: 'locsy-terms.html',
-        gradient: 'linear-gradient(135deg, #f59e0b, #d97706)',
+        gradient: 'linear-gradient(135deg, #262626, #0a0a0a)',
         status: 'Nouveau'
     }
 };
@@ -438,13 +438,17 @@ function openAppModal(appId) {
             <!-- RIGHT COLUMN: iPhone Mockups -->
             <div class="modal-mockups">
                 ${app.screenshots && app.screenshots.length > 0 ? (() => {
-                    const screens = app.screenshots.slice(0, 3);
-                    return screens.map((s, i) => `
+                    // Always show 3 iPhones for a premium look
+                    let html = '';
+                    for (let i = 0; i < 3; i++) {
+                        const screenshot = app.screenshots[i % app.screenshots.length];
+                        html += `
                         <div class="iphone-device">
                             <div class="iphone-notch"></div>
-                            <img src="${s}" alt="Screenshot ${i+1}" class="iphone-screen">
-                        </div>
-                    `).join('');
+                            <img src="${screenshot}" alt="Screenshot ${i+1}" class="iphone-screen">
+                        </div>`;
+                    }
+                    return html;
                 })() : `<div style="color:var(--text-muted);text-align:center;"><i class="fas fa-mobile-alt" style="font-size:4rem;opacity:0.3;"></i></div>`}
             </div>
 
