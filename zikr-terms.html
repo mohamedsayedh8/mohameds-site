@@ -1,261 +1,122 @@
 <!DOCTYPE html>
-<html lang="fr" dir="ltr">
-
+<html lang="fr" class="dark-mode">
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Conditions d'Utilisation — Zikr</title>
-    <link rel="stylesheet" href="style.css">
+    
+    <!-- Fonts -->
     <link rel="preconnect" href="https://fonts.googleapis.com">
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-    <link
-        href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;600;700&family=Outfit:wght@300;400;600;700&display=swap"
-        rel="stylesheet">
-    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css">
-    <style>
-        .legal-page {
-            max-width: 800px;
-            margin: 0 auto;
-            padding: 100px 24px 80px;
-        }
-
-        .legal-page h1 {
-            font-size: 2rem;
-            font-weight: 700;
-            margin-bottom: 8px;
-        }
-
-        .legal-page .last-updated {
-            font-size: 0.85rem;
-            opacity: 0.5;
-            margin-bottom: 48px;
-        }
-
-        .legal-page h2 {
-            font-size: 1.2rem;
-            font-weight: 600;
-            margin: 36px 0 12px;
-            color: #C9A84C;
-        }
-
-        .legal-page p,
-        .legal-page li {
-            font-size: 0.97rem;
-            line-height: 1.8;
-            opacity: 0.85;
-            margin-bottom: 12px;
-        }
-
-        .legal-page ul {
-            padding-left: 20px;
-        }
-
-        [dir="rtl"] .legal-page ul {
-            padding-left: 0;
-            padding-right: 20px;
-        }
-
-        .legal-page a {
-            color: #C9A84C;
-            text-decoration: underline;
-        }
-
-        .back-link {
-            display: inline-flex;
-            align-items: center;
-            gap: 8px;
-            margin-bottom: 40px;
-            font-size: 0.9rem;
-            opacity: 0.7;
-            color: inherit;
-            text-decoration: none;
-            transition: opacity 0.2s;
-        }
-
-        .back-link:hover {
-            opacity: 1;
-        }
-    </style>
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600&family=Outfit:wght@700;800&display=swap" rel="stylesheet">
+    
+    <!-- Icons -->
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.1/css/all.min.css">
+    
+    <!-- Styles -->
+    <link rel="stylesheet" href="style.css">
 </head>
+<body class="dark-mode">
+    <!-- 3D Background -->
+    <div id="canvas-container"></div>
 
-<body class="dark-theme">
-    <header>
-        <nav class="scrolled">
-            <div class="container">
-                <a href="index.html" style="text-decoration: none; color: inherit;">
-                    <div class="logo">
-                        <img src="assets/images/m-icon-dark.png" alt="M Logo" class="logo-img m-dynamic-icon">
-                        <span class="logo-text">Studio Mohamed</span>
-                    </div>
-                </a>
-                <div class="nav-controls">
-                    <div class="social-nav">
-                        <a href="https://www.instagram.com/mohamedsayedh8?igsh=MWQyd2dsbDV5NDJnaw%3D%3D&utm_source=qr" target="_blank" class="social-nav-icon" title="Instagram">
-                            <i class="fab fa-instagram"></i>
-                        </a>
-                        <a href="mailto:contact@mohameds.net" class="social-nav-icon" title="Email">
-                            <i class="fas fa-envelope"></i>
-                        </a>
-                    </div>
-                    <div class="lang-selector">
-                        <button class="lang-btn" onclick="setLanguage('fr')">FR</button>
-                        <button class="lang-btn" onclick="setLanguage('en')">EN</button>
-                        <button class="lang-btn" onclick="setLanguage('ar')">AR</button>
-                    </div>
+    <!-- Navigation -->
+    <nav id="navbar" class="scrolled">
+        <div class="container">
+            <a href="index.html" class="logo">
+                <div class="logo-icon">M</div>
+                <span>Mohamed</span>
+            </a>
+            <div class="nav-controls">
+                <div class="lang-switcher">
+                    <button class="lang-btn active" onclick="setLanguage('fr')">FR</button>
+                    <button class="lang-btn" onclick="setLanguage('en')">EN</button>
+                    <button class="lang-btn" onclick="setLanguage('ar')">AR</button>
+                </div>
+                <!-- Theme Toggle -->
+                <button class="theme-btn" id="theme-toggle">
+                    <i class="fas fa-moon"></i>
+                </button>
+            </div>
+        </div>
+    </nav>
+
+    <main class="legal-page">
+        <div class="container">
+            <a href="index.html#portfolio" class="back-to-home">
+                <i class="fas fa-arrow-left"></i> <span data-i18n="back">Retour</span>
+            </a>
+
+            <div class="legal-card">
+                <h1 data-i18n="zikr_terms_title">📋 Conditions d'Utilisation — Zikr</h1>
+                <span class="last-updated" data-i18n="zikr_last_updated">Dernière mise à jour : 21 mars 2026</span>
+
+                <div class="legal-content">
+                    <p data-i18n="zikr_terms_intro">En téléchargeant et utilisant l'application <strong>Zikr</strong>, vous acceptez les présentes conditions d'utilisation.</p>
+
+                    <h2 data-i18n="zikr_terms_h1">1. Services fournis</h2>
+                    <ul>
+                        <li data-i18n="zikr_terms_li1">Horaires de prière basés sur votre localisation.</li>
+                        <li data-i18n="zikr_terms_li2">Lecture du Coran (Mode Image et Mode Texte).</li>
+                        <li data-i18n="zikr_terms_li3">IA Imam — assistant spirituel islamique.</li>
+                        <li data-i18n="zikr_terms_li4">Compteur de Tasbih et Qibla.</li>
+                    </ul>
+
+                    <h2 data-i18n="zikr_terms_h3">2. Abonnement Premium</h2>
+                    <p data-i18n="zikr_terms_p1">L'abonnement est géré par Apple. Le renouvellement s'effectue 24h avant la fin de la période.</p>
+                    <p data-i18n="zikr_terms_prices"><strong>Mensuel :</strong> 2,99 € / mois — <strong>Annuel :</strong> 19,99 € / an</p>
+
+                    <h2 data-i18n="zikr_terms_h4">3. IA Imam</h2>
+                    <p data-i18n="zikr_terms_p2">L'IA Imam est limitée aux questions islamiques. Les réponses ne constituent pas un avis religieux officiel.</p>
+
+                    <h2 data-i18n="zikr_terms_h5">4. Propriété intellectuelle</h2>
+                    <p data-i18n="zikr_terms_p3">L'application Zikr et son contenu sont la propriété de Studio Mohamed.</p>
+
+                    <h2 data-i18n="zikr_terms_h6">5. Contact</h2>
+                    <p><a href="mailto:contact@mohameds.net" style="color: var(--primary); text-decoration: none;">contact@mohameds.net</a></p>
                 </div>
             </div>
-        </nav>
-    </header>
-
-    <main>
-        <div class="legal-page">
-            <a href="index.html" class="back-link"><i class="fas fa-arrow-left"></i> <span
-                    data-i18n="back">Retour</span></a>
-
-            <h1 data-i18n="terms_title">📋 Conditions d'Utilisation</h1>
-            <p class="last-updated" data-i18n="last_updated">Dernière mise à jour : 3 mars 2026</p>
-
-            <p data-i18n="terms_intro">En téléchargeant et utilisant l'application <strong>Zikr</strong>, vous acceptez
-                les présentes conditions d'utilisation.</p>
-
-            <h2 data-i18n="terms_h1">1. Acceptation des conditions</h2>
-            <p data-i18n="terms_p1">En accédant à Zikr, vous acceptez d'être lié par ces conditions. Si vous n'acceptez
-                pas, veuillez ne pas utiliser l'application. En utilisant Zikr, vous acceptez également les conditions
-                du contrat de licence utilisateur final standard d'Apple (EULA).</p>
-
-            <h2 data-i18n="terms_h2">2. Description du service</h2>
-            <ul>
-                <li data-i18n="terms_li1">Horaires de prière basés sur votre localisation</li>
-                <li data-i18n="terms_li2">Lecture du Coran (Mode Image et Mode Texte)</li>
-                <li data-i18n="terms_li3">Adhkar — invocations quotidiennes authentiques</li>
-                <li data-i18n="terms_li4">Direction de la Qibla</li>
-                <li data-i18n="terms_li5">IA Imam — assistant spirituel islamique</li>
-                <li data-i18n="terms_li6">Compteur de Tasbih numérique</li>
-                <li data-i18n="terms_li7">Notifications de rappel personnalisées</li>
-            </ul>
-
-            <h2 data-i18n="terms_h3">3. Abonnement Premium</h2>
-            <ul>
-                <li data-i18n="terms_li8">L'abonnement est géré par Apple via l'App Store.</li>
-                <li data-i18n="terms_li9">Le renouvellement automatique s'effectue 24h avant la fin de la période.</li>
-                <li data-i18n="terms_li10">Vous pouvez annuler depuis les réglages de votre compte Apple.</li>
-                <li data-i18n="terms_li11">Aucun remboursement n'est effectué pour la période en cours.</li>
-                <li data-i18n="terms_li12">Les codes promo accordent un accès premium pour la durée spécifiée.</li>
-            </ul>
-            <p data-i18n="terms_prices"><strong>Mensuel :</strong> 2,99 € / mois — <strong>Annuel :</strong> 19,99 € /
-                an</p>
-
-            <h2 data-i18n="terms_h4">4. IA Imam</h2>
-            <p data-i18n="terms_p2">L'IA Imam est limitée aux questions islamiques. Vos questions sont transmises à
-                OpenAI. Les réponses ne constituent pas un avis religieux officiel.</p>
-
-            <h2 data-i18n="terms_h5">5. Propriété intellectuelle</h2>
-            <p data-i18n="terms_p3">L'application Zikr et son contenu sont la propriété de Studio Mohamed. Toute
-                reproduction sans autorisation est interdite.</p>
-
-            <h2 data-i18n="terms_h6">6. Contact</h2>
-            <p><a href="/cdn-cgi/l/email-protection#ee8d81809a8f8d9aae8381868f838b8a9dc0808b9a"><span class="__cf_email__" data-cfemail="f1929e9f85909285b19c9e99909c949582df9f9485">[email&#160;protected]</span></a></p>
         </div>
     </main>
 
-    <footer class="container">
-        <div class="footer-content">
-            <p>© 2026 Studio Mohamed — <a href="zikr-privacy.html" data-i18n="nav_privacy">Confidentialité</a> · <a
-                    href="zikr-terms.html" data-i18n="nav_terms">Conditions</a></p>
+    <footer style="padding: 4rem 0; text-align: center; background: transparent;">
+        <div class="container">
+            <p>&copy; 2026 Mohamed. <span data-i18n="footer_rights">Tous droits réservés.</span></p>
+            <div style="margin-top: 1rem; font-size: 0.9rem; opacity: 0.6;">
+                <a href="zikr-privacy.html" style="color: inherit; margin: 0 10px;" data-i18n="nav_privacy">Confidentialité</a>
+                <a href="zikr-terms.html" style="color: inherit; margin: 0 10px;" data-i18n="nav_terms">Conditions</a>
+            </div>
         </div>
     </footer>
 
-    <script data-cfasync="false" src="/cdn-cgi/scripts/5c5dd728/cloudflare-static/email-decode.min.js"></script><script>
+    <!-- Scripts -->
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/three.js/r128/three.min.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/gsap/3.12.5/gsap.min.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/gsap/3.12.5/ScrollTrigger.min.js"></script>
+    <script src="script.js"></script>
+    
+    <script>
         const translations = {
             fr: {
                 back: "Retour",
-                terms_title: "📋 Conditions d'Utilisation",
-                last_updated: "Dernière mise à jour : 3 mars 2026",
-                terms_intro: "En téléchargeant et utilisant l'application <strong>Zikr</strong>, vous acceptez les présentes conditions d'utilisation.",
-                terms_h1: "1. Acceptation des conditions",
-                terms_p1: "En accédant à Zikr, vous acceptez d'être lié par ces conditions. Si vous n'acceptez pas, veuillez ne pas utiliser l'application. En utilisant Zikr, vous acceptez également les conditions du contrat de licence utilisateur final standard d'Apple (EULA).",
-                terms_h2: "2. Description du service",
-                terms_li1: "Horaires de prière basés sur votre localisation",
-                terms_li2: "Lecture du Coran (Mode Image et Mode Texte)",
-                terms_li3: "Adhkar — invocations quotidiennes authentiques",
-                terms_li4: "Direction de la Qibla",
-                terms_li5: "IA Imam — assistant spirituel islamique",
-                terms_li6: "Compteur de Tasbih numérique",
-                terms_li7: "Notifications de rappel personnalisées",
-                terms_h3: "3. Abonnement Premium",
-                terms_li8: "L'abonnement est géré par Apple via l'App Store.",
-                terms_li9: "Le renouvellement automatique s'effectue 24h avant la fin de la période.",
-                terms_li10: "Vous pouvez annuler depuis les réglages de votre compte Apple.",
-                terms_li11: "Aucun remboursement n'est effectué pour la période en cours.",
-                terms_li12: "Les codes promo accordent un accès premium pour la durée spécifiée.",
-                terms_prices: "<strong>Mensuel :</strong> 2,99 € / mois — <strong>Annuel :</strong> 19,99 € / an",
-                terms_h4: "4. IA Imam",
-                terms_p2: "L'IA Imam est limitée aux questions islamiques. Vos questions sont transmises à OpenAI. Les réponses ne constituent pas un avis religieux officiel.",
-                terms_h5: "5. Propriété intellectuelle",
-                terms_p3: "L'application Zikr et son contenu sont la propriété de Studio Mohamed. Toute reproduction sans autorisation est interdite.",
-                terms_h6: "6. Contact",
-                nav_privacy: "Confidentialité",
-                nav_terms: "Conditions"
+                zikr_terms_title: "📋 Conditions d'Utilisation — Zikr",
+                zikr_last_updated: "Dernière mise à jour : 21 mars 2026",
+                zikr_terms_intro: "En utilisant Zikr, vous acceptez les présentes conditions d'utilisation.",
+                footer_rights: "Tous droits réservés."
             },
             en: {
                 back: "Back",
-                terms_title: "📋 Terms of Use",
-                last_updated: "Last updated: March 3, 2026",
-                terms_intro: "By downloading and using <strong>Zikr</strong>, you agree to these terms of use.",
-                terms_h1: "1. Acceptance of Terms",
-                terms_p1: "By accessing Zikr, you agree to be bound by these terms. If you do not agree, please do not use the app. By using Zikr, you also agree to the Apple Standard Licensed Application End User License Agreement (EULA).",
-                terms_h2: "2. Service Description",
-                terms_li1: "Prayer times based on your location",
-                terms_li2: "Quran reading (Image Mode and Text Mode)",
-                terms_li3: "Adhkar — authentic daily invocations",
-                terms_li4: "Qibla direction",
-                terms_li5: "AI Imam — Islamic spiritual assistant",
-                terms_li6: "Digital Tasbih counter",
-                terms_li7: "Personalized reminder notifications",
-                terms_h3: "3. Premium Subscription",
-                terms_li8: "Subscriptions are managed by Apple via the App Store.",
-                terms_li9: "Automatic renewal occurs 24 hours before the end of the current period.",
-                terms_li10: "You can cancel anytime from your Apple account settings.",
-                terms_li11: "No refunds are issued for the current billing period.",
-                terms_li12: "Promo codes grant premium access for the specified duration.",
-                terms_prices: "<strong>Monthly:</strong> €2.99 / month — <strong>Annual:</strong> €19.99 / year",
-                terms_h4: "4. AI Imam",
-                terms_p2: "The AI Imam is strictly limited to Islamic questions. Your questions are sent to OpenAI. Responses do not constitute an official religious ruling.",
-                terms_h5: "5. Intellectual Property",
-                terms_p3: "The Zikr app and its content are the property of Studio Mohamed. Any reproduction without permission is prohibited.",
-                terms_h6: "6. Contact",
-                nav_privacy: "Privacy",
-                nav_terms: "Terms"
+                zikr_terms_title: "📋 Terms of Use — Zikr",
+                zikr_last_updated: "Last updated: March 21, 2026",
+                zikr_terms_intro: "By using Zikr, you agree to these terms of use.",
+                footer_rights: "All rights reserved."
             },
             ar: {
-                back: "رجوع",
-                terms_title: "📋 شروط الاستخدام",
-                last_updated: "آخر تحديث: 3 مارس 2026",
-                terms_intro: "بتنزيل واستخدام تطبيق <strong>ذكر</strong>، فإنك توافق على شروط الاستخدام هذه.",
-                terms_h1: "١. قبول الشروط",
-                terms_p1: "بالوصول إلى ذكر، فإنك توافق على الالتزام بهذه الشروط. إذا لم توافق، يرجى عدم استخدام التطبيق. باستخدامك لذكر، فإنك توافق أيضاً على شروط اتفاقية ترخيص المستخدم النهائي القياسية لشركة Apple (EULA).",
-                terms_h2: "٢. وصف الخدمة",
-                terms_li1: "مواقيت الصلاة بناءً على موقعك",
-                terms_li2: "قراءة القرآن الكريم (وضع الصورة ووضع النص)",
-                terms_li3: "الأذكار — الأذكار اليومية الصحيحة",
-                terms_li4: "اتجاه القبلة",
-                terms_li5: "الإمام الذكي — مساعد روحاني إسلامي",
-                terms_li6: "عداد التسبيح الرقمي",
-                terms_li7: "تنبيهات تذكير مخصصة",
-                terms_h3: "٣. الاشتراك المميز",
-                terms_li8: "تُدار الاشتراكات بواسطة Apple عبر App Store.",
-                terms_li9: "يتم التجديد التلقائي قبل 24 ساعة من انتهاء الفترة الحالية.",
-                terms_li10: "يمكنك الإلغاء في أي وقت من إعدادات حساب Apple الخاص بك.",
-                terms_li11: "لا تُصدر أي مبالغ مستردة عن الفترة الحالية.",
-                terms_li12: "تمنح رموز الترويج وصولاً مميزاً للمدة المحددة.",
-                terms_prices: "<strong>شهري:</strong> 2.99 € / شهر — <strong>سنوي:</strong> 19.99 € / سنة",
-                terms_h4: "٤. الإمام الذكي",
-                terms_p2: "يقتصر الإمام الذكي على الأسئلة الإسلامية. تُرسل أسئلتك إلى OpenAI. لا تُشكّل الإجابات فتوى دينية رسمية.",
-                terms_h5: "٥. الملكية الفكرية",
-                terms_p3: "تطبيق ذكر ومحتواه هو ملك لـ Studio Mohamed. يُحظر أي تكاثر دون إذن.",
-                terms_h6: "٦. التواصل معنا",
-                nav_privacy: "الخصوصية",
-                nav_terms: "الشروط"
+                back: "عودة",
+                zikr_terms_title: "📋 شروط الاستخدام — ذكر",
+                zikr_last_updated: "آخر تحديث: 21 مارس 2026",
+                zikr_terms_intro: "باستخدام ذكر ، فإنك توافق على شروط الاستخدام هذه.",
+                footer_rights: "جميع الحقوق محفوظة."
             }
         };
 
@@ -279,4 +140,3 @@
     </script>
 </body>
 </html>
-           

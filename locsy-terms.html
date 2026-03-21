@@ -4,145 +4,120 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Conditions d'Utilisation — Locsy</title>
-    <link rel="stylesheet" href="style.css">
+    
+    <!-- Fonts -->
     <link rel="preconnect" href="https://fonts.googleapis.com">
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;600;700&family=Outfit:wght@300;400;600;700&display=swap" rel="stylesheet">
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600&family=Outfit:wght@700;800&display=swap" rel="stylesheet">
+    
+    <!-- Icons -->
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.1/css/all.min.css">
-    <style>
-        .legal-page {
-            max-width: 800px;
-            margin: 0 auto;
-            padding: 100px 24px 80px;
-        }
-        .legal-page h1 { font-size: 2rem; font-weight: 700; margin-bottom: 8px; }
-        .legal-page .last-updated { font-size: 0.85rem; opacity: 0.5; margin-bottom: 48px; }
-        .legal-page h2 { font-size: 1.2rem; font-weight: 600; margin: 36px 0 12px; color: #f59e0b; }
-        .legal-page p, .legal-page li { font-size: 0.97rem; line-height: 1.8; opacity: 0.85; margin-bottom: 12px; }
-        .legal-page ul { padding-left: 20px; }
-        .legal-page a { color: #f59e0b; text-decoration: underline; }
-        .back-link {
-            display: inline-flex; align-items: center; gap: 8px;
-            margin-bottom: 40px; font-size: 0.9rem; opacity: 0.7;
-            color: inherit; text-decoration: none; transition: opacity 0.2s;
-        }
-        .back-link:hover { opacity: 1; }
-        .app-badge {
-            display: inline-flex; align-items: center; gap: 10px;
-            background: rgba(245, 158, 11, 0.1); border: 1px solid rgba(245, 158, 11, 0.3);
-            border-radius: 999px; padding: 6px 16px; margin-bottom: 24px;
-            font-size: 0.9rem; font-weight: 600; color: #f59e0b;
-        }
-    </style>
+    
+    <!-- Styles -->
+    <link rel="stylesheet" href="style.css">
 </head>
-<body>
-    <header>
-        <nav id="navbar" class="scrolled">
-            <div class="container">
-                <a href="index.html" class="logo">
-                    <img src="assets/images/m-icon-dark.png" alt="M Logo" class="logo-img m-dynamic-icon">
-                    <span>Studio Mohamed</span>
-                </a>
-                <div class="nav-controls">
-                    <div class="lang-switcher">
-                        <button class="lang-btn active" onclick="setLanguage('fr')">FR</button>
-                        <button class="lang-btn" onclick="setLanguage('en')">EN</button>
-                    </div>
+<body class="dark-mode">
+    <!-- 3D Background -->
+    <div id="canvas-container"></div>
+
+    <!-- Navigation -->
+    <nav id="navbar" class="scrolled">
+        <div class="container">
+            <a href="index.html" class="logo">
+                <div class="logo-icon">M</div>
+                <span>Mohamed</span>
+            </a>
+            <div class="nav-controls">
+                <div class="lang-switcher">
+                    <button class="lang-btn active" onclick="setLanguage('fr')">FR</button>
+                    <button class="lang-btn" onclick="setLanguage('en')">EN</button>
+                    <button class="lang-btn" onclick="setLanguage('ar')">AR</button>
+                </div>
+                <!-- Theme Toggle -->
+                <button class="theme-btn" id="theme-toggle">
+                    <i class="fas fa-moon"></i>
+                </button>
+            </div>
+        </div>
+    </nav>
+
+    <main class="legal-page">
+        <div class="container">
+            <a href="index.html#portfolio" class="back-to-home">
+                <i class="fas fa-arrow-left"></i> <span data-i18n="back">Retour</span>
+            </a>
+
+            <div class="legal-card">
+                <h1 data-i18n="locsy_terms_title">📄 Conditions d'Utilisation — Locsy</h1>
+                <span class="last-updated" data-i18n="locsy_last_updated">Dernière mise à jour : 21 mars 2026</span>
+
+                <div class="legal-content">
+                    <p data-i18n="locsy_terms_intro">En téléchargeant et en utilisant Locsy, vous acceptez les présentes conditions d'utilisation. Veuillez les lire attentivement.</p>
+
+                    <h2 data-i18n="locsy_terms_h1">1. Acceptation des conditions</h2>
+                    <p data-i18n="locsy_terms_p1">L'utilisation de Locsy implique votre acceptation entière des présentes CGU ainsi que du <a href="https://www.apple.com/legal/internet-services/itunes/dev/stdeula/" target="_blank" style="color: var(--primary);">EULA d'Apple</a>.</p>
+
+                    <h2 data-i18n="locsy_terms_h2">2. Services fournis</h2>
+                    <p data-i18n="locsy_terms_p2">Locsy utilise l'IA (Google Gemini) pour recommander des lieux. Nous ne garantissons pas l'exactitude absolue des informations générées.</p>
+
+                    <h2 data-i18n="locsy_terms_h3">3. Utilisation de l'IA</h2>
+                    <p data-i18n="locsy_terms_p3">Vos requêtes de recherche sont transmises à Google Gemini AI pour traitement. Évitez d'inclure des données sensibles.</p>
+
+                    <h2 data-i18n="locsy_terms_h4">4. Abonnements (Premium)</h2>
+                    <ul>
+                        <li data-i18n="locsy_terms_li1"><strong>Locsy Explorer</strong> : Abonnement mensuel auto-renouvelable.</li>
+                        <li data-i18n="locsy_terms_li2"><strong>Locsy CityPro</strong> : Abonnement mensuel incluant la météo IA.</li>
+                    </ul>
+                    <p data-i18n="locsy_terms_p5">Les paiements sont gérés par Apple. Le renouvellement est automatique sauf annulation 24h avant.</p>
+
+                    <h2 data-i18n="locsy_terms_h5">5. Limitation de responsabilité</h2>
+                    <p data-i18n="locsy_terms_p6">L'application est fournie "telle quelle". Le développeur de Locsy décline toute responsabilité en cas de dommages liés à l'usage de l'IA.</p>
+
+                    <h2 data-i18n="locsy_terms_h6">6. Contact</h2>
+                    <p><a href="mailto:contact@mohameds.net" style="color: var(--primary); text-decoration: none;">contact@mohameds.net</a></p>
                 </div>
             </div>
-        </nav>
-    </header>
-
-    <main>
-        <div class="legal-page">
-            <a href="index.html" class="back-link"><i class="fas fa-arrow-left"></i> <span data-i18n="back">Retour</span></a>
-
-            <div class="app-badge">📍 Locsy</div>
-
-            <h1 data-i18n="terms_title">📄 Conditions d'Utilisation</h1>
-            <p class="last-updated" data-i18n="last_updated">Dernière mise à jour : 21 mars 2026</p>
-
-            <p data-i18n="terms_intro">En téléchargeant et en utilisant Locsy, vous acceptez les présentes conditions d'utilisation. Veuillez les lire attentivement.</p>
-
-            <h2 data-i18n="terms_h1">1. Acceptation des conditions</h2>
-            <p data-i18n="terms_p1">L'utilisation de Locsy implique votre acceptation entière des présentes CGU ainsi que du <a href="https://www.apple.com/legal/internet-services/itunes/dev/stdeula/" target="_blank">Contrat de Licence Utilisateur Final (EULA) d'Apple</a>. Si vous n'êtes pas d'accord avec ces conditions, veuillez désinstaller l'application.</p>
-
-            <h2 data-i18n="terms_h2">2. Services fournis</h2>
-            <p data-i18n="terms_p2">Locsy est une application mobile utilisant l'intelligence artificielle (Google Gemini) pour recommander des lieux et des itinéraires (balades) à proximité. Bien que nous fassions de notre mieux pour garantir la précision des résultats, nous ne garantissons pas que les informations (horaires, lieux, adresses) générées par l'IA soient toujours exactes ou à jour.</p>
-
-            <h2 data-i18n="terms_h3">3. Utilisation de l'IA</h2>
-            <p data-i18n="terms_p3">En utilisant la fonction de recherche de Locsy, vous acceptez que vos requêtes de recherche textuelles soient transmises à Google Gemini AI pour traitement. N'incluez pas d'informations personnelles sensibles dans vos recherches.</p>
-
-            <h2 data-i18n="terms_h4">4. Abonnements (Premium)</h2>
-            <p data-i18n="terms_p4">Locsy propose un modèle "Freemium" incluant un nombre limité de requêtes IA gratuites par jour. Le déblocage illimité et l'accès aux fonctionnalités (Balades, Spots illimités) nécessitent un abonnement :</p>
-            <ul>
-                <li data-i18n="terms_li1"><strong>Locsy Explorer</strong> : Abonnement mensuel auto-renouvelable.</li>
-                <li data-i18n="terms_li2"><strong>Locsy CityPro</strong> : Abonnement mensuel auto-renouvelable incluant la météo IA et le support prioritaire.</li>
-            </ul>
-            <p data-i18n="terms_p5">Le paiement est débité sur votre compte Apple ID lors de la confirmation d'achat. <strong>L'abonnement se renouvelle automatiquement</strong> à moins d'être annulé au moins 24 heures avant la fin de la période en cours. Vous pouvez gérer vos abonnements dans les réglages de votre compte sur l'App Store après l'achat.</p>
-
-            <h2 data-i18n="terms_h5">5. Limitation de responsabilité</h2>
-            <p data-i18n="terms_p6">L'application est fournie "telle quelle". En aucun cas le développeur de Locsy ne pourra être tenu responsable des dommages directs ou indirects liés à l'utilisation ou l'incapacité d'utiliser l'application, ou liés à des erreurs générées par l'intelligence artificielle.</p>
-
-            <h2 data-i18n="terms_h6">6. Contact</h2>
-            <p data-i18n="terms_p7">Pour toute question concernant ces conditions, contactez : <a href="mailto:contact@mohameds.net">contact@mohameds.net</a></p>
         </div>
     </main>
 
-    <footer style="padding: 4rem 0; text-align: center; background: var(--bg);">
+    <footer style="padding: 4rem 0; text-align: center; background: transparent;">
         <div class="container">
-            <p>© 2026 Mohamed. Tous droits réservés.</p>
-            <div style="margin-top: 1rem; display: flex; justify-content: center; gap: 1.5rem; font-size: 0.85rem; opacity: 0.7;">
-                <a href="locsy-privacy.html" style="color: inherit;">Confidentialité</a>
-                <a href="locsy-terms.html" style="color: inherit;">Conditions</a>
-                <a href="index.html" style="color: inherit;">Accueil</a>
+            <p>&copy; 2026 Mohamed. <span data-i18n="footer_rights">Tous droits réservés.</span></p>
+            <div style="margin-top: 1rem; font-size: 0.9rem; opacity: 0.6;">
+                <a href="locsy-privacy.html" style="color: inherit; margin: 0 10px;" data-i18n="nav_privacy">Confidentialité</a>
+                <a href="locsy-terms.html" style="color: inherit; margin: 0 10px;" data-i18n="nav_terms">Conditions</a>
             </div>
         </div>
     </footer>
 
+    <!-- Scripts -->
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/three.js/r128/three.min.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/gsap/3.12.5/gsap.min.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/gsap/3.12.5/ScrollTrigger.min.js"></script>
+    <script src="script.js"></script>
+    
     <script>
         const translations = {
             fr: {
                 back: "Retour",
-                terms_title: "📄 Conditions d'Utilisation — Locsy",
-                last_updated: "Dernière mise à jour : 21 mars 2026",
-                terms_intro: "En téléchargeant et en utilisant Locsy, vous acceptez les présentes conditions d'utilisation. Veuillez les lire attentivement.",
-                terms_h1: "1. Acceptation des conditions",
-                terms_p1: "L'utilisation de Locsy implique votre acceptation entière des présentes CGU ainsi que du <a href='https://www.apple.com/legal/internet-services/itunes/dev/stdeula/' target='_blank'>Contrat de Licence Utilisateur Final (EULA) d'Apple</a>. Si vous n'êtes pas d'accord, veuillez désinstaller l'application.",
-                terms_h2: "2. Services fournis",
-                terms_p2: "Locsy est une application mobile utilisant l'intelligence artificielle (Google Gemini) pour recommander des lieux et des itinéraires (balades). Bien que nous fassions de notre mieux, nous ne garantissons pas que les informations (horaires, lieux, adresses) générées par l'IA soient toujours exactes ou à jour.",
-                terms_h3: "3. Utilisation de l'IA",
-                terms_p3: "En utilisant la fonction de recherche de Locsy, vous acceptez que vos requêtes soient transmises à Google Gemini AI pour traitement. N'incluez pas d'informations personnelles sensibles dans vos recherches.",
-                terms_h4: "4. Abonnements (Premium)",
-                terms_p4: "Locsy propose un modèle 'Freemium' incluant un accès limité. Le déblocage illimité nécessite un abonnement :",
-                terms_li1: "<strong>Locsy Explorer</strong> : Abonnement mensuel auto-renouvelable.",
-                terms_li2: "<strong>Locsy CityPro</strong> : Abonnement mensuel auto-renouvelable (inclut Météo IA).",
-                terms_p5: "Le paiement est débité sur votre compte Apple ID. <strong>L'abonnement se renouvelle automatiquement</strong> à moins d'être annulé au moins 24 heures avant la fin de la période en cours. Gérable dans les réglages de votre compte sur l'App Store.",
-                terms_h5: "5. Limitation de responsabilité",
-                terms_p6: "L'application est fournie 'telle quelle'. En aucun cas le développeur ne pourra être tenu responsable des dommages liés à l'utilisation ou l'incapacité d'utiliser l'application, ou liés à des erreurs générées par l'IA.",
-                terms_h6: "6. Contact",
-                terms_p7: "Pour toute question, contactez : <a href='mailto:contact@mohameds.net'>contact@mohameds.net</a>"
+                locsy_terms_title: "📄 Conditions d'Utilisation — Locsy",
+                locsy_last_updated: "Dernière mise à jour : 21 mars 2026",
+                locsy_terms_intro: "En utilisant Locsy, vous acceptez les présentes conditions d'utilisation.",
+                footer_rights: "Tous droits réservés."
             },
             en: {
                 back: "Back",
-                terms_title: "📄 Terms of Use — Locsy",
-                last_updated: "Last updated: March 21, 2026",
-                terms_intro: "By downloading and using Locsy, you agree to these terms of use. Please read them carefully.",
-                terms_h1: "1. Acceptance of Terms",
-                terms_p1: "Using Locsy implies your full acceptance of these Terms as well as <a href='https://www.apple.com/legal/internet-services/itunes/dev/stdeula/' target='_blank'>Apple's Standard End User License Agreement (EULA)</a>. If you do not agree, please uninstall the app.",
-                terms_h2: "2. Services Provided",
-                terms_p2: "Locsy is a mobile app using AI (Google Gemini) to recommend nearby places and walks. While we do our best, we do not guarantee that the information (hours, places, addresses) generated by the AI will always be perfectly accurate or up to date.",
-                terms_h3: "3. AI Usage",
-                terms_p3: "By using Locsy's search function, you agree that your search queries will be transmitted to Google Gemini AI for processing. Do not include sensitive personal information in your searches.",
-                terms_h4: "4. Subscriptions (Premium)",
-                terms_p4: "Locsy offers a 'Freemium' model with limited free daily usage. Unlimited access requires a subscription:",
-                terms_li1: "<strong>Locsy Explorer</strong>: Auto-renewable monthly subscription.",
-                terms_li2: "<strong>Locsy CityPro</strong>: Auto-renewable monthly subscription (includes AI Weather).",
-                terms_p5: "Payment will be charged to your Apple ID account. <strong>Subscription automatically renews</strong> unless canceled at least 24 hours before the end of the current period. Manageable in your App Store account settings.",
-                terms_h5: "5. Limitation of Liability",
-                terms_p6: "The app is provided 'as is'. In no event shall the developer be liable for any damages arising from the use or inability to use the app, or from errors generated by artificial intelligence.",
-                terms_h6: "6. Contact",
-                terms_p7: "For any questions, contact: <a href='mailto:contact@mohameds.net'>contact@mohameds.net</a>"
+                locsy_terms_title: "📄 Terms of Use — Locsy",
+                locsy_last_updated: "Last updated: March 21, 2026",
+                locsy_terms_intro: "By using Locsy, you agree to these terms of use.",
+                footer_rights: "All rights reserved."
+            },
+            ar: {
+                back: "عودة",
+                locsy_terms_title: "📄 شروط الاستخدام — Locsy",
+                locsy_last_updated: "آخر تحديث: 21 مارس 2026",
+                locsy_terms_intro: "باستخدام Locsy ، فإنك توافق على شروط الاستخدام هذه.",
+                footer_rights: "جميع الحقوق محفوظة."
             }
         };
 
@@ -162,7 +137,6 @@
                 }
             });
         }
-
         setLanguage(currentLanguage);
     </script>
 </body>
