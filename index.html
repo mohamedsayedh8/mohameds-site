@@ -1,0 +1,270 @@
+<!DOCTYPE html>
+<html lang="fr" class="dark-mode">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Mohamed Sayed | Développeur</title>
+    
+    <!-- Fonts -->
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600&family=Outfit:wght@700;800&display=swap" rel="stylesheet">
+    
+    <!-- Icons -->
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.1/css/all.min.css">
+    
+    <!-- Styles -->
+    <link rel="stylesheet" href="style.css">
+</head>
+<body>
+    <!-- 3D Background -->
+    <div id="canvas-container"></div>
+
+    <!-- Navigation -->
+    <nav id="navbar">
+        <div class="container">
+            <a href="#" class="logo">
+                <div class="logo-icon">M</div>
+                <span>Mohamed</span>
+            </a>
+            <ul class="nav-links">
+                <li><a href="#hero" class="active" data-i18n="nav_home">Accueil</a></li>
+                <li><a href="#portfolio" data-i18n="nav_apps">Mes Apps</a></li>
+                <li><a href="#contact" data-i18n="nav_contact">Contact</a></li>
+            </ul>
+            <div class="nav-controls">
+                <div class="lang-switcher">
+                    <button class="lang-btn active" onclick="setLanguage('fr')">FR</button>
+                    <button class="lang-btn" onclick="setLanguage('en')">EN</button>
+                    <button class="lang-btn" onclick="setLanguage('ar')">AR</button>
+                </div>
+                <button class="theme-btn" id="theme-toggle">
+                    <i class="fas fa-moon"></i>
+                </button>
+            </div>
+        </div>
+    </nav>
+
+    <!-- Hero Section -->
+    <section class="hero" id="hero">
+        <div class="container">
+            <div class="hero-content">
+                <h1 id="hero-title" data-i18n="hero_title">Inspirer le futur par le <span class="gradient-text">code et l'IA</span></h1>
+                <p id="hero-desc" data-i18n="hero_desc">Développeur passionné par la création d'expériences innovantes. Découvrez mes projets Zikr, M App et Locsy lancés en 2026.</p>
+                <div class="hero-actions">
+                    <a href="#portfolio" class="btn btn-primary" data-i18n="hero_cta_apps">Voir mes apps</a>
+                </div>
+            </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- About Section -->
+    <section class="about" id="about">
+        <div class="container">
+            <div class="about-grid">
+                <div class="about-text">
+                    <h2 class="gradient-text" data-i18n="about_title">Passionné par l'innovation</h2>
+                    <p data-i18n="about_p1">Je suis Mohamed Sayed, un développeur dédié à la création d'expériences utilisateur exceptionnelles. Mon approche combine rigueur technique et créativité pour donner vie à des idées ambitieuses.</p>
+
+                </div>
+                <div class="about-stats" style="display: grid; grid-template-columns: 1fr 1fr; gap: 1rem;">
+                    <div class="stat-card glass" style="text-align: center; padding: 2rem; border-radius: 1.5rem;">
+                        <span style="font-size: 2.5rem; font-weight: 800; color: var(--primary);">3</span>
+                        <p data-i18n="about_stat_apps">Apps Lancées</p>
+                    </div>
+                    <div class="stat-card glass" style="text-align: center; padding: 2rem; border-radius: 1.5rem;">
+                        <span style="font-size: 2.5rem; font-weight: 800; color: var(--secondary);">2026</span>
+                        <p data-i18n="about_stat_year">Année Clé</p>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Skills Section -->
+    <section class="skills" id="skills">
+        <div class="container">
+            <div class="section-title">
+                <h2 data-i18n="skills_title">Mes Compétences</h2>
+            </div>
+            <div class="skills-grid">
+                <div class="skill-card glass">
+                    <i class="fas fa-code"></i>
+                    <h3 data-i18n="skill_dev_title">Développement</h3>
+                    <p data-i18n="skill_dev_desc">Swift, Flutter, Node.js</p>
+                </div>
+                <div class="skill-card glass">
+                    <i class="fas fa-brain"></i>
+                    <h3 data-i18n="skill_ai_title">Intelligence Artificielle</h3>
+                    <p data-i18n="skill_ai_desc">Gemini AI, Prompt Engineering</p>
+                </div>
+                <div class="skill-card glass">
+                    <i class="fas fa-rocket"></i>
+                    <h3 data-i18n="skill_prod_title">Produit</h3>
+                    <p data-i18n="skill_prod_desc">UX Design, Lancement App</p>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Experience Section (Timeline) -->
+    <section class="portfolio" id="experience" style="padding-bottom: 0;">
+        <div class="container">
+            <div class="section-title">
+                <h2 data-i18n="timeline_title">Parcours 2026</h2>
+                <p data-i18n="timeline_subtitle">Une année d'innovation intense.</p>
+            </div>
+            <div class="timeline">
+                <div class="timeline-item">
+                    <div class="timeline-content">
+                        <span class="timeline-date" data-i18n="timeline_locsy_date">Mars 2026</span>
+                        <h3 data-i18n="timeline_locsy_title">Lancement de "Locsy"</h3>
+                        <p data-i18n="timeline_locsy_p">Application de planification de voyages intelligente utilisant l'IA Gemini.</p>
+                    </div>
+                </div>
+                <div class="timeline-item">
+                    <div class="timeline-content">
+                        <span class="timeline-date" data-i18n="timeline_zikr_date">Mars 2026</span>
+                        <h3 data-i18n="timeline_zikr_title">Lancement de "Zikr"</h3>
+                        <p data-i18n="timeline_zikr_p">App spirituelle complète avec Coran, Qibla et Imam IA.</p>
+                    </div>
+                </div>
+                <div class="timeline-item">
+                    <div class="timeline-content">
+                        <span class="timeline-date" data-i18n="timeline_m_date">Juin 2026</span>
+                        <h3 data-i18n="timeline_m_title">Lancement de "M App"</h3>
+                        <p data-i18n="timeline_m_p">Réseau social dynamique axé sur les Reels et la messagerie instantanée.</p>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Portfolio Section -->
+    <section class="portfolio" id="portfolio">
+        <div class="container">
+            <div class="section-title">
+                <h2 data-i18n="portfolio_title">Mes Applications</h2>
+                <p data-i18n="portfolio_subtitle">Découvrez mes créations originales de 2026.</p>
+            </div>
+            
+            <div class="apps-grid">
+                <div class="app-card glass" onclick="openAppModal('zikr')">
+                    <div class="icon-box">
+                        <img src="assets/images/zikr-icon.png" alt="Zikr Icon" style="width: 100%; height: 100%; border-radius: 12px; object-fit: cover;">
+                    </div>
+                    <h3>Zikr</h3>
+                    <p class="tagline" data-i18n="app_zikr_tagline">Votre compagnon spirituel quotidien.</p>
+                    <span class="status-badge status-live" data-i18n="status_available">Mars 2026</span>
+                </div>
+
+                <div class="app-card glass" onclick="openAppModal('m_app')">
+                    <div class="icon-box">
+                        <img src="assets/images/m-icon-dark.png" alt="M App Icon" style="width: 100%; height: 100%; border-radius: 12px; object-fit: cover;">
+                    </div>
+                    <h3>M App</h3>
+                    <p class="tagline" data-i18n="app_m_tagline">Social, Vidéos & Reels en temps réel.</p>
+                    <span class="status-badge status-dev" data-i18n="status_available">Juin 2026</span>
+                </div>
+
+                <div class="app-card glass" onclick="openAppModal('locsy')">
+                    <div class="icon-box" style="background: linear-gradient(135deg, #f59e0b, #d97706); display: flex; align-items: center; justify-content: center; font-size: 2rem;">
+                        📍
+                    </div>
+                    <h3>Locsy</h3>
+                    <p class="tagline" data-i18n="app_locsy_tagline">L'IA qui réinvente vos voyages.</p>
+                    <span class="status-badge status-live" data-i18n="status_new">Mars 2026</span>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Contact Section -->
+    <section class="portfolio" id="contact" style="background: rgba(16, 185, 129, 0.03); border-radius: 4rem 4rem 0 0;">
+        <div class="container" style="text-align: center;">
+            <div class="section-title">
+                <h2 data-i18n="contact_title">Travaillons ensemble</h2>
+                <p data-i18n="contact_subtitle">Une idée de projet ? Contactez-moi.</p>
+            </div>
+            <div style="display: flex; justify-content: center; gap: 2rem; flex-wrap: wrap; margin-top: 3rem;">
+                <a href="mailto:contact@mohameds.net" class="btn btn-primary">
+                    <i class="fas fa-envelope"></i> contact@mohameds.net
+                </a>
+                <button class="btn glass" onclick="openFAQ()" style="cursor:pointer;">
+                    <i class="fas fa-question-circle"></i> <span data-i18n="faq_btn">FAQ</span>
+                </button>
+                <a href="https://www.instagram.com/mohamedsayedh8?igsh=MWQyd2dsbDV5NDJnaw%3D%3D&utm_source=qr" target="_blank" class="btn glass">
+                    <i class="fab fa-instagram"></i> Instagram
+                </a>
+            </div>
+        </div>
+    </section>
+
+    <!-- FAQ Modal -->
+    <div class="modal" id="faq-modal">
+        <div class="modal-content glass" style="max-width: 680px;">
+            <button class="close-modal" onclick="closeFAQ()">&times;</button>
+            <h2 style="font-size: 1.8rem; margin-bottom: 2rem;" data-i18n="faq_title">Questions fréquentes</h2>
+            <div id="faq-data">
+                <div class="faq-item">
+                    <button class="faq-q" onclick="toggleFAQ(this)">
+                        <span data-i18n="faq_q1"></span>
+                        <i class="fas fa-chevron-down"></i>
+                    </button>
+                    <div class="faq-a"><p data-i18n="faq_a1"></p></div>
+                </div>
+                <div class="faq-item">
+                    <button class="faq-q" onclick="toggleFAQ(this)">
+                        <span data-i18n="faq_q2"></span>
+                        <i class="fas fa-chevron-down"></i>
+                    </button>
+                    <div class="faq-a"><p data-i18n="faq_a2"></p></div>
+                </div>
+                <div class="faq-item">
+                    <button class="faq-q" onclick="toggleFAQ(this)">
+                        <span data-i18n="faq_q3"></span>
+                        <i class="fas fa-chevron-down"></i>
+                    </button>
+                    <div class="faq-a"><p data-i18n="faq_a3"></p></div>
+                </div>
+                <div class="faq-item">
+                    <button class="faq-q" onclick="toggleFAQ(this)">
+                        <span data-i18n="faq_q4"></span>
+                        <i class="fas fa-chevron-down"></i>
+                    </button>
+                    <div class="faq-a"><p data-i18n="faq_a4"></p></div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <!-- Modal -->
+    <div class="modal" id="app-modal">
+        <div class="modal-content glass">
+            <button class="close-modal" id="close-modal">&times;</button>
+            <div id="modal-data">
+                <!-- Contenu dynamique via JS -->
+            </div>
+        </div>
+    </div>
+
+    <footer style="padding: 4rem 0; text-align: center; background: var(--bg);">
+        <div class="container">
+            <p>&copy; 2026 Mohamed. <span data-i18n="footer_rights">Tous droits réservés.</span></p>
+            <div style="margin-top: 1rem; display: flex; justify-content: center; gap: 1.5rem; font-size: 0.85rem; opacity: 0.7;">
+                <a href="privacy.html" style="color: inherit;">Confidentialité</a>
+                <a href="terms.html" style="color: inherit;">Conditions</a>
+            </div>
+        </div>
+    </footer>
+
+    <!-- Libraries -->
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/three.js/r128/three.min.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/gsap/3.12.5/gsap.min.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/gsap/3.12.5/ScrollTrigger.min.js"></script>
+    
+    <!-- Custom script -->
+    <script src="script.js"></script>
+</body>
+</html>
