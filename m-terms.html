@@ -80,26 +80,28 @@
 
 <body class="dark-theme">
     <header>
-        <nav class="container">
-            <a href="index.html" style="text-decoration: none; color: inherit;">
-                <div class="logo">
-                    <img src="assets/images/m-icon-dark.png" alt="M Logo" class="logo-img m-dynamic-icon">
-                    <span class="logo-text">Studio Mohamed</span>
-                </div>
-            </a>
-            <div class="nav-controls">
-                <div class="social-nav">
-                    <a href="https://www.instagram.com/mohamedsayedh8?igsh=MWQyd2dsbDV5NDJnaw%3D%3D&utm_source=qr" target="_blank" class="social-nav-icon" title="Instagram">
-                        <i class="fab fa-instagram"></i>
-                    </a>
-                    <a href="mailto:contact@mohameds.net" class="social-nav-icon" title="Email">
-                        <i class="fas fa-envelope"></i>
-                    </a>
-                </div>
-                <div class="lang-selector">
-                    <button class="lang-btn" onclick="setLanguage('fr')">FR</button>
-                    <button class="lang-btn" onclick="setLanguage('en')">EN</button>
-                    <button class="lang-btn" onclick="setLanguage('ar')">AR</button>
+        <nav class="scrolled">
+            <div class="container">
+                <a href="index.html" style="text-decoration: none; color: inherit;">
+                    <div class="logo">
+                        <img src="assets/images/m-icon-dark.png" alt="M Logo" class="logo-img m-dynamic-icon">
+                        <span class="logo-text">Studio Mohamed</span>
+                    </div>
+                </a>
+                <div class="nav-controls">
+                    <div class="social-nav">
+                        <a href="https://www.instagram.com/mohamedsayedh8?igsh=MWQyd2dsbDV5NDJnaw%3D%3D&utm_source=qr" target="_blank" class="social-nav-icon" title="Instagram">
+                            <i class="fab fa-instagram"></i>
+                        </a>
+                        <a href="mailto:contact@mohameds.net" class="social-nav-icon" title="Email">
+                            <i class="fas fa-envelope"></i>
+                        </a>
+                    </div>
+                    <div class="lang-selector">
+                        <button class="lang-btn" onclick="setLanguage('fr')">FR</button>
+                        <button class="lang-btn" onclick="setLanguage('en')">EN</button>
+                        <button class="lang-btn" onclick="setLanguage('ar')">AR</button>
+                    </div>
                 </div>
             </div>
         </nav>
@@ -232,4 +234,8 @@
                     el.innerHTML = translations[lang][key];
                 }
             });
-            document.doc
+        }
+        setLanguage(currentLanguage);
+    </script>
+</body>
+</html>
