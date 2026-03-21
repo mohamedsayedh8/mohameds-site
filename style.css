@@ -58,6 +58,7 @@ body {
     backdrop-filter: blur(12px);
     -webkit-backdrop-filter: blur(12px);
     border: 1px solid var(--glass-border);
+    color: var(--text-main);
 }
 
 /* Navigation */
@@ -264,7 +265,8 @@ nav .container {
     gap: 0.5rem;
     transition: all 0.3s;
     cursor: pointer;
-    border: none;
+    border: 1px solid var(--glass-border);
+    color: var(--text-main);
 }
 
 .btn-primary {
