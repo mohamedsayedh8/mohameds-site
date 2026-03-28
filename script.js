@@ -522,6 +522,65 @@ function toggleFAQ(btn) {
     if (!isOpen) item.classList.add('open');
 }
 
+// --- Advanced Visuals (Split Text, 3D Tilt, Smooth Scroll) ---
+function initAdvancedVisuals() {
+    // 1. Split Text Reveal
+    const revealTexts = document.querySelectorAll(".reveal-text");
+    revealTexts.forEach(text => {
+        const content = text.innerText;
+        text.innerHTML = content.split('').map(char => 
+            `<span style="display:inline-block; transform:translateY(100%); opacity:0;">${char === ' ' ? '&nbsp;' : char}</span>`
+        ).join('');
+
+        gsap.to(text.querySelectorAll("span"), {
+            scrollTrigger: {
+                trigger: text,
+                start: "top 90%"
+            },
+            y: 0,
+            opacity: 1,
+            duration: 0.8,
+            stagger: 0.02,
+            ease: "expo.out"
+        });
+    });
+
+    // 2. 3D Tilt Effect
+    const tiltElements = document.querySelectorAll(".app-card, .skill-card, .about-image");
+    tiltElements.forEach(el => {
+        el.addEventListener("mousemove", (e) => {
+            const rect = el.getBoundingClientRect();
+            const x = e.clientX - rect.left;
+            const y = e.clientY - rect.top;
+            const centerX = rect.width / 2;
+            const centerY = rect.height / 2;
+            const rotateX = (y - centerY) / 10;
+            const rotateY = (centerX - x) / 10;
+
+            gsap.to(el, {
+                rotateX: rotateX,
+                rotateY: rotateY,
+                scale: 1.02,
+                duration: 0.5,
+                ease: "power2.out"
+            });
+        });
+
+        el.addEventListener("mouseleave", () => {
+            gsap.to(el, {
+                rotateX: 0,
+                rotateY: 0,
+                scale: 1,
+                duration: 0.8,
+                ease: "elastic.out(1, 0.3)"
+            });
+        });
+    });
+
+    // 3. Smooth Scroll Enhancement (Native feel but smoother)
+    gsap.config({ force3D: true });
+}
+
 // --- Interactive Animations (Cursor, Parallax, Magnetic) ---
 function initInteractiveAnimations() {
     const cursorDot = document.querySelector(".cursor-dot");
@@ -535,18 +594,20 @@ function initInteractiveAnimations() {
         const posX = e.clientX;
         const posY = e.clientY;
 
-        // Custom Cursor
+        // Custom Cursor with mix-blend-mode exclusion logic
         gsap.to(cursorDot, { x: posX, y: posY, duration: 0.1 });
         gsap.to(cursorOutline, { x: posX, y: posY, duration: 0.5, ease: "power2.out" });
 
-        // Hero Parallax (Very subtle)
-        if (heroContent && window.scrollY < 500) {
-            const xMove = (posX - window.innerWidth / 2) / 40;
-            const yMove = (posY - window.innerHeight / 2) / 40;
+        // Hero Parallax (Refined)
+        if (heroContent && window.scrollY < 800) {
+            const xMove = (posX - window.innerWidth / 2) / 30;
+            const yMove = (posY - window.innerHeight / 2) / 30;
             gsap.to(heroContent, {
                 x: xMove,
                 y: yMove,
-                duration: 1,
+                rotateX: -yMove / 2,
+                rotateY: xMove / 2,
+                duration: 1.2,
                 ease: "power2.out"
             });
         }
@@ -590,6 +651,7 @@ document.addEventListener('DOMContentLoaded', () => {
 
     initThree();
     initInteractiveAnimations();
+    initAdvancedVisuals();
 
     // Initialize Language
     setLanguage(getPreferredLanguage());
