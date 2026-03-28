@@ -116,6 +116,11 @@ const apps = {
             ar: ['إنشاء منشورات مميزة', 'أسلوب Twitter داكن وفاتح', 'ملف تعريف مخصص', 'بريميوم غير محدود (150 نجمة)']
         },
         telegram: 'https://t.me/Mofram_bot',
+        screenshots: [
+            'assets/images/mo_frame_screen_1.png',
+            'assets/images/mo_frame_screen_2.png',
+            'assets/images/mo_frame_screen_3.png'
+        ],
         gradient: 'linear-gradient(135deg, #7c3aed, #4f46e5)',
         status: 'Bot'
     }
