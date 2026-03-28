@@ -98,7 +98,7 @@ const apps = {
     mo_frame: {
         id: 'mo_frame',
         icon: '🖼️',
-        iconUrl: null,
+        iconUrl: 'assets/images/mo-frame-icon.png',
         name: 'Mo Frame',
         tagline: {
             fr: 'Créez des posts stylés en un clic.',
