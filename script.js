@@ -620,25 +620,22 @@ function toggleFAQ(btn) {
 
 // --- Advanced Visuals (3D Tilt, Smooth Scroll, Reveals) ---
 function initAdvancedVisuals() {
-    // 1. Text Reveal — animate the element as a whole to prevent RTL and HTML tag bugs
+    // 1. Text Reveal — animate the element as a whole using pure GSAP to avoid conflicts
     const revealTexts = document.querySelectorAll(".reveal-text");
     
     revealTexts.forEach(text => {
-        // Reset styles properly if it was previously animated
         if (!text.classList.contains('gsap-ready')) {
-            text.style.opacity = '0';
-            text.style.transform = 'translateY(30px)';
             text.classList.add('gsap-ready');
-            
-            gsap.to(text, {
+            gsap.from(text, {
                 scrollTrigger: { 
                     trigger: text, 
-                    start: "top 90%" 
+                    start: "top 95%" 
                 },
-                y: 0,
-                opacity: 1,
+                y: 30,
+                opacity: 0,
                 duration: 1,
-                ease: "expo.out"
+                ease: "expo.out",
+                clearProps: "all" // Cleans up inline styles after animation
             });
         }
     });
