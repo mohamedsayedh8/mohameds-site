@@ -44,9 +44,9 @@ const apps = {
             ar: 'عش اللحظة في عام 2026.'
         },
         description: {
-            fr: 'Lancée en Juin 2026. Un réseau social fluide et moderne (Expo/Supabase) axé sur l\'instant présent. Partagez vos moments, appelez vos proches et découvrez du contenu captivant.',
-            en: 'Launched in June 2026. A smooth and modern social network (Expo/Supabase) focused on the instant. Share your moments, call your loved ones, and discover captivating content.',
-            ar: 'تم إطلاقه في يونيو 2026. شبكة اجتماعية سريعة وحديثة (Expo/Supabase) تركز على اللحظة. شارك لحظاتك، اتصل بأحبائك واكتشف محتوى جذاباً.'
+            fr: 'Un réseau social fluide et moderne (Expo/Supabase) axé sur l\'instant présent. Partagez vos moments, appelez vos proches et découvrez du contenu captivant.',
+            en: 'A smooth and modern social network (Expo/Supabase) focused on the instant. Share your moments, call your loved ones, and discover captivating content.',
+            ar: 'شبكة اجتماعية سريعة وحديثة (Expo/Supabase) تركز على اللحظة. شارك لحظاتك، اتصل بأحبائك واكتشف محتوى جذاباً.'
         },
         features: {
             fr: ['Appels Audio/Vidéo HD', 'Partage de Moments (Vidéos)', 'Messagerie instantanée', 'Histoires & Actus quotidiennes'],
@@ -63,7 +63,7 @@ const apps = {
         privacy: 'm-privacy.html',
         terms: 'm-terms.html',
         gradient: 'linear-gradient(135deg, #3b82f6, #2563eb)',
-        status: 'Disponible'
+        status: 'Bientôt'
     },
     locsy: {
         id: 'locsy',
@@ -125,7 +125,7 @@ const translations = {
         timeline_zikr_date: 'Mars 2026',
         timeline_zikr_title: 'Lancement de Zikr',
         timeline_zikr_p: 'Application spirituelle iOS complète : Coran, Adhkar, Qibla et Imam IA.',
-        timeline_m_date: 'Juin 2026',
+        timeline_m_date: 'Bientôt',
         timeline_m_title: 'Lancement de M App',
         timeline_m_p: 'Réseau social avec Reels, messagerie instantanée et communauté.',
         portfolio_title: 'Mes Applications',
@@ -180,7 +180,7 @@ const translations = {
         timeline_zikr_date: 'March 2026',
         timeline_zikr_title: 'Launching Zikr',
         timeline_zikr_p: 'Complete spiritual iOS app: Quran, Adhkar, Qibla and AI Imam.',
-        timeline_m_date: 'June 2026',
+        timeline_m_date: 'Coming Soon',
         timeline_m_title: 'Launching M App',
         timeline_m_p: 'Social network with Reels, instant messaging and community features.',
         portfolio_title: 'My Applications',
@@ -235,7 +235,7 @@ const translations = {
         timeline_zikr_date: 'مارس 2026',
         timeline_zikr_title: 'إطلاق Zikr',
         timeline_zikr_p: 'تطبيق إسلامي شامل: قرآن، أذكار، قبلة وإمام ذكاء اصطناعي.',
-        timeline_m_date: 'يونيو 2026',
+        timeline_m_date: 'قريباً',
         timeline_m_title: 'إطلاق M App',
         timeline_m_p: 'شبكة اجتماعية بـReels ومحادثات فورية ومجتمع نشط.',
         portfolio_title: 'تطبيقاتي',
@@ -268,6 +268,26 @@ const translations = {
 
 let currentLang = 'fr';
 
+function getPreferredLanguage() {
+    // 1. Check localStorage
+    const savedLang = localStorage.getItem('preferredLang');
+    if (savedLang && ['en', 'fr', 'ar'].includes(savedLang)) {
+        return savedLang;
+    }
+
+    // 2. Check browser language
+    const browserLang = navigator.language || navigator.userLanguage;
+    if (browserLang) {
+        const langCode = browserLang.split('-')[0].toLowerCase();
+        if (['en', 'fr', 'ar'].includes(langCode)) {
+            return langCode;
+        }
+    }
+
+    // 3. Default to fr
+    return 'fr';
+}
+
 function setLanguage(lang) {
     currentLang = lang;
     document.documentElement.lang = lang;
@@ -290,6 +310,9 @@ function setLanguage(lang) {
             }
         }
     });
+
+    // Save preference
+    localStorage.setItem('preferredLang', lang);
 
     // Specific updates for hardcoded IDs if needed
     if (document.getElementById('hero-title')) document.getElementById('hero-title').innerHTML = t.hero_title;
@@ -508,6 +531,9 @@ document.addEventListener('DOMContentLoaded', () => {
 
     initThree();
 
+    // Initialize Language
+    setLanguage(getPreferredLanguage());
+
     // Theme Toggle
     const themeBtn = document.getElementById('theme-toggle');
     themeBtn.addEventListener('click', () => {
@@ -536,10 +562,23 @@ document.addEventListener('DOMContentLoaded', () => {
             },
             y: 30,
             opacity: 0,
-            duration: 0.8,
-            stagger: 0.2,
-            ease: "power2.out"
+            duration: 1,
+            stagger: 0.15,
+            ease: "power4.out"
         });
+    });
+
+    // Subtle float animation for app cards
+    gsap.to('.app-card', {
+        y: -5,
+        duration: 2,
+        repeat: -1,
+        yoyo: true,
+        ease: "sine.inOut",
+        stagger: {
+            amount: 0.5,
+            from: "random"
+        }
     });
 
     // Scroll Animations for app cards
