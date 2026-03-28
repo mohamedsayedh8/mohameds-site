@@ -618,36 +618,26 @@ function toggleFAQ(btn) {
     if (!isOpen) item.classList.add('open');
 }
 
-// --- Advanced Visuals (Split Text, 3D Tilt, Smooth Scroll) ---
+// --- Advanced Visuals (3D Tilt, Smooth Scroll, Reveals) ---
 function initAdvancedVisuals() {
-    // 1. Split Text Reveal — word-based to support Arabic RTL
+    // 1. Text Reveal — animate the element as a whole to prevent RTL and HTML tag bugs
     const revealTexts = document.querySelectorAll(".reveal-text");
-    const isArabic = document.documentElement.lang === 'ar';
-
+    
     revealTexts.forEach(text => {
-        const content = text.innerText;
-        if (isArabic) {
-            // For Arabic: animate the whole block, don't split letters
+        // Reset styles properly if it was previously animated
+        if (!text.classList.contains('gsap-ready')) {
             text.style.opacity = '0';
             text.style.transform = 'translateY(30px)';
+            text.classList.add('gsap-ready');
+            
             gsap.to(text, {
-                scrollTrigger: { trigger: text, start: "top 90%" },
+                scrollTrigger: { 
+                    trigger: text, 
+                    start: "top 90%" 
+                },
                 y: 0,
                 opacity: 1,
-                duration: 0.9,
-                ease: "expo.out"
-            });
-        } else {
-            // For EN/FR: split by word (not char) to avoid breaking text
-            text.innerHTML = content.split(' ').map(word =>
-                `<span style="display:inline-block; transform:translateY(100%); opacity:0;">${word}&nbsp;</span>`
-            ).join('');
-            gsap.to(text.querySelectorAll("span"), {
-                scrollTrigger: { trigger: text, start: "top 90%" },
-                y: 0,
-                opacity: 1,
-                duration: 0.8,
-                stagger: 0.05,
+                duration: 1,
                 ease: "expo.out"
             });
         }
