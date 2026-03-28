@@ -481,12 +481,6 @@ function openAppModal(appId) {
     const app = apps[appId];
     if (!app) return;
 
-    // For Mo Frame, redirect directly to Telegram
-    if (appId === 'mo_frame' && app.telegram) {
-        window.open(app.telegram, '_blank');
-        return;
-    }
-
     const modalData = document.getElementById('modal-data');
     const t = translations[currentLang];
     

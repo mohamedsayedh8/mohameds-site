@@ -286,9 +286,18 @@ nav .container {
     transition: transform 0.4s cubic-bezier(0.175, 0.885, 0.32, 1.275);
 }
 
-.app-card:hover .card-mockups {
-    transform: translateY(30px);
-}
+/* Card specific overrides with hover states to prevent scale jumping */
+.app-card-hero.card-zikr .card-mockups { transform: scale(0.9) translateY(20px); }
+.app-card:hover .app-card-hero.card-zikr .card-mockups { transform: scale(0.9) translateY(40px); }
+
+.app-card-hero.card-mapp .card-mockups { transform: scale(0.95) translateY(10px); }
+.app-card:hover .app-card-hero.card-mapp .card-mockups { transform: scale(0.95) translateY(30px); }
+
+.app-card-hero.card-locsy .card-mockups { transform: scale(0.9) translateY(15px); }
+.app-card:hover .app-card-hero.card-locsy .card-mockups { transform: scale(0.9) translateY(35px); }
+
+.app-card-hero.card-moframe .card-mockups { transform: scale(0.9) translateY(15px); }
+.app-card:hover .app-card-hero.card-moframe .card-mockups { transform: scale(0.9) translateY(35px); }
 
 .iphone-device.card-mini {
     position: absolute;
