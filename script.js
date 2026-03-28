@@ -317,6 +317,11 @@ function setLanguage(lang) {
     // Specific updates for hardcoded IDs if needed
     if (document.getElementById('hero-title')) document.getElementById('hero-title').innerHTML = t.hero_title;
     if (document.getElementById('hero-desc')) document.getElementById('hero-desc').textContent = t.hero_desc;
+
+    // Re-initialize text reveals after translation
+    if (typeof initAdvancedVisuals === 'function') {
+        initAdvancedVisuals();
+    }
 }
 
 // --- Three.js Bokeh Effect ---
