@@ -94,6 +94,30 @@ const apps = {
         terms: 'locsy-terms.html',
         gradient: 'linear-gradient(135deg, #262626, #0a0a0a)',
         status: 'Disponible'
+    },
+    mo_frame: {
+        id: 'mo_frame',
+        icon: '🖼️',
+        iconUrl: null,
+        name: 'Mo Frame',
+        tagline: {
+            fr: 'Créez des posts stylés en un clic.',
+            en: 'Create styled posts in one click.',
+            ar: 'اصنع منشورات مميزة بضغطة واحدة.'
+        },
+        description: {
+            fr: 'Un bot Telegram qui transforme vos textes et photos en posts stylés professionnels. Choisissez votre style (Dark/Light), personnalisez votre profil et partagez instantanément. Premium disponible (150 Stars/mois).',
+            en: 'A Telegram bot that transforms your text and photos into professional styled posts. Choose your style (Dark/Light), customize your profile and share instantly. Premium available (150 Stars/month).',
+            ar: 'بوت Telegram يحول نصوصك وصورك إلى منشورات احترافية. اختر أسلوبك (داكن/فاتح)، خصص بروفيلك وشارك فوراً. بريميوم متاح (150 نجمة/شهر).'
+        },
+        features: {
+            fr: ['Génération de posts stylés', 'Styles Twitter Dark & Light', 'Profil personnalisable', 'Premium illimité (150 Stars)'],
+            en: ['Styled post generation', 'Twitter Dark & Light styles', 'Customizable profile', 'Unlimited Premium (150 Stars)'],
+            ar: ['إنشاء منشورات مميزة', 'أسلوب Twitter داكن وفاتح', 'ملف تعريف مخصص', 'بريميوم غير محدود (150 نجمة)']
+        },
+        telegram: 'https://t.me/Mofram_bot',
+        gradient: 'linear-gradient(135deg, #7c3aed, #4f46e5)',
+        status: 'Bot'
     }
 };
 
@@ -133,8 +157,10 @@ const translations = {
         app_zikr_tagline: 'Votre compagnon spirituel quotidien.',
         app_m_tagline: 'Social, Vidéos & Reels.',
         app_locsy_tagline: 'L\'IA qui réinvente vos voyages.',
+        app_mo_frame_tagline: 'Créez des posts stylés en un clic.',
         status_available: 'Disponible',
         status_new: 'Bientôt',
+        status_bot: 'Bot Telegram',
         contact_title: 'Travaillons ensemble',
         contact_subtitle: 'Une idée de projet ? Contactez-moi.',
         modal_features: 'Fonctionnalités',
@@ -188,8 +214,10 @@ const translations = {
         app_zikr_tagline: 'Your daily spiritual companion.',
         app_m_tagline: 'Social, Videos & Reels.',
         app_locsy_tagline: 'AI reinventing your travels.',
+        app_mo_frame_tagline: 'Create styled posts in one click.',
         status_available: 'Available',
         status_new: 'Coming soon',
+        status_bot: 'Telegram Bot',
         contact_title: 'Let\'s work together',
         contact_subtitle: 'Have a project in mind? Get in touch.',
         modal_features: 'Features',
@@ -243,8 +271,10 @@ const translations = {
         app_zikr_tagline: 'رفيقك الروحي اليومي.',
         app_m_tagline: 'تواصل، فيديوهات وReels.',
         app_locsy_tagline: 'الذكاء الاصطناعي يعيد ابتكار رحلاتك.',
+        app_mo_frame_tagline: 'اصنع منشورات مميزة بضغطة واحدة.',
         status_available: 'متاح',
         status_new: 'قريباً',
+        status_bot: 'بوت Telegram',
         contact_title: 'لنعمل معاً',
         contact_subtitle: 'لديك فكرة مشروع؟ تواصل معي.',
         modal_features: 'المميزات',
@@ -445,6 +475,12 @@ function updateParticleColor() {
 function openAppModal(appId) {
     const app = apps[appId];
     if (!app) return;
+
+    // For Mo Frame, redirect directly to Telegram
+    if (appId === 'mo_frame' && app.telegram) {
+        window.open(app.telegram, '_blank');
+        return;
+    }
 
     const modalData = document.getElementById('modal-data');
     const t = translations[currentLang];
