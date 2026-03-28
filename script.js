@@ -85,7 +85,7 @@ const apps = {
             en: ['AI Itinerary Generator', 'Secret Spots Exploration', 'Voice Travel Companion', '3D Interactive Maps'],
             ar: ['مولد مسارات بالذكاء الاصطناعي', 'استكشاف الأماكن السرية', 'رفيق سفر صوتي', 'خرائط تفاعلية ثلاثية الأبعاد']
         },
-        appStore: '#',
+        appStore: 'https://apps.apple.com/fr/app/locsy/id6760738424',
         playStore: '#',
         screenshots: [
             'assets/images/locsy_screen_1.png'
@@ -93,7 +93,7 @@ const apps = {
         privacy: 'locsy-privacy.html',
         terms: 'locsy-terms.html',
         gradient: 'linear-gradient(135deg, #262626, #0a0a0a)',
-        status: 'Nouveau'
+        status: 'Disponible'
     }
 };
 
