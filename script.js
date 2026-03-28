@@ -522,14 +522,74 @@ function toggleFAQ(btn) {
     if (!isOpen) item.classList.add('open');
 }
 
+// --- Interactive Animations (Cursor, Parallax, Magnetic) ---
+function initInteractiveAnimations() {
+    const cursorDot = document.querySelector(".cursor-dot");
+    const cursorOutline = document.querySelector(".cursor-outline");
+    const heroContent = document.querySelector("#hero .container");
+    const magneticBtns = document.querySelectorAll(".btn, .logo, .lang-btn, .theme-btn");
+
+    if (!cursorDot || !cursorOutline) return;
+
+    window.addEventListener("mousemove", (e) => {
+        const posX = e.clientX;
+        const posY = e.clientY;
+
+        // Custom Cursor
+        gsap.to(cursorDot, { x: posX, y: posY, duration: 0.1 });
+        gsap.to(cursorOutline, { x: posX, y: posY, duration: 0.5, ease: "power2.out" });
+
+        // Hero Parallax (Very subtle)
+        if (heroContent && window.scrollY < 500) {
+            const xMove = (posX - window.innerWidth / 2) / 40;
+            const yMove = (posY - window.innerHeight / 2) / 40;
+            gsap.to(heroContent, {
+                x: xMove,
+                y: yMove,
+                duration: 1,
+                ease: "power2.out"
+            });
+        }
+
+        // Magnetic Buttons
+        magneticBtns.forEach(btn => {
+            const rect = btn.getBoundingClientRect();
+            const btnX = rect.left + rect.width / 2;
+            const btnY = rect.top + rect.height / 2;
+            const dist = Math.hypot(posX - btnX, posY - btnY);
+
+            if (dist < 80) {
+                const xMove = (posX - btnX) * 0.3;
+                const yMove = (posY - btnY) * 0.3;
+                gsap.to(btn, { x: xMove, y: yMove, duration: 0.4, ease: "power2.out" });
+                cursorOutline.classList.add("hovering");
+                gsap.to(cursorOutline, { scale: 1.5, borderColor: "rgba(16, 185, 129, 0.4)", duration: 0.3 });
+            } else {
+                gsap.to(btn, { x: 0, y: 0, duration: 0.4, ease: "power2.out" });
+                cursorOutline.classList.remove("hovering");
+                gsap.to(cursorOutline, { scale: 1, borderColor: "var(--primary)", duration: 0.3 });
+            }
+        });
+    });
+
+    // Hide cursor when leaving window
+    document.addEventListener("mouseleave", () => {
+        gsap.to([cursorDot, cursorOutline], { opacity: 0 });
+    });
+    document.addEventListener("mouseenter", () => {
+        gsap.to([cursorDot, cursorOutline], { opacity: 1 });
+    });
+}
+
 // --- Initialization ---
 document.addEventListener('DOMContentLoaded', () => {
-    // Register GSAP Plugins
+    // Stage GSAP Plugins
     if (typeof gsap !== 'undefined' && typeof ScrollTrigger !== 'undefined') {
         gsap.registerPlugin(ScrollTrigger);
     }
 
     initThree();
+    initInteractiveAnimations();
 
     // Initialize Language
     setLanguage(getPreferredLanguage());
@@ -545,24 +605,26 @@ document.addEventListener('DOMContentLoaded', () => {
 
     // GSAP Scroll Animations
     gsap.from(".hero-content > *", {
-        y: 50,
+        y: 60,
         opacity: 0,
-        duration: 1,
+        duration: 1.2,
         stagger: 0.2,
         ease: "power4.out"
     });
 
-    // Sections reveal
+    // Sections reveal with skew effect
     gsap.utils.toArray('section').forEach(section => {
         if (section.id === 'hero') return;
         gsap.from(section.querySelectorAll('.container > *'), {
             scrollTrigger: {
                 trigger: section,
-                start: "top 80%"
+                start: "top 85%"
             },
-            y: 30,
+            y: 50,
+            skewY: 2,
+            scale: 0.98,
             opacity: 0,
-            duration: 1,
+            duration: 1.2,
             stagger: 0.15,
             ease: "power4.out"
         });
