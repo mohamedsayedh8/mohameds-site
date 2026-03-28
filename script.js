@@ -115,7 +115,7 @@ const apps = {
             en: ['Styled post generation', 'Twitter Dark & Light styles', 'Customizable profile', 'Unlimited Premium (150 Stars)'],
             ar: ['إنشاء منشورات مميزة', 'أسلوب Twitter داكن وفاتح', 'ملف تعريف مخصص', 'بريميوم غير محدود (150 نجمة)']
         },
-        telegram: 'https://t.me/Mofram_bot',
+        telegram: 'tg://resolve?domain=Moframe_bot',
         screenshots: [
             'assets/images/mo_frame_s1_final.png',
             'assets/images/mo_frame_s2_final.png',
@@ -526,7 +526,7 @@ function openAppModal(appId) {
                 <!-- Download buttons -->
                 <div class="modal-actions">
                     ${app.telegram ? `
-                    <a href="${app.telegram}" target="_blank" class="btn btn-primary" style="background:#0a84ff; border:none; box-shadow:0 10px 20px rgba(10,132,255,0.3);">
+                    <a href="${app.telegram}" class="btn btn-primary" style="background:#0a84ff; border:none; box-shadow:0 10px 20px rgba(10,132,255,0.3);">
                         <i class="fab fa-telegram"></i> Ouvrir sur Telegram
                     </a>
                     ` : `
