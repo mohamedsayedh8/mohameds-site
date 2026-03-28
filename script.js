@@ -324,8 +324,10 @@ function setLanguage(lang) {
     }
 }
 
-// --- Three.js Bokeh Effect ---
-let scene, camera, renderer, particles;
+// --- Three.js Plexus Effect ---
+let scene, camera, renderer, particles, lines;
+const MAX_PARTICLES = 150;
+const MIN_DISTANCE = 2.5;
 
 function initThree() {
     const container = document.getElementById('canvas-container');
@@ -334,7 +336,7 @@ function initThree() {
     try {
         scene = new THREE.Scene();
         camera = new THREE.PerspectiveCamera(75, window.innerWidth / window.innerHeight, 0.1, 1000);
-        camera.position.z = 5;
+        camera.position.z = 8;
 
         renderer = new THREE.WebGLRenderer({ alpha: true, antialias: true });
         renderer.setSize(window.innerWidth, window.innerHeight);
@@ -343,31 +345,79 @@ function initThree() {
 
         // Particles
         const geometry = new THREE.BufferGeometry();
-        const vertices = [];
-        for (let i = 0; i < 3000; i++) {
-            vertices.push(
-                Math.random() * 20 - 10,
-                Math.random() * 20 - 10,
-                Math.random() * 20 - 10
-            );
-        }
-        geometry.setAttribute('position', new THREE.Float32BufferAttribute(vertices, 3));
+        const positions = new Float32Array(MAX_PARTICLES * 3);
+        const velocities = [];
 
+        for (let i = 0; i < MAX_PARTICLES; i++) {
+            positions[i * 3] = (Math.random() - 0.5) * 20;
+            positions[i * 3 + 1] = (Math.random() - 0.5) * 20;
+            positions[i * 3 + 2] = (Math.random() - 0.5) * 20;
+            velocities.push(new THREE.Vector3(
+                (Math.random() - 0.5) * 0.02,
+                (Math.random() - 0.5) * 0.02,
+                (Math.random() - 0.5) * 0.02
+            ));
+        }
+
+        geometry.setAttribute('position', new THREE.BufferAttribute(positions, 3));
         const material = new THREE.PointsMaterial({
-            size: 0.05,
+            size: 0.15,
             color: document.body.classList.contains('light-mode') ? 0x64748b : 0x10b981,
             transparent: true,
-            opacity: 0.6,
-            blending: document.body.classList.contains('light-mode') ? THREE.NormalBlending : THREE.AdditiveBlending
+            opacity: 0.8
         });
 
         particles = new THREE.Points(geometry, material);
         scene.add(particles);
 
+        // Lines (Plexus)
+        const lineGeometry = new THREE.BufferGeometry();
+        const linePositions = new Float32Array(MAX_PARTICLES * MAX_PARTICLES * 6);
+        lineGeometry.setAttribute('position', new THREE.BufferAttribute(linePositions, 3));
+        const lineMaterial = new THREE.LineBasicMaterial({
+            color: document.body.classList.contains('light-mode') ? 0x64748b : 0x10b981,
+            transparent: true,
+            opacity: 0.15
+        });
+        lines = new THREE.LineSegments(lineGeometry, lineMaterial);
+        scene.add(lines);
+
         function animate() {
             requestAnimationFrame(animate);
-            particles.rotation.y += 0.0008;
-            particles.rotation.x += 0.0004;
+            const pos = particles.geometry.attributes.position.array;
+            let lineIdx = 0;
+
+            for (let i = 0; i < MAX_PARTICLES; i++) {
+                // Update position
+                pos[i * 3] += velocities[i].x;
+                pos[i * 3 + 1] += velocities[i].y;
+                pos[i * 3 + 2] += velocities[i].z;
+
+                // Bounce
+                if (Math.abs(pos[i * 3]) > 10) velocities[i].x *= -1;
+                if (Math.abs(pos[i * 3 + 1]) > 10) velocities[i].y *= -1;
+                if (Math.abs(pos[i * 3 + 2]) > 10) velocities[i].z *= -1;
+
+                // Connection lines
+                for (let j = i + 1; j < MAX_PARTICLES; j++) {
+                    const dx = pos[i * 3] - pos[j * 3];
+                    const dy = pos[i * 3 + 1] - pos[j * 3 + 1];
+                    const dz = pos[i * 3 + 2] - pos[j * 3 + 2];
+                    const dist = Math.sqrt(dx * dx + dy * dy + dz * dz);
+
+                    if (dist < MIN_DISTANCE) {
+                        linePositions[lineIdx++] = pos[i * 3];
+                        linePositions[lineIdx++] = pos[i * 3 + 1];
+                        linePositions[lineIdx++] = pos[i * 3 + 2];
+                        linePositions[lineIdx++] = pos[j * 3];
+                        linePositions[lineIdx++] = pos[j * 3 + 1];
+                        linePositions[lineIdx++] = pos[j * 3 + 2];
+                    }
+                }
+            }
+
+            particles.geometry.attributes.position.needsUpdate = true;
+            lines.geometry.attributes.position.needsUpdate = true;
             renderer.render(scene, camera);
         }
         animate();
@@ -586,22 +636,14 @@ function initAdvancedVisuals() {
     gsap.config({ force3D: true });
 }
 
-// --- Interactive Animations (Cursor, Parallax, Magnetic) ---
+// --- Interactive Animations (Parallax, Magnetic) ---
 function initInteractiveAnimations() {
-    const cursorDot = document.querySelector(".cursor-dot");
-    const cursorOutline = document.querySelector(".cursor-outline");
     const heroContent = document.querySelector("#hero .container");
     const magneticBtns = document.querySelectorAll(".btn, .logo, .lang-btn, .theme-btn");
-
-    if (!cursorDot || !cursorOutline) return;
 
     window.addEventListener("mousemove", (e) => {
         const posX = e.clientX;
         const posY = e.clientY;
-
-        // Custom Cursor with mix-blend-mode exclusion logic
-        gsap.to(cursorDot, { x: posX, y: posY, duration: 0.1 });
-        gsap.to(cursorOutline, { x: posX, y: posY, duration: 0.5, ease: "power2.out" });
 
         // Hero Parallax (Refined)
         if (heroContent && window.scrollY < 800) {
@@ -628,22 +670,10 @@ function initInteractiveAnimations() {
                 const xMove = (posX - btnX) * 0.3;
                 const yMove = (posY - btnY) * 0.3;
                 gsap.to(btn, { x: xMove, y: yMove, duration: 0.4, ease: "power2.out" });
-                cursorOutline.classList.add("hovering");
-                gsap.to(cursorOutline, { scale: 1.5, borderColor: "rgba(16, 185, 129, 0.4)", duration: 0.3 });
             } else {
                 gsap.to(btn, { x: 0, y: 0, duration: 0.4, ease: "power2.out" });
-                cursorOutline.classList.remove("hovering");
-                gsap.to(cursorOutline, { scale: 1, borderColor: "var(--primary)", duration: 0.3 });
             }
         });
-    });
-
-    // Hide cursor when leaving window
-    document.addEventListener("mouseleave", () => {
-        gsap.to([cursorDot, cursorOutline], { opacity: 0 });
-    });
-    document.addEventListener("mouseenter", () => {
-        gsap.to([cursorDot, cursorOutline], { opacity: 1 });
     });
 }
 
