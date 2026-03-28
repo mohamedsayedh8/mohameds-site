@@ -88,7 +88,7 @@ const apps = {
         appStore: 'https://apps.apple.com/fr/app/locsy/id6760738424',
         playStore: '#',
         screenshots: [
-            'assets/images/locsy_screen_1.png'
+            'assets/images/locsy_s1_final.png'
         ],
         privacy: 'locsy-privacy.html',
         terms: 'locsy-terms.html',
@@ -117,9 +117,9 @@ const apps = {
         },
         telegram: 'https://t.me/Mofram_bot',
         screenshots: [
-            'assets/images/mo_frame_screen_1.png',
-            'assets/images/mo_frame_screen_2.png',
-            'assets/images/mo_frame_screen_3.png'
+            'assets/images/mo_frame_s1_final.png',
+            'assets/images/mo_frame_s2_final.png',
+            'assets/images/mo_frame_s3_final.png'
         ],
         gradient: 'linear-gradient(135deg, #7c3aed, #4f46e5)',
         status: 'Bot'
@@ -525,12 +525,18 @@ function openAppModal(appId) {
 
                 <!-- Download buttons -->
                 <div class="modal-actions">
+                    ${app.telegram ? `
+                    <a href="${app.telegram}" target="_blank" class="btn btn-primary" style="background:#0a84ff; border:none; box-shadow:0 10px 20px rgba(10,132,255,0.3);">
+                        <i class="fab fa-telegram"></i> Ouvrir sur Telegram
+                    </a>
+                    ` : `
                     <a href="${app.appStore}" target="_blank" class="btn ${app.appStore === '#' ? 'glass' : 'btn-primary'}" style="${app.appStore === '#' ? 'pointer-events:none;opacity:0.4;' : ''}">
                         <i class="fab fa-apple"></i> App Store
                     </a>
                     <a href="${app.playStore}" target="_blank" class="btn glass" style="${app.playStore === '#' ? 'pointer-events:none;opacity:0.4;' : ''}">
                         <i class="fab fa-google-play"></i> Google Play
                     </a>
+                    `}
                     ${app.whatsapp ? `
                     <a href="${app.whatsapp}" target="_blank" class="btn glass" style="background:rgba(37,211,102,0.12); color:#25D366; border-color:rgba(37,211,102,0.25);">
                         <i class="fab fa-whatsapp"></i> WhatsApp
@@ -538,6 +544,7 @@ function openAppModal(appId) {
                 </div>
 
                 <!-- Legal -->
+                ${!app.telegram ? `
                 <div class="modal-legal-box">
                     <a href="${app.privacy}" class="modal-legal-link">
                         <i class="fas fa-shield-alt"></i> ${t.modal_privacy}
@@ -546,6 +553,7 @@ function openAppModal(appId) {
                         <i class="fas fa-file-alt"></i> ${t.modal_terms}
                     </a>
                 </div>
+                ` : ''}
             </div>
 
             <!-- RIGHT COLUMN: iPhone Mockups -->
