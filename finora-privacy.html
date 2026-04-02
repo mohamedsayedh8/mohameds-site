@@ -1,0 +1,108 @@
+<!DOCTYPE html>
+<html lang="fr" class="dark-mode">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Politique de Confidentialité — Finora</title>
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600&family=Outfit:wght@700;800&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.1/css/all.min.css">
+    <link rel="stylesheet" href="style.css">
+</head>
+<body class="dark-mode">
+    <div id="canvas-container"></div>
+    <nav id="navbar" class="scrolled">
+        <div class="container">
+            <a href="index.html" class="logo">
+                <div class="logo-icon">M</div>
+                <span>Studio Mohamed</span>
+            </a>
+            <div class="nav-controls">
+                <button class="theme-btn" id="theme-toggle"><i class="fas fa-moon"></i></button>
+            </div>
+        </div>
+    </nav>
+
+    <main class="legal-page">
+        <div class="container">
+            <a href="index.html#portfolio" class="back-to-home">
+                <i class="fas fa-arrow-left"></i> Retour
+            </a>
+            <div class="legal-card">
+                <h1>🔒 Politique de Confidentialité — Finora</h1>
+                <span class="last-updated">Dernière mise à jour : 3 avril 2026</span>
+                <div class="legal-content">
+
+                    <p>Bienvenue sur <strong>Finora</strong>. Nous prenons la protection de vos données personnelles très au sérieux. Cette politique explique comment nous collectons, utilisons et protégeons vos informations.</p>
+
+                    <h2>1. Données collectées</h2>
+                    <ul>
+                        <li><strong>Compte (optionnel)</strong> : email et nom complet si vous créez un compte. L'app fonctionne entièrement sans compte.</li>
+                        <li><strong>Transactions financières</strong> : montants, catégories, descriptions, dates — saisis manuellement ou via scan de reçu. Ces données vous appartiennent entièrement.</li>
+                        <li><strong>Photos de reçus</strong> : analysées momentanément par l'IA pour extraire les données, puis supprimées. Aucune image n'est stockée sur nos serveurs.</li>
+                        <li><strong>Données de budget et objectifs</strong> : configurées par vos soins, stockées localement (mode invité) ou dans notre base sécurisée (compte).</li>
+                        <li><strong>Préférences</strong> : langue, devise, thème — stockées localement sur votre appareil.</li>
+                    </ul>
+
+                    <h2>2. Mode invité — Données 100 % locales</h2>
+                    <p>Si vous utilisez Finora sans compte, <strong>toutes vos données restent exclusivement sur votre appareil</strong>. Aucune information n'est transmise à nos serveurs. La suppression de l'app entraîne la perte définitive des données locales.</p>
+
+                    <h2>3. Compte utilisateur — Stockage sécurisé</h2>
+                    <p>Si vous créez un compte, vos données sont stockées dans notre base de données sécurisée (Supabase / PostgreSQL) avec chiffrement au repos et en transit (TLS 1.3). Vos données financières ne sont jamais partagées, vendues ou utilisées à des fins publicitaires.</p>
+
+                    <h2>4. Scanner de reçus IA</h2>
+                    <p>Les photos de reçus sont envoyées à notre service IA (API sécurisée) uniquement pour extraire les données (montant, marchand, date). Le traitement est instantané et aucune image n'est conservée après analyse. Le service ne peut pas identifier les personnes présentes sur les photos.</p>
+
+                    <h2>5. Abonnement Premium</h2>
+                    <p>Les paiements sont gérés exclusivement via Apple App Store ou Google Play. Nous ne collectons ni ne stockons vos informations bancaires ou de carte de crédit. Les reçus d'abonnement sont fournis par Apple/Google.</p>
+
+                    <h2>6. Partage des données</h2>
+                    <p>Nous ne vendons, ne louons et ne partageons jamais vos données personnelles avec des tiers à des fins commerciales. Les seuls accès tiers sont :</p>
+                    <ul>
+                        <li><strong>Supabase</strong> : hébergement base de données (serveurs UE)</li>
+                        <li><strong>API IA</strong> : analyse de reçus uniquement (sans stockage)</li>
+                        <li><strong>Apple / Google</strong> : gestion des achats in-app</li>
+                    </ul>
+
+                    <h2>7. Sécurité</h2>
+                    <ul>
+                        <li>Chiffrement TLS 1.3 pour toutes les communications</li>
+                        <li>Authentification sécurisée via Supabase Auth</li>
+                        <li>Aucun accès employé aux données financières personnelles</li>
+                        <li>Sauvegardes chiffrées régulières</li>
+                    </ul>
+
+                    <h2>8. Vos droits (RGPD)</h2>
+                    <p>Vous disposez des droits suivants :</p>
+                    <ul>
+                        <li><strong>Accès</strong> : consulter toutes vos données via l'export dans l'app</li>
+                        <li><strong>Rectification</strong> : modifier vos données directement dans l'app</li>
+                        <li><strong>Suppression</strong> : supprimer votre compte et toutes vos données depuis Profil → Supprimer le compte</li>
+                        <li><strong>Portabilité</strong> : exporter vos données en CSV (Premium)</li>
+                    </ul>
+
+                    <h2>9. Conservation des données</h2>
+                    <p>Vos données sont conservées tant que votre compte est actif. Après suppression du compte, toutes les données sont effacées sous 30 jours. Les données locales (mode invité) sont supprimées immédiatement à la désinstallation.</p>
+
+                    <h2>10. Mineurs</h2>
+                    <p>Finora n'est pas destiné aux personnes de moins de 13 ans. Nous ne collectons pas sciemment de données sur les mineurs.</p>
+
+                    <h2>11. Contact</h2>
+                    <p>Pour toute question relative à vos données : <a href="mailto:contact@mohameds.net" style="color: #7C6AF7;">contact@mohameds.net</a></p>
+
+                </div>
+            </div>
+        </div>
+    </main>
+
+    <footer style="padding: 2rem 0; text-align: center; background: var(--bg);">
+        <div class="container">
+            <p>&copy; 2026 Mohamed. Tous droits réservés. — <a href="finora-terms.html" style="color: #7C6AF7;">Conditions d'utilisation</a></p>
+        </div>
+    </footer>
+
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/three.js/r128/three.min.js"></script>
+    <script src="script.js?v=9"></script>
+</body>
+</html>
