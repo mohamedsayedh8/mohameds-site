@@ -118,12 +118,14 @@ const apps = {
         appStore: '#',
         playStore: '#',
         screenshots: [
-            'assets/images/kinto-icon.png',
+            'assets/images/kinto-screen1.png',
+            'assets/images/kinto-screen2.png',
+            'assets/images/kinto-screen3.png',
         ],
         privacy: 'kinto-privacy.html',
         terms: 'kinto-terms.html',
         gradient: 'linear-gradient(135deg, #7C6AF7, #5B4BD4)',
-        status: 'Bientôt'
+        status: 'Bientôt sur l'App Store'
     },
     mo_frame: {
         id: 'mo_frame',
