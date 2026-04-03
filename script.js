@@ -125,7 +125,7 @@ const apps = {
         privacy: 'kinto-privacy.html',
         terms: 'kinto-terms.html',
         gradient: 'linear-gradient(135deg, #7C6AF7, #5B4BD4)',
-        status: 'Bientôt sur l'App Store'
+        status: "Bientôt sur l'App Store"
     },
     mo_frame: {
         id: 'mo_frame',
