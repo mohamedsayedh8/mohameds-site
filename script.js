@@ -1085,7 +1085,16 @@ window.submitBooking = async (e) => {
     }
 
     const name = document.getElementById('student-name').value;
-    const phone = document.getElementById('student-phone').value;
+    let phone = document.getElementById('student-phone').value;
+    // Clean phone: keep only numbers and plus
+    phone = phone.replace(/[^0-9+]/g, '');
+    
+    if (phone.length < 8) {
+        alert("Numéro de téléphone invalide.");
+        if (btn) btn.disabled = false;
+        return;
+    }
+
     const email = document.getElementById('student-email').value;
     
     const bookingData = {
