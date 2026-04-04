@@ -80,7 +80,7 @@
         <div class="admin-header">
             <div>
                 <h1 style="font-size: 1.5rem; letter-spacing: -0.02em;">M Académie</h1>
-                <p style="color: var(--primary); font-size: 0.85rem; font-weight: 600;">Espace de Gestion Enseignant</p>
+                <div id="auth-debug" style="margin-top: 0.5rem; font-size: 0.7rem; padding: 0.4rem 0.8rem; border-radius: 0.5rem; display: inline-flex; align-items: center; gap: 0.4rem; font-weight: 700;"></div>
             </div>
             <button class="btn glass" onclick="logout()" style="color: var(--danger); font-size: 0.8rem;"><i class="fas fa-sign-out-alt"></i> Quitter</button>
         </div>
@@ -447,7 +447,14 @@
 
         // --- AUTH & LOADERS ---
         onAuthStateChanged(auth, (user) => {
+            const debugEl = document.getElementById('auth-debug');
             if (user) {
+                if (debugEl) {
+                    debugEl.innerHTML = `<i class="fas fa-user-shield"></i> Connecté: <span style="color:white;">${user.email}</span>`;
+                    debugEl.style.background = "rgba(16, 185, 129, 0.2)";
+                    debugEl.style.color = "var(--accent)";
+                }
+                
                 document.getElementById('login-view').style.display = 'none';
                 document.getElementById('admin-view').style.display = 'block';
                 
@@ -487,7 +494,8 @@
                         list.appendChild(row);
                     });
                 }, (err) => {
-                    alert("Erreur réservations: " + err.message);
+                    console.error("Firebase Sync Error (Bookings):", err);
+                    window.showToast("Erreur Bookings (Permissions ?)", "var(--danger)");
                 });
 
                 // Load Availability
@@ -496,10 +504,17 @@
                     renderAdminCalendar();
                     if (selectedAdminDate) window.selectDate(selectedAdminDate);
                 }, (err) => {
-                    alert("Erreur disponibilités: " + err.message);
+                    console.error("Firebase Sync Error (Days):", err);
+                    window.showToast("Erreur Jours (Permissions ?)", "var(--danger)");
+                    renderAdminCalendar(); // Render anyway even if permission fails
                 });
 
             } else {
+                if (debugEl) {
+                    debugEl.innerHTML = `<i class="fas fa-exclamation-triangle"></i> Session expirée`;
+                    debugEl.style.background = "rgba(239, 68, 68, 0.2)";
+                    debugEl.style.color = "var(--danger)";
+                }
                 document.getElementById('login-view').style.display = 'block';
                 document.getElementById('admin-view').style.display = 'none';
             }
