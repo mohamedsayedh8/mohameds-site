@@ -227,41 +227,59 @@
 
         // --- DATA LOADERS ---
         function loadBookings() {
-            const q = query(collection(db, "bookings"), orderBy("createdAt", "desc"));
-            onSnapshot(q, (snapshot) => {
-                const list = document.getElementById('bookings-list');
-                if (!list) return;
-                list.innerHTML = '';
-                snapshot.forEach((docSnap) => {
-                    const data = docSnap.data();
-                    const row = document.createElement('tr');
-                    row.innerHTML = `
-                        <td><div style="font-weight:600; font-size:0.85rem;">${data.date}</div><div style="font-size:0.75rem; color:var(--primary);">${data.time}</div></td>
-                        <td><div style="font-weight:600;">${data.studentName}</div><div style="font-size:0.75rem; color:var(--text-muted);">${data.studentPhone}</div></td>
-                        <td><span class="status-pill status-${data.status}">${data.status}</span></td>
-                        <td>
-                            <div style="display:flex; gap:0.5rem;">
-                                <button class="action-btn wa-btn" onclick="openWA('${data.studentPhone}', '${data.studentName.replace(/'/g, "\\'")}')" title="WhatsApp"><i class="fab fa-whatsapp"></i></button>
-                                <button class="action-btn glass" onclick="markPaid('${docSnap.id}')" title="Valider Paiement" style="color:var(--accent);"><i class="fas fa-check"></i></button>
-                            </div>
-                        </td>
-                    `;
-                    list.appendChild(row);
+            try {
+                const q = query(collection(db, "bookings"), orderBy("createdAt", "desc"));
+                onSnapshot(q, (snapshot) => {
+                    const list = document.getElementById('bookings-list');
+                    if (!list) return;
+                    list.innerHTML = '';
+                    if (snapshot.empty) {
+                        list.innerHTML = '<tr><td colspan="4" style="text-align:center; padding:2rem; color:var(--text-muted);">Aucune réservation trouvée.</td></tr>';
+                        return;
+                    }
+                    snapshot.forEach((docSnap) => {
+                        const data = docSnap.data();
+                        const row = document.createElement('tr');
+                        const sName = data.studentName || 'Sans Nom';
+                        const sPhone = data.studentPhone || 'Pas de numéro';
+                        const sDate = data.date || '---';
+                        const sTime = data.time || '---';
+                        
+                        row.innerHTML = `
+                            <td><div style="font-weight:600; font-size:0.85rem;">${sDate}</div><div style="font-size:0.75rem; color:var(--primary);">${sTime}</div></td>
+                            <td><div style="font-weight:600;">${sName}</div><div style="font-size:0.75rem; color:var(--text-muted);">${sPhone}</div></td>
+                            <td><span class="status-pill status-${data.status || 'pending'}">${data.status || 'pending'}</span></td>
+                            <td>
+                                <div style="display:flex; gap:0.5rem;">
+                                    <button class="action-btn wa-btn" onclick="openWA('${sPhone}', '${sName.replace(/'/g, "\\'")}')" title="WhatsApp"><i class="fab fa-whatsapp"></i></button>
+                                    <button class="action-btn glass" onclick="markPaid('${docSnap.id}')" title="Valider Paiement" style="color:var(--accent);"><i class="fas fa-check"></i></button>
+                                </div>
+                            </td>
+                        `;
+                        list.appendChild(row);
+                    });
+                }, (err) => {
+                    console.error("Firestore Bookings Error:", err);
+                    alert("Erreur base de données (Réservations) : " + err.message);
                 });
-            });
+            } catch (err) {
+                console.error("Load bookings crash:", err);
+            }
         }
 
         function loadAvailability() {
             onSnapshot(collection(db, "disabled_days"), (snapshot) => {
                 disabledDays = snapshot.docs.map(d => d.id);
                 renderAdminCalendar();
+            }, (err) => {
+                console.error("Firestore Availability Error:", err);
             });
 
             getDoc(doc(db, "config", "slots")).then(snap => {
                 if (snap.exists()) {
                     defaultHours = snap.data().hours.sort((a,b) => a-b);
                 }
-            });
+            }).catch(err => console.error("Config fetch error:", err));
         }
 
         function renderAdminCalendar() {

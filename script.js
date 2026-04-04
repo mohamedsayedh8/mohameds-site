@@ -1112,9 +1112,16 @@ window.submitBooking = async (e) => {
             if (app) {
                 const db = getFirestore(app);
                 await addDoc(collection(db, "bookings"), bookingData);
+                
+                // --- SUCCESS UI ---
+                const formView = document.getElementById('booking-form-view');
+                const successView = document.getElementById('booking-success-view');
+                if (formView) formView.style.display = 'none';
+                if (successView) successView.style.display = 'block';
             }
         } catch (err) {
             console.error("Firestore error:", err);
+            alert("Erreur lors de l'envoi de la réservation. Vérifiez votre connexion.");
         }
     }
 
