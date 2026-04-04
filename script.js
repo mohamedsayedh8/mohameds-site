@@ -837,203 +837,7 @@ document.addEventListener('DOMContentLoaded', () => {
         }
     }
 
-    // Modal Controls
-    window.openBookingModal = function() {
-        console.log("Opening Booking Modal...");
-        const modal = document.getElementById('booking-modal');
-        if (!modal) {
-            console.error("Booking modal element not found!");
-            return;
-        }
-        modal.classList.add('active');
-        document.body.style.overflow = 'hidden';
-        
-        // Reset View
-        document.getElementById('slot-selection-view').style.display = 'block';
-        document.getElementById('booking-form-view').style.display = 'none';
-        document.getElementById('booking-success-view').style.display = 'none';
-        
-        selectedBookingDate = null;
-        selectedBookingSlot = null;
-        renderCalendar();
-    };
-
-    window.closeBookingModal = function() {
-        const modal = document.getElementById('booking-modal');
-        if (modal) modal.classList.remove('active');
-        document.body.style.overflow = 'auto';
-    };
-
-    // Calendar Rendering
-    function renderCalendar() {
-        const grid = document.getElementById('calendar-grid');
-        const monthDisplay = document.getElementById('current-month-display');
-        grid.innerHTML = '';
-        
-        const year = currentCalendarDate.getFullYear();
-        const month = currentCalendarDate.getMonth();
-        
-        // Display Month Name
-        const monthYear = new Intl.DateTimeFormat(currentLang, { month: 'long', year: 'numeric' }).format(currentCalendarDate);
-        monthDisplay.textContent = monthYear.charAt(0).toUpperCase() + monthYear.slice(1);
-        
-        // Get Days
-        const firstDay = new Date(year, month, 1).getDay();
-        const daysInMonth = new Date(year, month + 1, 0).getDate();
-        
-        // Adjust for Monday start (standard in FR/AR)
-        let startingDay = firstDay === 0 ? 6 : firstDay - 1;
-        
-        // Add Header
-        const dayNames = currentLang === 'ar' 
-            ? ['ن', 'ث', 'ر', 'خ', 'ج', 'س', 'ح'] 
-            : ['Lun', 'Mar', 'Mer', 'Jeu', 'Ven', 'Sam', 'Dim'];
-            
-        dayNames.forEach(name => {
-            const el = document.createElement('div');
-            el.className = 'calendar-day-header';
-            el.textContent = name;
-            grid.appendChild(el);
-        });
-
-        // Empty Slots Before 1st
-        for (let i = 0; i < startingDay; i++) {
-            const empty = document.createElement('div');
-            empty.className = 'calendar-day empty';
-            grid.appendChild(empty);
-        }
-
-        // Fill Days
-        const today = new Date();
-        today.setHours(0,0,0,0);
-
-        // Fetch Disabled Dates from local state or Firestore (Simulation for now)
-        let disabledDates = []; 
-        if (bookingFirestore) {
-            // In a real scenario, we'd fetch this from collection("disabledDates")
-        }
-
-        for (let d = 1; d <= daysInMonth; d++) {
-            const date = new Date(year, month, d);
-            const dateKey = date.toISOString().split('T')[0];
-            const el = document.createElement('div');
-            el.className = 'calendar-day';
-            el.textContent = d;
-
-            const isPast = date < today;
-            const isManuallyDisabled = disabledDates.includes(dateKey);
-
-            if (isPast || isManuallyDisabled) {
-                el.classList.add('disabled');
-            } else {
-                el.classList.add('available');
-                el.onclick = () => handleDayClick(date, el);
-            }
-
-            if (selectedBookingDate && date.getTime() === selectedBookingDate.getTime()) {
-                el.classList.add('selected');
-            }
-
-            grid.appendChild(el);
-        }
-    }
-
-    // Month Navigation
-    document.getElementById('prev-month').onclick = () => {
-        currentCalendarDate.setMonth(currentCalendarDate.getMonth() - 1);
-        renderCalendar();
-    };
-    document.getElementById('next-month').onclick = () => {
-        currentCalendarDate.setMonth(currentCalendarDate.getMonth() + 1);
-        renderCalendar();
-    };
-
-    // Day Selection
-    function handleDayClick(date, el) {
-        selectedBookingDate = date;
-        
-        // UI Selection
-        document.querySelectorAll('.calendar-day').forEach(d => d.classList.remove('selected'));
-        el.classList.add('selected');
-        
-        // Header Update
-        const dateStr = new Intl.DateTimeFormat(currentLang, { weekday: 'long', day: 'numeric', month: 'long' }).format(date);
-        document.getElementById('selected-date-display').textContent = dateStr;
-        
-        // Render Slots
-        renderSlots(date);
-    }
-
-    function renderSlots(date) {
-        const container = document.getElementById('slots-grid');
-        container.innerHTML = '';
-        
-        // Simulation of hours (9h to 18h)
-        const hours = [9, 10, 11, 12, 14, 15, 16, 17];
-        
-        hours.forEach(hour => {
-            const slot = document.createElement('div');
-            slot.className = 'time-slot glass';
-            slot.textContent = `${hour}:00 - ${hour+1}:00`;
-            
-            // Randomly disable some slots for demo
-            if (Math.random() > 0.8) {
-                slot.classList.add('disabled');
-            } else {
-                slot.onclick = () => handleSlotClick(`${hour}:00`);
-            }
-            
-            container.appendChild(slot);
-        });
-    }
-
-    function handleSlotClick(time) {
-        selectedBookingSlot = time;
-        document.getElementById('slot-selection-view').style.display = 'none';
-        document.getElementById('booking-form-view').style.display = 'block';
-    }
-
-    document.getElementById('back-to-slots').onclick = () => {
-        document.getElementById('slot-selection-view').style.display = 'block';
-        document.getElementById('booking-form-view').style.display = 'none';
-    };
-
-    // Form Submission
-    const bookingForm = document.getElementById('booking-form');
-    bookingForm.onsubmit = async (e) => {
-        e.preventDefault();
-        
-        const name = document.getElementById('student-name').value;
-        const phone = document.getElementById('student-phone').value;
-        const email = document.getElementById('student-email').value;
-        
-        const bookingData = {
-            date: selectedBookingDate.toISOString().split('T')[0],
-            time: selectedBookingSlot,
-            studentName: name,
-            studentPhone: phone,
-            studentEmail: email,
-            status: 'pending',
-            createdAt: new Date().toISOString()
-        };
-
-        console.log("Saving booking:", bookingData);
-
-        // Firebase Integration
-        if (bookingFirestore) {
-            try {
-                const { collection, addDoc } = window.firebaseSDK;
-                await addDoc(collection(bookingFirestore, "bookings"), bookingData);
-            } catch (err) {
-                console.error("Firestore save error:", err);
-                // Fallback for demo if Firebase fails
-            }
-        }
-
-        // Show Success
-        document.getElementById('booking-form-view').style.display = 'none';
-        document.getElementById('booking-success-view').style.display = 'block';
-    };
+    // ... (logic moved to global scope) ...
 });
 
 // --- GLOBAL MODAL CONTROLLERS ---
@@ -1105,4 +909,114 @@ window.toggleMobileMenu = function() {
 window.closeMobileMenu = function() {
     document.getElementById('nav-links').classList.remove('open');
     document.getElementById('hamburger').classList.remove('open');
+};
+
+// --- GLOBAL BOOKING CONTROLLERS ---
+let selectedBookingDate = null;
+let selectedBookingSlot = null;
+let currentCalendarDate = new Date();
+
+window.openBookingModal = function() {
+    console.log("Opening M Académie Modal...");
+    const modal = document.getElementById('booking-modal');
+    if (!modal) return;
+    modal.classList.add('active');
+    document.body.style.overflow = 'hidden';
+    
+    document.getElementById('slot-selection-view').style.display = 'block';
+    document.getElementById('booking-form-view').style.display = 'none';
+    document.getElementById('booking-success-view').style.display = 'none';
+    
+    selectedBookingDate = null;
+    selectedBookingSlot = null;
+    renderCalendar();
+};
+
+window.closeBookingModal = function() {
+    const modal = document.getElementById('booking-modal');
+    if (modal) modal.classList.remove('active');
+    document.body.style.overflow = 'auto';
+};
+
+window.renderCalendar = function() {
+    const grid = document.getElementById('calendar-grid');
+    const monthDisplay = document.getElementById('current-month-display');
+    if (!grid || !monthDisplay) return;
+    grid.innerHTML = '';
+    
+    const year = currentCalendarDate.getFullYear();
+    const month = currentCalendarDate.getMonth();
+    const monthYear = new Intl.DateTimeFormat(currentLang, { month: 'long', year: 'numeric' }).format(currentCalendarDate);
+    monthDisplay.textContent = monthYear.charAt(0).toUpperCase() + monthYear.slice(1);
+    
+    const firstDay = new Date(year, month, 1).getDay();
+    const daysInMonth = new Date(year, month + 1, 0).getDate();
+    let startingDay = firstDay === 0 ? 6 : firstDay - 1;
+    
+    const dayNames = currentLang === 'ar' ? ['ن','ث','ر','خ','ج','س','ح'] : ['Lun','Mar','Mer','Jeu','Ven','Sam','Dim'];
+    dayNames.forEach(name => {
+        const el = document.createElement('div');
+        el.className = 'calendar-day-header';
+        el.textContent = name;
+        grid.appendChild(el);
+    });
+
+    for (let i = 0; i < startingDay; i++) {
+        const empty = document.createElement('div');
+        empty.className = 'calendar-day empty';
+        grid.appendChild(empty);
+    }
+
+    const today = new Date();
+    today.setHours(0,0,0,0);
+
+    for (let d = 1; d <= daysInMonth; d++) {
+        const date = new Date(year, month, d);
+        const el = document.createElement('div');
+        el.className = 'calendar-day';
+        el.textContent = d;
+        if (date < today) {
+            el.classList.add('disabled');
+        } else {
+            el.classList.add('available');
+            el.onclick = () => window.handleDayClick(date, el);
+        }
+        if (selectedBookingDate && date.getTime() === selectedBookingDate.getTime()) el.classList.add('selected');
+        grid.appendChild(el);
+    }
+};
+
+window.handleDayClick = function(date, el) {
+    selectedBookingDate = date;
+    document.querySelectorAll('.calendar-day').forEach(d => d.classList.remove('selected'));
+    el.classList.add('selected');
+    const dateStr = new Intl.DateTimeFormat(currentLang, { weekday: 'long', day: 'numeric', month: 'long' }).format(date);
+    document.getElementById('selected-date-display').textContent = dateStr;
+    renderSlots(date);
+};
+
+window.renderSlots = function(date) {
+    const container = document.getElementById('slots-grid');
+    container.innerHTML = '';
+    const hours = [9, 10, 11, 12, 14, 15, 16, 17];
+    hours.forEach(hour => {
+        const slot = document.createElement('div');
+        slot.className = 'time-slot glass';
+        slot.textContent = `${hour}:00 - ${hour+1}:00`;
+        slot.onclick = () => window.handleSlotClick(`${hour}:00`);
+        container.appendChild(slot);
+    });
+};
+
+window.handleSlotClick = function(time) {
+    selectedBookingSlot = time;
+    document.getElementById('slot-selection-view').style.display = 'none';
+    document.getElementById('booking-form-view').style.display = 'block';
+};
+
+window.prevMonth = function() { currentCalendarDate.setMonth(currentCalendarDate.getMonth() - 1); renderCalendar(); };
+window.nextMonth = function() { currentCalendarDate.setMonth(currentCalendarDate.getMonth() + 1); renderCalendar(); };
+window.backToSlots = function() {
+    document.getElementById('slot-selection-view').style.display = 'block';
+    document.getElementById('booking-form-view').style.display = 'none';
 };

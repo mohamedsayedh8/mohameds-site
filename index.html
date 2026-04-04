@@ -399,7 +399,7 @@
     <!-- Main App Modal -->
     <div class="modal" id="app-modal">
         <div class="modal-content glass">
-            <button class="close-modal" id="close-modal">&times;</button>
+            <button class="close-modal" id="close-modal" onclick="closeModal()">&times;</button>
             <div id="modal-data">
                 <!-- Contenu dynamique via JS -->
             </div>
@@ -415,7 +415,7 @@
     <!-- Booking Modal -->
     <div class="modal" id="booking-modal">
         <div class="modal-content glass" style="max-width: 900px;">
-            <button class="close-modal" id="close-booking">&times;</button>
+            <button class="close-modal" id="close-booking" onclick="closeBookingModal()">&times;</button>
             <div class="booking-container">
                 <div class="booking-header">
                     <h2 id="booking-title" data-i18n="booking_modal_title">M Académie - Réservation</h2>
@@ -426,9 +426,9 @@
                     <!-- Calendar Side -->
                     <div class="calendar-section">
                         <div class="calendar-nav">
-                            <button id="prev-month"><i class="fas fa-chevron-left"></i></button>
-                            <h3 id="current-month-display">Avril 2026</h3>
-                            <button id="next-month"><i class="fas fa-chevron-right"></i></button>
+                            <button id="prev-month" onclick="prevMonth()"><i class="fas fa-chevron-left"></i></button>
+                            <h3 id="current-month-display"></h3>
+                            <button id="next-month" onclick="nextMonth()"><i class="fas fa-chevron-right"></i></button>
                         </div>
                         <div class="calendar-grid" id="calendar-grid">
                             <!-- Days will be injected here -->
@@ -445,7 +445,7 @@
                         </div>
 
                         <div id="booking-form-view" style="display: none;">
-                            <button class="back-btn" id="back-to-slots"><i class="fas fa-arrow-left"></i> <span data-i18n="back">Retour</span></button>
+                            <button class="back-btn" id="back-to-slots" onclick="backToSlots()"><i class="fas fa-arrow-left"></i> <span data-i18n="back">Retour</span></button>
                             <h3 data-i18n="form_title">Vos informations</h3>
                             <form id="booking-form">
                                 <div class="form-group">
@@ -490,6 +490,6 @@
     </script>
 
     <!-- Custom script with cache-buster -->
-    <script src="script.js?v=17"></script>
+    <script src="script.js?v=20"></script>
 </body>
 </html>
