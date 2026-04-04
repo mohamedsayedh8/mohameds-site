@@ -342,11 +342,12 @@
                 const grid = document.getElementById('admin-calendar-grid');
                 if (!grid) return;
                 
-                grid.style.display = 'flex';
-                grid.style.flexWrap = 'wrap';
-                grid.style.padding = '10px';
+                // STRICT GRID FOR PERFECT ALIGNMENT
+                grid.style.display = 'grid';
+                grid.style.gridTemplateColumns = 'repeat(7, 1fr)';
+                grid.style.gap = '8px';
+                grid.style.padding = '15px';
                 grid.style.minHeight = '300px';
-                grid.style.justifyContent = 'flex-start';
                 grid.innerHTML = '';
 
                 const today = new Date();
@@ -362,23 +363,19 @@
                 const days = ['L', 'M', 'M', 'J', 'V', 'S', 'D'];
                 days.forEach(day => {
                     const el = document.createElement('div');
-                    el.className = 'calendar-header-day';
                     el.textContent = day;
-                    el.style.width = '12.5%';
                     el.style.textAlign = 'center';
-                    el.style.fontSize = '0.65rem';
+                    el.style.fontSize = '0.7rem';
                     el.style.color = 'var(--primary)';
                     el.style.fontWeight = '900';
-                    el.style.marginBottom = '10px';
-                    el.style.opacity = '0.6';
+                    el.style.paddingBottom = '10px';
+                    el.style.opacity = '0.7';
                     grid.appendChild(el);
                 });
 
                 // 2. FILL OFFSET SLOTS
                 for (let i = 0; i < offset; i++) {
                     const el = document.createElement('div');
-                    el.style.width = '12.5%';
-                    el.style.aspectRatio = '1/1';
                     grid.appendChild(el);
                 }
 
@@ -395,30 +392,29 @@
                     const isBlocked = disabledDays.includes(dayKey);
                     const isSelected = selectedAdminDate === dayKey;
                     
-                    el.style.width = '12.5%';
                     el.style.aspectRatio = '1/1';
                     el.style.display = 'flex';
                     el.style.alignItems = 'center';
                     el.style.justifyContent = 'center';
                     el.style.borderRadius = '12px';
-                    el.style.fontSize = '0.9rem';
+                    el.style.fontSize = '0.95rem';
                     el.style.fontWeight = '800';
                     el.style.cursor = 'pointer';
-                    el.style.margin = '1px';
-                    el.style.transition = '0.3s cubic-bezier(0.4, 0, 0.2, 1)';
+                    el.style.transition = 'all 0.3s cubic-bezier(0.4, 0, 0.2, 1)';
                     
                     if (isBlocked) {
-                        el.style.background = 'rgba(239, 68, 68, 0.15)'; // Deep Red tint
+                        el.style.background = 'rgba(239, 68, 68, 0.15)'; 
                         el.style.color = '#f87171';
                         el.style.border = '1px solid rgba(239, 68, 68, 0.3)';
                     } else if (isSelected) {
                         el.style.background = '#ffffff';
                         el.style.color = '#0f172a';
                         el.style.border = '2px solid var(--primary)';
-                        el.style.boxShadow = '0 0 20px rgba(96, 165, 250, 0.4)';
-                        el.style.transform = 'scale(1.05)';
+                        el.style.boxShadow = '0 0 25px rgba(59, 130, 246, 0.5)';
+                        el.style.transform = 'scale(1.1)';
+                        el.style.zIndex = '10';
                     } else {
-                        el.style.background = 'rgba(16, 185, 129, 0.1)'; // Deep Green tint
+                        el.style.background = 'rgba(16, 185, 129, 0.1)'; 
                         el.style.color = '#34d399';
                         el.style.border = '1px solid rgba(16, 185, 129, 0.2)';
                     }
@@ -440,9 +436,9 @@
                 const list = document.getElementById('slots-list');
                 if (!list) return;
                 list.innerHTML = '';
-                list.style.display = 'flex';
-                list.style.flexWrap = 'wrap';
-                list.style.gap = '0.6rem';
+                list.style.display = 'grid';
+                list.style.gridTemplateColumns = 'repeat(auto-fill, minmax(80px, 1fr))';
+                list.style.gap = '10px';
                 
                 const hoursToRender = [9, 10, 11, 12, 13, 14, 15, 16, 17, 18, 19, 20];
                 
@@ -451,14 +447,13 @@
                     const isDisabled = (disabledSlotsForDay || []).includes(h);
                     pill.textContent = `${h}h`;
                     
-                    pill.style.padding = '0.8rem 1.2rem';
+                    pill.style.padding = '12px';
                     pill.style.borderRadius = '12px';
                     pill.style.textAlign = 'center';
                     pill.style.cursor = 'pointer';
                     pill.style.fontWeight = '700';
-                    pill.style.minWidth = '5rem';
-                    pill.style.transition = '0.3s';
-                    pill.style.border = '1px solid var(--border)';
+                    pill.style.transition = '0.2s';
+                    pill.style.border = '1px solid rgba(255,255,255,0.1)';
 
                     if (isDisabled) {
                         pill.style.background = 'rgba(255,255,255,0.03)';
@@ -467,7 +462,7 @@
                     } else {
                         pill.style.background = 'var(--primary)';
                         pill.style.color = 'white';
-                        pill.style.boxShadow = '0 5px 15px rgba(59, 130, 246, 0.2)';
+                        pill.style.boxShadow = '0 8px 20px rgba(59, 130, 246, 0.2)';
                     }
 
                     pill.onclick = () => window.toggleHour(h, !isDisabled);
