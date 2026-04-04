@@ -915,33 +915,31 @@ window.closeMobileMenu = function() {
 };
 
 // --- FIREBASE SYNC ---
-let disabledDays = [];
-let defaultHours = [9, 10, 11, 12, 13, 14, 15, 16, 17, 18, 19, 20];
-let currentDaySlots = null;
-let unsubscribeDayListener = null;
-
-// Global State
-let currentCalendarDate = new Date();
-let selectedBookingDate = null;
-let selectedBookingSlot = null;
+window.M_ACADEMIE_STATE = {
+    currentCalendarDate: new Date(),
+    selectedBookingDate: null,
+    selectedBookingSlot: null,
+    disabledDays: [],
+    defaultHours: [9, 10, 11, 12, 13, 14, 15, 16, 17, 18, 19, 20],
+    currentDaySlots: null,
+    unsubscribeDayListener: null
+};
 
 function initAvailability() {
     if (window.firebaseSDK && window.firebaseApp) {
         const { getFirestore, collection, onSnapshot, doc } = window.firebaseSDK;
         const db = getFirestore(window.firebaseApp);
         
-        // Listen to disabled days
         onSnapshot(collection(db, "disabled_days"), (snapshot) => {
-            disabledDays = snapshot.docs.map(doc => doc.id);
+            window.M_ACADEMIE_STATE.disabledDays = snapshot.docs.map(doc => doc.id);
             if (document.getElementById('booking-modal')?.classList.contains('active')) {
                 window.renderCalendar();
             }
         });
 
-        // Listen to default slots config
         onSnapshot(doc(db, "config", "slots"), (docSnap) => {
             if (docSnap.exists()) {
-                defaultHours = docSnap.data().hours.sort((a,b) => a-b);
+                window.M_ACADEMIE_STATE.defaultHours = docSnap.data().hours.sort((a,b) => a-b);
             }
         });
     }
@@ -963,15 +961,15 @@ window.openBookingModal = function() {
     document.getElementById('booking-form-view').style.display = 'none';
     document.getElementById('booking-success-view').style.display = 'none';
     
-    window.selectedBookingDate = null;
-    window.selectedBookingSlot = null;
+    window.M_ACADEMIE_STATE.selectedBookingDate = null;
+    window.M_ACADEMIE_STATE.selectedBookingSlot = null;
     window.renderCalendar();
 };
 
 window.closeBookingModal = function() {
-    if (unsubscribeDayListener) {
-        unsubscribeDayListener();
-        unsubscribeDayListener = null;
+    if (window.M_ACADEMIE_STATE.unsubscribeDayListener) {
+        window.M_ACADEMIE_STATE.unsubscribeDayListener();
+        window.M_ACADEMIE_STATE.unsubscribeDayListener = null;
     }
     const modal = document.getElementById('booking-modal');
     if (modal) modal.classList.remove('active');
@@ -984,9 +982,9 @@ window.renderCalendar = function() {
     if (!grid || !monthDisplay) return;
     grid.innerHTML = '';
     
-    const year = window.currentCalendarDate.getFullYear();
-    const month = window.currentCalendarDate.getMonth();
-    const monthYear = new Intl.DateTimeFormat(currentLang, { month: 'long', year: 'numeric' }).format(window.currentCalendarDate);
+    const year = window.M_ACADEMIE_STATE.currentCalendarDate.getFullYear();
+    const month = window.M_ACADEMIE_STATE.currentCalendarDate.getMonth();
+    const monthYear = new Intl.DateTimeFormat(currentLang, { month: 'long', year: 'numeric' }).format(window.M_ACADEMIE_STATE.currentCalendarDate);
     monthDisplay.textContent = monthYear.charAt(0).toUpperCase() + monthYear.slice(1);
     
     const firstDay = new Date(year, month, 1).getDay();

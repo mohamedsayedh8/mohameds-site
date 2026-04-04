@@ -181,7 +181,38 @@
         let daySpecificSlots = null;
         let unsubscribeDaySlots = null;
 
-        // ... (Auth Logic same as before) ...
+        // --- UTILITIES ---
+        window.openWA = (phone, name) => {
+            const msg = encodeURIComponent(`Bonjour ${name}, c'est Mohamed de M Académie. Je vous contacte pour votre réservation. Voici le lien pour le paiement : https://revolut.me/mohamed`);
+            window.open(`https://wa.me/${phone.replace(/\s/g, '')}?text=${msg}`, '_blank');
+        };
+
+        window.markPaid = async (id) => {
+            await updateDoc(doc(db, "bookings", id), { status: 'paid' });
+        };
+
+        window.addSlot = async () => {
+            const input = document.getElementById('new-slot-hour');
+            const hour = parseInt(input.value);
+            if (isNaN(hour) || hour < 0 || hour > 23) return;
+            
+            const currentSlots = daySpecificSlots || defaultHours;
+            if (currentSlots.includes(hour)) return;
+            
+            const newHours = [...currentSlots, hour].sort((a,b) => a-b);
+            await setDoc(doc(db, "day_configs", selectedAdminDate), { hours: newHours });
+            input.value = '';
+        };
+
+        window.removeSlot = async (hour) => {
+            const currentSlots = daySpecificSlots || defaultHours;
+            const newHours = currentSlots.filter(h => h !== hour);
+            await setDoc(doc(db, "day_configs", selectedAdminDate), { hours: newHours });
+        };
+
+        window.logout = () => signOut(auth);
+
+        // --- AUTH ---
         onAuthStateChanged(auth, (user) => {
             if (user) {
                 document.getElementById('login-view').style.display = 'none';
@@ -194,24 +225,25 @@
             }
         });
 
-        // Load Bookings
+        // --- DATA LOADERS ---
         function loadBookings() {
             const q = query(collection(db, "bookings"), orderBy("createdAt", "desc"));
             onSnapshot(q, (snapshot) => {
                 const list = document.getElementById('bookings-list');
+                if (!list) return;
                 list.innerHTML = '';
-                snapshot.forEach((doc) => {
-                    const data = doc.data();
+                snapshot.forEach((docSnap) => {
+                    const data = docSnap.data();
                     const row = document.createElement('tr');
                     row.innerHTML = `
-                        <td>${data.date}</td>
-                        <td>${data.time}</td>
-                        <td>${data.studentName}</td>
-                        <td>${data.studentPhone}</td>
+                        <td><div style="font-weight:600; font-size:0.85rem;">${data.date}</div><div style="font-size:0.75rem; color:var(--primary);">${data.time}</div></td>
+                        <td><div style="font-weight:600;">${data.studentName}</div><div style="font-size:0.75rem; color:var(--text-muted);">${data.studentPhone}</div></td>
                         <td><span class="status-pill status-${data.status}">${data.status}</span></td>
                         <td>
-                            <button class="action-btn wa-btn" onclick="openWA('${data.studentPhone}', '${data.studentName}')"><i class="fab fa-whatsapp"></i></button>
-                            <button class="action-btn glass" onclick="markPaid('${doc.id}')"><i class="fas fa-check"></i></button>
+                            <div style="display:flex; gap:0.5rem;">
+                                <button class="action-btn wa-btn" onclick="openWA('${data.studentPhone}', '${data.studentName.replace(/'/g, "\\'")}')" title="WhatsApp"><i class="fab fa-whatsapp"></i></button>
+                                <button class="action-btn glass" onclick="markPaid('${docSnap.id}')" title="Valider Paiement" style="color:var(--accent);"><i class="fas fa-check"></i></button>
+                            </div>
                         </td>
                     `;
                     list.appendChild(row);
@@ -219,7 +251,6 @@
             });
         }
 
-        // --- Availability Management ---
         function loadAvailability() {
             onSnapshot(collection(db, "disabled_days"), (snapshot) => {
                 disabledDays = snapshot.docs.map(d => d.id);
@@ -227,9 +258,7 @@
             });
 
             getDoc(doc(db, "config", "slots")).then(snap => {
-                if (!snap.exists()) {
-                    setDoc(doc(db, "config", "slots"), { hours: defaultHours });
-                } else {
+                if (snap.exists()) {
                     defaultHours = snap.data().hours.sort((a,b) => a-b);
                 }
             });
@@ -246,7 +275,7 @@
             const month = today.getMonth();
             const daysInMonth = new Date(year, month + 1, 0).getDate();
             
-            const monthName = new Intl.DateTimeFormat('fr-FR', { month: 'long' }).format(today);
+            const monthName = new Intl.DateTimeFormat('fr-FR', { month: 'long', year: 'numeric' }).format(today);
             monthDisplay.textContent = monthName.charAt(0).toUpperCase() + monthName.slice(1);
 
             for (let d = 1; d <= daysInMonth; d++) {
@@ -262,14 +291,17 @@
                 el.style.color = 'white';
                 el.style.fontWeight = '700';
 
-                if (selectedAdminDate === dayKey) el.classList.add('selected-admin');
+                if (selectedAdminDate === dayKey) {
+                    el.style.border = '2px solid white';
+                    el.style.boxShadow = '0 0 15px rgba(255,255,255,0.3)';
+                }
                 
                 el.onclick = () => selectDate(dayKey);
                 grid.appendChild(el);
             }
         }
 
-        function selectDate(dayKey) {
+        async function selectDate(dayKey) {
             selectedAdminDate = dayKey;
             renderAdminCalendar();
             
@@ -281,7 +313,7 @@
             const blockBtn = document.getElementById('block-day-btn');
             
             title.textContent = `Heures du ${new Date(dayKey).toLocaleDateString('fr-FR', { day: 'numeric', month: 'long' })}`;
-            subtitle.textContent = "Configuration spécifique pour cette date.";
+            subtitle.textContent = "Cliquez sur une heure pour la supprimer ou ajoutez-en une.";
 
             const isBlocked = disabledDays.includes(dayKey);
             blockBtn.textContent = isBlocked ? "Débloquer ce jour" : "Bloquer ce jour complet";
@@ -306,6 +338,7 @@
 
         function renderSlotsList() {
             const list = document.getElementById('slots-list');
+            if (!list) return;
             list.innerHTML = '';
             const hours = daySpecificSlots || defaultHours;
             
@@ -315,7 +348,7 @@
                 info.style.color = 'var(--primary)';
                 info.style.width = '100%';
                 info.style.marginBottom = '1rem';
-                info.textContent = "(Utilise les heures par défaut 9h-20h)";
+                info.textContent = "(Utilise le planning standard 9h-20h)";
                 list.appendChild(info);
             }
 
@@ -326,38 +359,14 @@
                 badge.style.alignItems = 'center';
                 badge.style.gap = '0.5rem';
                 badge.style.padding = '0.5rem 0.8rem';
-                badge.innerHTML = `${hour}h <i class="fas fa-times" style="cursor:pointer; color:#ef4444;" onclick="removeSlot(${hour})"></i>`;
+                badge.style.cursor = 'default';
+                badge.innerHTML = `${hour}h <i class="fas fa-times" style="cursor:pointer; color:var(--danger);" onclick="removeSlot(${hour})"></i>`;
                 list.appendChild(badge);
             });
         }
-
-        window.removeSlot = async (hour) => {
-            const currentSlots = daySpecificSlots || defaultHours;
-            const newHours = currentSlots.filter(h => h !== hour);
-            await setDoc(doc(db, "day_configs", selectedAdminDate), { hours: newHours });
-        };
-
-        window.addSlot = async () => {
-            const input = document.getElementById('new-slot-hour');
-            const hour = parseInt(input.value);
-            if (isNaN(hour) || hour < 0 || hour > 23) return;
-            
-            const currentSlots = daySpecificSlots || defaultHours;
-            if (currentSlots.includes(hour)) return;
-            
-            const newHours = [...currentSlots, hour].sort((a,b) => a-b);
-            await setDoc(doc(db, "day_configs", selectedAdminDate), { hours: newHours });
-            input.value = '';
-        };
-
-        window.openWA = (phone, name) => {
-            const msg = encodeURIComponent(`Bonjour ${name}, c'est Mohamed. Voici le lien Revolut pour confirmer votre cours : https://revolut.me/mohamed`);
-            window.open(`https://wa.me/${phone.replace(/\s/g, '')}?text=${msg}`, '_blank');
-        };
-
-        window.markPaid = async (id) => {
-            await updateDoc(doc(db, "bookings", id), { status: 'paid' });
-        };
+    </script>
+</body>
+</html>
     </script>
 </body>
 </html>
