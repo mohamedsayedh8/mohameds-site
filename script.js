@@ -919,11 +919,13 @@ window.closeMobileMenu = function() {
 
 // --- FIREBASE SYNC ---
 let disabledDays = [];
-let availableHours = [9, 10, 11, 12, 14, 15, 16, 17];
+let defaultHours = [9, 10, 11, 12, 13, 14, 15, 16, 17, 18, 19, 20];
+let currentDaySlots = null;
+let unsubscribeDayListener = null;
 
 function initAvailability() {
     if (window.firebaseSDK && window.firebaseApp) {
-        const { getFirestore, collection, onSnapshot, query, doc } = window.firebaseSDK;
+        const { getFirestore, collection, onSnapshot, doc } = window.firebaseSDK;
         const db = getFirestore(window.firebaseApp);
         
         // Listen to disabled days
@@ -934,10 +936,10 @@ function initAvailability() {
             }
         });
 
-        // Listen to slots config
+        // Listen to default slots config
         onSnapshot(doc(db, "config", "slots"), (docSnap) => {
             if (docSnap.exists()) {
-                availableHours = docSnap.data().hours || availableHours;
+                defaultHours = docSnap.data().hours.sort((a,b) => a-b);
             }
         });
     }
@@ -961,10 +963,14 @@ window.openBookingModal = function() {
     
     selectedBookingDate = null;
     selectedBookingSlot = null;
-    renderCalendar();
+    window.renderCalendar();
 };
 
 window.closeBookingModal = function() {
+    if (unsubscribeDayListener) {
+        unsubscribeDayListener();
+        unsubscribeDayListener = null;
+    }
     const modal = document.getElementById('booking-modal');
     if (modal) modal.classList.remove('active');
     document.body.style.overflow = 'auto';
@@ -1004,10 +1010,11 @@ window.renderCalendar = function() {
 
     for (let d = 1; d <= daysInMonth; d++) {
         const date = new Date(year, month, d);
+        const dayKey = date.toISOString().split('T')[0];
         const el = document.createElement('div');
         el.className = 'calendar-day';
         el.textContent = d;
-        if (date < today) {
+        if (date < today || disabledDays.includes(dayKey)) {
             el.classList.add('disabled');
         } else {
             el.classList.add('available');

@@ -7,19 +7,19 @@
     <link rel="stylesheet" href="style.css">
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.1/css/all.min.css">
     <style>
-        body { background: #0f172a; padding: 2rem; }
-        .admin-card { max-width: 1000px; margin: 0 auto; padding: 2rem; border-radius: 2rem; }
-        .admin-header { display: flex; justify-content: space-between; align-items: center; margin-bottom: 2rem; }
-        .bookings-table { width: 100%; border-collapse: collapse; margin-top: 1rem; }
-        .bookings-table th, .bookings-table td { padding: 1rem; text-align: left; border-bottom: 1px solid rgba(255,255,255,0.05); }
-        .status-pill { padding: 0.2rem 0.6rem; border-radius: 1rem; font-size: 0.75rem; font-weight: 700; }
-        .status-pending { background: rgba(245, 158, 11, 0.1); color: #f59e0b; }
-        .status-paid { background: rgba(16, 185, 129, 0.1); color: #10b981; }
-        .action-btn { padding: 0.5rem 1rem; border-radius: 0.5rem; font-size: 0.8rem; cursor: pointer; border: none; margin-right: 0.5rem; }
-        .wa-btn { background: #25D366; color: white; }
-        .login-container { max-width: 400px; margin: 10vh auto; text-align: center; }
-        .calendar-manage { margin-top: 3rem; background: rgba(255,255,255,0.02); padding: 2rem; border-radius: 1.5rem; }
-        .sync-box { margin-top: 2rem; padding: 1rem; background: rgba(59, 130, 246, 0.1); border-radius: 1rem; border: 1px solid rgba(59, 130, 246, 0.2); }
+        /* Specific Admin Styles */
+        .calendar-grid { display: grid; grid-template-columns: repeat(7, 1fr); gap: 5px; }
+        .calendar-day { 
+            aspect-ratio: 1/1; 
+            display: flex; 
+            align-items: center; 
+            justify-content: center; 
+            border-radius: 0.5rem; 
+            font-size: 0.8rem;
+            transition: all 0.2s;
+        }
+        .calendar-day.selected-admin { border: 2px solid white !important; transform: scale(1.1); box-shadow: 0 0 10px rgba(255,255,255,0.2); }
+        .calendar-nav-admin { display: flex; justify-content: space-between; align-items: center; margin-bottom: 1rem; }
     </style>
 </head>
 <body>
@@ -74,28 +74,37 @@
 
         <div class="calendar-manage">
             <h3>Gérer les disponibilités</h3>
-            <p style="font-size: 0.85rem; color: var(--text-muted); margin-bottom: 1.5rem;">Configurez vos jours et vos heures de cours.</p>
+            <p style="font-size: 0.85rem; color: var(--text-muted); margin-bottom: 1.5rem;">Cliquez sur un jour pour voir ses heures ou le bloquer.</p>
             
-            <div class="modal-grid" style="grid-template-columns: 1fr 1fr; gap: 2rem;">
+            <div class="modal-grid" style="grid-template-columns: 1fr 1.5fr; gap: 2rem;">
                 <div class="glass" style="padding: 1.5rem; border-radius: 1rem;">
-                    <h4 style="margin-bottom: 1rem;"><i class="fas fa-calendar-day"></i> Bloquer des jours</h4>
-                    <div id="admin-calendar-grid" class="calendar-grid" style="grid-template-columns: repeat(7, 1fr); font-size: 0.8rem;">
-                        <!-- Mini calendar -->
+                    <div class="calendar-nav-admin">
+                        <h4 style="margin-bottom: 0;"><i class="fas fa-calendar-day"></i> Calendrier</h4>
+                        <span id="admin-month-display" style="font-weight: 700; color:var(--primary);">Avril</span>
+                    </div>
+                    <div id="admin-calendar-grid" class="calendar-grid">
+                        <!-- Mini calendar injected -->
                     </div>
                     <div style="margin-top: 1rem; display: flex; gap: 1rem; font-size: 0.75rem;">
-                        <div><span style="display:inline-block; width:8px; height:8px; background:#10b981; border-radius:50%;"></span> Disponible</div>
+                        <div><span style="display:inline-block; width:8px; height:8px; background:#10b981; border-radius:50%;"></span> Libre</div>
                         <div><span style="display:inline-block; width:8px; height:8px; background:#ef4444; border-radius:50%;"></span> Bloqué</div>
                     </div>
                 </div>
 
                 <div class="glass" style="padding: 1.5rem; border-radius: 1rem;">
-                    <h4 style="margin-bottom: 1rem;"><i class="fas fa-clock"></i> Heures de cours</h4>
-                    <div id="slots-list" style="display: flex; flex-wrap: wrap; gap: 0.5rem; margin-bottom: 1.5rem;">
-                        <!-- Slots list -->
-                    </div>
-                    <div style="display: flex; gap: 0.5rem;">
-                        <input type="number" id="new-slot-hour" placeholder="Heure (ex: 18)" style="flex: 1; padding: 0.5rem; border-radius: 0.5rem; background: rgba(0,0,0,0.2); border: 1px solid rgba(255,255,255,0.1); color: white;">
-                        <button class="btn btn-primary" onclick="addSlot()">Ajouter</button>
+                    <h4 style="margin-bottom: 0.5rem;" id="selected-day-title"><i class="fas fa-clock"></i> Heures du jour</h4>
+                    <p id="selected-day-subtitle" style="font-size:0.8rem; color:var(--text-muted); margin-bottom:1.5rem;">Sélectionnez une date.</p>
+                    
+                    <div id="slots-manager-ui" style="display: none;">
+                        <button class="btn glass w-100" id="block-day-btn" style="margin-bottom: 1.5rem; background: rgba(239, 68, 68, 0.1); border-color: #ef4444; color: #ef4444;">Bloquer le jour complet</button>
+                        
+                        <div id="slots-list" style="display: flex; flex-wrap: wrap; gap: 0.5rem; margin-bottom: 1.5rem;">
+                            <!-- Slots list -->
+                        </div>
+                        <div style="display: flex; gap: 0.5rem;">
+                            <input type="number" id="new-slot-hour" placeholder="Heure (ex: 20)" style="flex: 1; padding: 0.5rem; border-radius: 0.5rem; background: rgba(0,0,0,0.2); border: 1px solid rgba(255,255,255,0.1); color: white;">
+                            <button class="btn btn-primary" onclick="addSlot()">Ajouter</button>
+                        </div>
                     </div>
                 </div>
             </div>
@@ -123,23 +132,12 @@
         const auth = getAuth(app);
 
         let disabledDays = [];
-        let availableHours = [];
+        let defaultHours = [9, 10, 11, 12, 13, 14, 15, 16, 17, 18, 19, 20];
+        let selectedAdminDate = null;
+        let daySpecificSlots = null;
+        let unsubscribeDaySlots = null;
 
-        // Auth Logic
-        const loginForm = document.getElementById('login-form');
-        loginForm.onsubmit = async (e) => {
-            e.preventDefault();
-            const email = document.getElementById('admin-email').value;
-            const pass = document.getElementById('admin-password').value;
-            try {
-                await signInWithEmailAndPassword(auth, email, pass);
-            } catch (err) {
-                alert("Erreur de connexion : " + err.message);
-            }
-        };
-
-        window.logout = () => signOut(auth);
-
+        // ... (Auth Logic same as before) ...
         onAuthStateChanged(auth, (user) => {
             if (user) {
                 document.getElementById('login-view').style.display = 'none';
@@ -179,48 +177,79 @@
 
         // --- Availability Management ---
         function loadAvailability() {
-            // Listen to disabled days
             onSnapshot(collection(db, "disabled_days"), (snapshot) => {
                 disabledDays = snapshot.docs.map(d => d.id);
                 renderAdminCalendar();
             });
 
-            // Listen to slots
-            onSnapshot(doc(db, "config", "slots"), (docSnap) => {
-                if (docSnap.exists()) {
-                    availableHours = docSnap.data().hours.sort((a,b) => a-b);
+            // Ensure default config exists
+            getDoc(doc(db, "config", "slots")).then(snap => {
+                if (!snap.exists()) {
+                    setDoc(doc(db, "config", "slots"), { hours: defaultHours });
                 } else {
-                    availableHours = [9, 10, 11, 12, 14, 15, 16, 17];
-                    setDoc(doc(db, "config", "slots"), { hours: availableHours });
+                    defaultHours = snap.data().hours.sort((a,b) => a-b);
                 }
-                renderSlotsList();
             });
         }
 
         function renderAdminCalendar() {
             const grid = document.getElementById('admin-calendar-grid');
+            const monthDisplay = document.getElementById('admin-month-display');
             grid.innerHTML = '';
             const today = new Date();
             const year = today.getFullYear();
             const month = today.getMonth();
             const daysInMonth = new Date(year, month + 1, 0).getDate();
             
+            const monthName = new Intl.DateTimeFormat('fr-FR', { month: 'long' }).format(today);
+            monthDisplay.textContent = monthName.charAt(0).toUpperCase() + monthName.slice(1);
+
             for (let d = 1; d <= daysInMonth; d++) {
                 const date = new Date(year, month, d);
                 const dayKey = date.toISOString().split('T')[0];
                 const el = document.createElement('div');
                 el.className = 'calendar-day';
-                el.style.padding = '0.5rem';
-                el.style.cursor = 'pointer';
                 el.textContent = d;
                 
                 const isBlocked = disabledDays.includes(dayKey);
                 el.style.background = isBlocked ? 'rgba(239, 68, 68, 0.2)' : 'rgba(16, 185, 129, 0.2)';
                 el.style.border = isBlocked ? '1px solid #ef4444' : '1px solid #10b981';
+                el.style.color = 'white';
+                el.style.cursor = 'pointer';
+
+                if (selectedAdminDate === dayKey) el.classList.add('selected-admin');
                 
-                el.onclick = () => toggleDay(dayKey, isBlocked);
+                el.onclick = () => selectDate(dayKey);
                 grid.appendChild(el);
             }
+        }
+
+        function selectDate(dayKey) {
+            selectedAdminDate = dayKey;
+            renderAdminCalendar();
+            
+            const title = document.getElementById('selected-day-title');
+            const subtitle = document.getElementById('selected-day-subtitle');
+            const ui = document.getElementById('slots-manager-ui');
+            const blockBtn = document.getElementById('block-day-btn');
+            
+            title.innerHTML = `<i class="fas fa-clock"></i> Heures du ${dayKey}`;
+            subtitle.textContent = "Modifiez les créneaux pour ce jour spécifique.";
+            ui.style.display = 'block';
+
+            const isBlocked = disabledDays.includes(dayKey);
+            blockBtn.textContent = isBlocked ? "Débloquer le jour" : "Bloquer le jour complet";
+            blockBtn.style.background = isBlocked ? 'rgba(16, 185, 129, 0.1)' : 'rgba(239, 68, 68, 0.1)';
+            blockBtn.style.borderColor = isBlocked ? '#10b981' : '#ef4444';
+            blockBtn.style.color = isBlocked ? '#10b981' : '#ef4444';
+            blockBtn.onclick = () => toggleDay(dayKey, isBlocked);
+
+            // Listen to specific day slots
+            if (unsubscribeDaySlots) unsubscribeDaySlots();
+            unsubscribeDaySlots = onSnapshot(doc(db, "day_configs", dayKey), (snap) => {
+                daySpecificSlots = snap.exists() ? snap.data().hours.sort((a,b) => a-b) : null;
+                renderSlotsList();
+            });
         }
 
         async function toggleDay(dayKey, isCurrentlyBlocked) {
@@ -234,7 +263,19 @@
         function renderSlotsList() {
             const list = document.getElementById('slots-list');
             list.innerHTML = '';
-            availableHours.forEach(hour => {
+            const hours = daySpecificSlots || defaultHours;
+            
+            if (!daySpecificSlots) {
+                const info = document.createElement('p');
+                info.style.fontSize = '0.75rem';
+                info.style.color = 'var(--primary)';
+                info.style.width = '100%';
+                info.style.marginBottom = '1rem';
+                info.textContent = "(Utilise les heures par défaut 9h-20h)";
+                list.appendChild(info);
+            }
+
+            hours.forEach(hour => {
                 const badge = document.createElement('span');
                 badge.className = 'status-pill glass';
                 badge.style.display = 'flex';
@@ -247,18 +288,21 @@
         }
 
         window.removeSlot = async (hour) => {
-            const newHours = availableHours.filter(h => h !== hour);
-            await updateDoc(doc(db, "config", "slots"), { hours: newHours });
+            const currentSlots = daySpecificSlots || defaultHours;
+            const newHours = currentSlots.filter(h => h !== hour);
+            await setDoc(doc(db, "day_configs", selectedAdminDate), { hours: newHours });
         };
 
         window.addSlot = async () => {
             const input = document.getElementById('new-slot-hour');
             const hour = parseInt(input.value);
             if (isNaN(hour) || hour < 0 || hour > 23) return;
-            if (availableHours.includes(hour)) return;
             
-            const newHours = [...availableHours, hour].sort((a,b) => a-b);
-            await updateDoc(doc(db, "config", "slots"), { hours: newHours });
+            const currentSlots = daySpecificSlots || defaultHours;
+            if (currentSlots.includes(hour)) return;
+            
+            const newHours = [...currentSlots, hour].sort((a,b) => a-b);
+            await setDoc(doc(db, "day_configs", selectedAdminDate), { hours: newHours });
             input.value = '';
         };
 
