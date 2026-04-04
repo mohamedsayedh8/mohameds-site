@@ -1074,25 +1074,25 @@ window.renderSlots = async function(date) {
         const { getFirestore, doc, getDoc, collection, query, where, getDocs } = window.firebaseSDK;
         const db = getFirestore(window.firebaseApp);
 
-        // Heures bloquées manuellement par l'admin pour ce jour
-        try {
-            const dayConfig = await getDoc(doc(db, "day_configs", dateStr));
-            if (dayConfig.exists()) disabledHours = dayConfig.data().disabled_hours || [];
-        } catch (e) { console.warn("day_configs fetch error:", e); }
+        // Les deux requêtes en parallèle pour réduire le temps de chargement
+        const [dayConfigSnap, bookingsSnap] = await Promise.allSettled([
+            getDoc(doc(db, "day_configs", dateStr)),
+            getDocs(query(collection(db, "bookings"), where("date", "==", dateStr)))
+        ]);
 
-        // Compter les réservations PAID par heure — filtre status côté client
-        // (évite l'index composite Firestore)
-        try {
-            const q = query(collection(db, "bookings"), where("date", "==", dateStr));
-            const snap = await getDocs(q);
-            snap.forEach(docSnap => {
+        if (dayConfigSnap.status === 'fulfilled' && dayConfigSnap.value.exists()) {
+            disabledHours = dayConfigSnap.value.data().disabled_hours || [];
+        }
+
+        if (bookingsSnap.status === 'fulfilled') {
+            bookingsSnap.value.forEach(docSnap => {
                 const data = docSnap.data();
                 if (data.status === 'paid') {
                     const h = parseInt(data.time); // "12:00" -> 12
                     paidCountPerHour[h] = (paidCountPerHour[h] || 0) + 1;
                 }
             });
-        } catch (e) { console.warn("bookings count error:", e); }
+        }
     }
 
     container.innerHTML = '';
@@ -1123,13 +1123,15 @@ window.handleSlotClick = function(time) {
     document.getElementById('booking-form-view').style.display = 'block';
 };
 
-window.prevMonth = function() { 
-    window.M_ACADEMIE_STATE.currentCalendarDate.setMonth(window.M_ACADEMIE_STATE.currentCalendarDate.getMonth() - 1); 
-    window.renderCalendar(); 
+window.prevMonth = function() {
+    const d = window.M_ACADEMIE_STATE.currentCalendarDate;
+    window.M_ACADEMIE_STATE.currentCalendarDate = new Date(d.getFullYear(), d.getMonth() - 1, 1);
+    window.renderCalendar();
 };
-window.nextMonth = function() { 
-    window.M_ACADEMIE_STATE.currentCalendarDate.setMonth(window.M_ACADEMIE_STATE.currentCalendarDate.getMonth() + 1); 
-    window.renderCalendar(); 
+window.nextMonth = function() {
+    const d = window.M_ACADEMIE_STATE.currentCalendarDate;
+    window.M_ACADEMIE_STATE.currentCalendarDate = new Date(d.getFullYear(), d.getMonth() + 1, 1);
+    window.renderCalendar();
 };
 window.backToSlots = function() {
     document.getElementById('slot-selection-view').style.display = 'block';
@@ -1152,7 +1154,6 @@ window.submitBooking = async (e) => {
     
     if (phone.length < 8) {
         alert("Numéro de téléphone invalide.");
-        if (btn) btn.disabled = false;
         return;
     }
 
