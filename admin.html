@@ -226,6 +226,7 @@
         let disabledSlotsForDay = [];
         let selectedAdminDate = null;
         let unsubscribeSlots = null;
+        let adminViewDate = new Date(); // Local state for admin navigation
 
         // --- GLOBAL EXPORTS ---
         window.showToast = (msg, color = "rgba(16, 185, 129, 0.95)") => {
@@ -336,6 +337,11 @@
             }
         };
 
+        window.changeMonth = (dir) => {
+            adminViewDate.setMonth(adminViewDate.getMonth() + dir);
+            renderAdminCalendar();
+        };
+
         window.addSlot = async () => {
             const input = document.getElementById('new-slot-hour');
             const h = parseInt(input.value);
@@ -369,11 +375,11 @@
                 const today = new Date();
                 today.setHours(12, 0, 0, 0); // Normalized to noon
                 // ISOLATED OFFSET CALCULATION
-                const renderYear = window.M_ACADEMIE_STATE.currentCalendarDate.getFullYear();
-                const renderMonth = window.M_ACADEMIE_STATE.currentCalendarDate.getMonth();
+                const renderYear = adminViewDate.getFullYear();
+                const renderMonth = adminViewDate.getMonth();
                 const firstDayDate = new Date(renderYear, renderMonth, 1, 12, 0, 0);
-                const dayOfWeek = firstDayDate.getDay(); // 0 is Sun, 1 is Mon...
-                const offset = (dayOfWeek + 6) % 7; // Map to Mon=0, Tue=1...
+                const dayOfWeek = firstDayDate.getDay(); 
+                const offset = (dayOfWeek + 6) % 7; 
                 
                 const daysInMonth = new Date(renderYear, renderMonth + 1, 0).getDate();
 
