@@ -178,9 +178,9 @@ const apps = {
         },
         whatsapp: 'https://wa.me/33759275623',
         screenshots: [
-            'assets/images/whatsapp_bot_s1.png',
-            'assets/images/whatsapp_bot_s2.png',
-            'assets/images/whatsapp_bot_s3.png'
+            'assets/images/cal_elite_1.png',
+            'assets/images/cal_elite_2.png',
+            'assets/images/cal_elite_3.png'
         ],
         gradient: 'linear-gradient(135deg, #25D366, #128C7E)',
         status: 'Bot WhatsApp'
