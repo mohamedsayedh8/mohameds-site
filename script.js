@@ -591,152 +591,6 @@ function updateParticleColor() {
     }
 }
 
-// --- Modal Logic ---
-function openAppModal(appId) {
-    const app = apps[appId];
-    if (!app) return;
-
-    const modalData = document.getElementById('modal-data');
-    const t = translations[currentLang];
-    
-    // Get localized content for the app
-    const tagline = typeof app.tagline === 'object' ? app.tagline[currentLang] : app.tagline;
-    const description = typeof app.description === 'object' ? app.description[currentLang] : app.description;
-    const features = typeof app.features === 'object' ? app.features[currentLang] : app.features;
-
-    modalData.innerHTML = `
-        <div class="modal-grid">
-
-            <!-- LEFT COLUMN: Info -->
-            <div class="modal-info">
-                <!-- Header -->
-                <div class="modal-header-box">
-                    <div class="modal-app-icon" style="background: ${app.gradient};">
-                        ${app.iconUrl
-                            ? `<img src="${app.iconUrl}" alt="${app.name}">`
-                            : `<span style="font-size:2.5rem;display:flex;align-items:center;justify-content:center;height:100%;">${app.icon}</span>`
-                        }
-                    </div>
-                    <div>
-                        <h2 class="modal-app-title">${app.name}</h2>
-                        <p class="modal-app-tagline">${tagline}</p>
-                    </div>
-                </div>
-
-                <!-- Description -->
-                <p class="modal-description">${description}</p>
-
-                <!-- Features -->
-                <div class="modal-features-section">
-                    <h3 class="modal-features-title">${t.modal_features}</h3>
-                    <div class="modal-features-list">
-                        ${features.map(f => `
-                        <div class="modal-feature-item">
-                            <i class="fas fa-check-circle"></i>
-                            <span>${f}</span>
-                        </div>`).join('')}
-                    </div>
-                </div>
-
-                <!-- Download buttons -->
-                <div class="modal-actions">
-                    ${app.telegram ? `
-                    <a href="${app.telegram}" target="_blank" class="btn btn-primary" style="background:#0a84ff; border:none; box-shadow:0 10px 20px rgba(10,132,255,0.3);">
-                        <i class="fab fa-telegram"></i> Ouvrir sur Telegram
-                    </a>
-                    ` : `
-                    ${(app.appStore && app.appStore !== '#') ? `
-                    <a href="${app.appStore}" target="_blank" class="btn btn-primary">
-                        <i class="fab fa-apple"></i> App Store
-                    </a>` : ''}
-                    ${(app.playStore && app.playStore !== '#') ? `
-                    <a href="${app.playStore}" target="_blank" class="btn glass">
-                        <i class="fab fa-google-play"></i> Google Play
-                    </a>` : ''}
-                    `}
-                    ${app.whatsapp ? `
-                    <a href="${app.whatsapp}" target="_blank" class="btn glass" style="background:rgba(37,211,102,0.12); color:#25D366; border-color:rgba(37,211,102,0.25);">
-                        <i class="fab fa-whatsapp"></i> WhatsApp
-                    </a>` : ''}
-                </div>
-
-                <!-- Legal -->
-                ${!app.telegram ? `
-                <div class="modal-legal-box">
-                    <a href="${app.privacy}" class="modal-legal-link">
-                        <i class="fas fa-shield-alt"></i> ${t.modal_privacy}
-                    </a>
-                    <a href="${app.terms}" class="modal-legal-link">
-                        <i class="fas fa-file-alt"></i> ${t.modal_terms}
-                    </a>
-                </div>
-                ` : ''}
-            </div>
-
-            <!-- RIGHT COLUMN: iPhone Mockups -->
-            <div class="modal-mockups">
-                ${app.screenshots && app.screenshots.length > 0 ? (() => {
-                    // Always show 3 iPhones for a premium look
-                    let html = '';
-                    for (let i = 0; i < 3; i++) {
-                        const screenshot = app.screenshots[i % app.screenshots.length];
-                        html += `
-                        <div class="iphone-device">
-                            <div class="iphone-notch"></div>
-                            <img src="${screenshot}" alt="Screenshot ${i+1}" class="iphone-screen">
-                        </div>`;
-                    }
-                    return html;
-                })() : `<div style="color:var(--text-muted);text-align:center;"><i class="fas fa-mobile-alt" style="font-size:4rem;opacity:0.3;"></i></div>`}
-            </div>
-
-        </div>
-    `;
-
-    const modal = document.getElementById('app-modal');
-    modal.classList.add('active');
-    document.body.style.overflow = 'hidden';
-}
-
-function closeModal() {
-    const modal = document.getElementById('app-modal');
-    if (modal) {
-        modal.classList.remove('active');
-        document.body.style.overflow = 'auto';
-    }
-}
-
-function openFAQ() {
-    document.getElementById('faq-modal').classList.add('active');
-    document.body.style.overflow = 'hidden';
-    // Re-apply translations to the dynamically-rendered FAQ
-    setLanguage(currentLang);
-}
-
-function toggleMobileMenu() {
-    const nav = document.getElementById('nav-links');
-    const btn = document.getElementById('hamburger');
-    nav.classList.toggle('open');
-    btn.classList.toggle('open');
-}
-
-function closeMobileMenu() {
-    document.getElementById('nav-links').classList.remove('open');
-    document.getElementById('hamburger').classList.remove('open');
-}
-
-function closeFAQ() {
-    document.getElementById('faq-modal').classList.remove('active');
-    document.body.style.overflow = 'auto';
-}
-
-function toggleFAQ(btn) {
-    const item = btn.parentElement;
-    const isOpen = item.classList.contains('open');
-    document.querySelectorAll('.faq-item').forEach(i => i.classList.remove('open'));
-    if (!isOpen) item.classList.add('open');
-}
-
 // --- Advanced Visuals (3D Tilt, Smooth Scroll, Reveals) ---
 function initAdvancedVisuals() {
     // 1. Text Reveal — animate the element as a whole using pure GSAP to avoid conflicts
@@ -1181,3 +1035,74 @@ document.addEventListener('DOMContentLoaded', () => {
         document.getElementById('booking-success-view').style.display = 'block';
     };
 });
+
+// --- GLOBAL MODAL CONTROLLERS ---
+window.openAppModal = function(appId) {
+    const app = apps[appId];
+    if (!app) return;
+    const modalData = document.getElementById('modal-data');
+    const t = translations[currentLang];
+    const tagline = typeof app.tagline === 'object' ? app.tagline[currentLang] : app.tagline;
+    const description = typeof app.description === 'object' ? app.description[currentLang] : app.description;
+    const features = typeof app.features === 'object' ? app.features[currentLang] : app.features;
+
+    modalData.innerHTML = `
+        <div class="modal-grid">
+            <div class="modal-info">
+                <div class="modal-header-box">
+                    <div class="modal-app-icon" style="background: ${app.gradient};">
+                        ${app.iconUrl ? `<img src="${app.iconUrl}" alt="${app.name}">` : `<span style="font-size:2.5rem;">${app.icon}</span>`}
+                    </div>
+                    <div>
+                        <h2 class="modal-app-title">${app.name}</h2>
+                        <p class="modal-app-tagline">${tagline}</p>
+                    </div>
+                </div>
+                <p class="modal-description">${description}</p>
+                <div class="modal-features-section">
+                    <h3 class="modal-features-title">${t.modal_features}</h3>
+                    <div class="modal-features-list">
+                        ${features.map(f => `<div class="modal-feature-item"><i class="fas fa-check-circle"></i><span>${f}</span></div>`).join('')}
+                    </div>
+                </div>
+                <div class="modal-actions">
+                    ${app.telegram ? `<a href="${app.telegram}" target="_blank" class="btn btn-primary"><i class="fab fa-telegram"></i> Telegram</a>` : `
+                    ${(app.appStore && app.appStore !== '#') ? `<a href="${app.appStore}" target="_blank" class="btn btn-primary"><i class="fab fa-apple"></i> App Store</a>` : ''}
+                    ${(app.playStore && app.playStore !== '#') ? `<a href="${app.playStore}" target="_blank" class="btn glass"><i class="fab fa-google-play"></i> Play Store</a>` : ''}`}
+                </div>
+            </div>
+            <div class="modal-mockups">
+                ${app.screenshots.map(s => `<div class="iphone-device"><div class="iphone-notch"></div><img src="${s}" class="iphone-screen"></div>`).join('')}
+            </div>
+        </div>`;
+    document.getElementById('app-modal').classList.add('active');
+    document.body.style.overflow = 'hidden';
+};
+
+window.closeModal = function() {
+    document.getElementById('app-modal').classList.remove('active');
+    document.body.style.overflow = 'auto';
+};
+
+window.openFAQ = function() {
+    document.getElementById('faq-modal').classList.add('active');
+    document.body.style.overflow = 'hidden';
+};
+window.closeFAQ = function() {
+    document.getElementById('faq-modal').classList.remove('active');
+    document.body.style.overflow = 'auto';
+};
+window.toggleFAQ = function(btn) {
+    const item = btn.parentElement;
+    const isOpen = item.classList.contains('open');
+    document.querySelectorAll('.faq-item').forEach(i => i.classList.remove('open'));
+    if (!isOpen) item.classList.add('open');
+};
+window.toggleMobileMenu = function() {
+    document.getElementById('nav-links').classList.toggle('open');
+    document.getElementById('hamburger').classList.toggle('open');
+};
+window.closeMobileMenu = function() {
+    document.getElementById('nav-links').classList.remove('open');
+    document.getElementById('hamburger').classList.remove('open');
+};
