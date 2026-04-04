@@ -915,6 +915,14 @@ window.closeMobileMenu = function() {
 };
 
 // --- FIREBASE SYNC ---
+// Helper: génère YYYY-MM-DD en heure locale (évite le décalage UTC de toISOString)
+function localDateStr(date) {
+    const y = date.getFullYear();
+    const m = String(date.getMonth() + 1).padStart(2, '0');
+    const d = String(date.getDate()).padStart(2, '0');
+    return `${y}-${m}-${d}`;
+}
+
 window.M_ACADEMIE_STATE = {
     currentCalendarDate: new Date(),
     selectedBookingDate: null,
@@ -1028,7 +1036,7 @@ window.renderCalendar = function() {
 
     for (let d = 1; d <= daysInMonth; d++) {
         const date = new Date(year, month, d);
-        const dayKey = date.toISOString().split('T')[0];
+        const dayKey = localDateStr(date);
         const el = document.createElement('div');
         el.className = 'calendar-day';
         el.textContent = d;
@@ -1057,7 +1065,7 @@ window.renderSlots = async function(date) {
     if (!container) return;
     container.innerHTML = '<div style="color:rgba(255,255,255,0.4); text-align:center; padding:1.5rem; font-size:0.85rem;">Chargement des créneaux...</div>';
 
-    const dateStr = date.toISOString().split('T')[0];
+    const dateStr = localDateStr(date);
     const allHours = window.M_ACADEMIE_STATE.defaultHours;
     let disabledHours = [];
     let paidCountPerHour = {};
@@ -1072,13 +1080,17 @@ window.renderSlots = async function(date) {
             if (dayConfig.exists()) disabledHours = dayConfig.data().disabled_hours || [];
         } catch (e) { console.warn("day_configs fetch error:", e); }
 
-        // Compter les réservations PAID par heure (max 8)
+        // Compter les réservations PAID par heure — filtre status côté client
+        // (évite l'index composite Firestore)
         try {
-            const q = query(collection(db, "bookings"), where("date", "==", dateStr), where("status", "==", "paid"));
+            const q = query(collection(db, "bookings"), where("date", "==", dateStr));
             const snap = await getDocs(q);
-            snap.forEach(d => {
-                const h = parseInt(d.data().time); // "11:00" -> 11
-                paidCountPerHour[h] = (paidCountPerHour[h] || 0) + 1;
+            snap.forEach(docSnap => {
+                const data = docSnap.data();
+                if (data.status === 'paid') {
+                    const h = parseInt(data.time); // "12:00" -> 12
+                    paidCountPerHour[h] = (paidCountPerHour[h] || 0) + 1;
+                }
             });
         } catch (e) { console.warn("bookings count error:", e); }
     }
@@ -1147,7 +1159,7 @@ window.submitBooking = async (e) => {
     const email = document.getElementById('student-email').value;
     
     const bookingData = {
-        date: window.M_ACADEMIE_STATE.selectedBookingDate.toISOString().split('T')[0],
+        date: localDateStr(window.M_ACADEMIE_STATE.selectedBookingDate),
         time: window.M_ACADEMIE_STATE.selectedBookingSlot,
         studentName: name,
         studentPhone: phone,
