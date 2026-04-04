@@ -1057,13 +1057,19 @@ window.renderSlots = function(date) {
 };
 
 window.handleSlotClick = function(time) {
-    selectedBookingSlot = time;
+    window.M_ACADEMIE_STATE.selectedBookingSlot = time;
     document.getElementById('slot-selection-view').style.display = 'none';
     document.getElementById('booking-form-view').style.display = 'block';
 };
 
-window.prevMonth = function() { currentCalendarDate.setMonth(currentCalendarDate.getMonth() - 1); renderCalendar(); };
-window.nextMonth = function() { currentCalendarDate.setMonth(currentCalendarDate.getMonth() + 1); renderCalendar(); };
+window.prevMonth = function() { 
+    window.M_ACADEMIE_STATE.currentCalendarDate.setMonth(window.M_ACADEMIE_STATE.currentCalendarDate.getMonth() - 1); 
+    window.renderCalendar(); 
+};
+window.nextMonth = function() { 
+    window.M_ACADEMIE_STATE.currentCalendarDate.setMonth(window.M_ACADEMIE_STATE.currentCalendarDate.getMonth() + 1); 
+    window.renderCalendar(); 
+};
 window.backToSlots = function() {
     document.getElementById('slot-selection-view').style.display = 'block';
     document.getElementById('booking-form-view').style.display = 'none';
@@ -1073,7 +1079,7 @@ window.submitBooking = async (e) => {
     e.preventDefault();
     console.log("Submitting booking...");
 
-    if (!selectedBookingDate || !selectedBookingSlot) {
+    if (!window.M_ACADEMIE_STATE.selectedBookingDate || !window.M_ACADEMIE_STATE.selectedBookingSlot) {
         alert("Erreur: Date ou heure non sélectionnée.");
         return;
     }
@@ -1083,8 +1089,8 @@ window.submitBooking = async (e) => {
     const email = document.getElementById('student-email').value;
     
     const bookingData = {
-        date: selectedBookingDate.toISOString().split('T')[0],
-        time: selectedBookingSlot,
+        date: window.M_ACADEMIE_STATE.selectedBookingDate.toISOString().split('T')[0],
+        time: window.M_ACADEMIE_STATE.selectedBookingSlot,
         studentName: name,
         studentPhone: phone,
         studentEmail: email,
