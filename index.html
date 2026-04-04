@@ -312,15 +312,15 @@
                         <div class="card-mockups">
                             <div class="iphone-device card-mini">
                                 <div class="iphone-notch"></div>
-                                <img src="assets/images/whatsapp_bot_s1.png" class="iphone-screen">
+                                <img src="assets/images/zikr_screen_1.png" class="iphone-screen">
                             </div>
                             <div class="iphone-device card-mini">
                                 <div class="iphone-notch"></div>
-                                <img src="assets/images/whatsapp_bot_s2.png" class="iphone-screen">
+                                <img src="assets/images/locsy_s1_final.png" class="iphone-screen">
                             </div>
                             <div class="iphone-device card-mini">
                                 <div class="iphone-notch"></div>
-                                <img src="assets/images/whatsapp_bot_s3.png" class="iphone-screen">
+                                <img src="assets/images/mo_frame_s1_final.png" class="iphone-screen">
                             </div>
                         </div>
                         <div class="icon-box-mini">
@@ -337,7 +337,80 @@
         </div>
     </section>
 
-    <!-- ... (rest of sections) ... -->
+    <!-- Contact Section -->
+    <section class="portfolio" id="contact" style="background: rgba(16, 185, 129, 0.03); border-radius: 4rem 4rem 0 0;">
+        <div class="container" style="text-align: center;">
+            <div class="section-title">
+                <h2 data-i18n="contact_title">Travaillons ensemble</h2>
+                <p data-i18n="contact_subtitle">Une idée de projet ? Contactez-moi.</p>
+            </div>
+            <div style="display: flex; justify-content: center; gap: 2rem; flex-wrap: wrap; margin-top: 3rem;">
+                <a href="mailto:contact@mohameds.net" class="btn btn-primary">
+                    <i class="fas fa-envelope"></i> contact@mohameds.net
+                </a>
+                <button class="btn glass" onclick="openFAQ()" style="cursor:pointer;">
+                    <i class="fas fa-question-circle"></i> <span data-i18n="faq_btn">FAQ</span>
+                </button>
+                <a href="https://www.instagram.com/mohamedsayedh8?igsh=MWQyd2dsbDV5NDJnaw%3D%3D&utm_source=qr" target="_blank" class="btn glass">
+                    <i class="fab fa-instagram"></i> Instagram
+                </a>
+            </div>
+        </div>
+    </section>
+
+    <!-- FAQ Modal -->
+    <div class="modal" id="faq-modal">
+        <div class="modal-content glass" style="max-width: 680px;">
+            <button class="close-modal" onclick="closeFAQ()">&times;</button>
+            <h2 style="font-size: 1.8rem; margin-bottom: 2rem;" data-i18n="faq_title">Questions fréquentes</h2>
+            <div id="faq-data">
+                <div class="faq-item">
+                    <button class="faq-q" onclick="toggleFAQ(this)">
+                        <span data-i18n="faq_q1"></span>
+                        <i class="fas fa-chevron-down"></i>
+                    </button>
+                    <div class="faq-a"><p data-i18n="faq_a1"></p></div>
+                </div>
+                <div class="faq-item">
+                    <button class="faq-q" onclick="toggleFAQ(this)">
+                        <span data-i18n="faq_q2"></span>
+                        <i class="fas fa-chevron-down"></i>
+                    </button>
+                    <div class="faq-a"><p data-i18n="faq_a2"></p></div>
+                </div>
+                <div class="faq-item">
+                    <button class="faq-q" onclick="toggleFAQ(this)">
+                        <span data-i18n="faq_q3"></span>
+                        <i class="fas fa-chevron-down"></i>
+                    </button>
+                    <div class="faq-a"><p data-i18n="faq_a3"></p></div>
+                </div>
+                <div class="faq-item">
+                    <button class="faq-q" onclick="toggleFAQ(this)">
+                        <span data-i18n="faq_q4"></span>
+                        <i class="fas fa-chevron-down"></i>
+                    </button>
+                    <div class="faq-a"><p data-i18n="faq_a4"></p></div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <!-- Main App Modal -->
+    <div class="modal" id="app-modal">
+        <div class="modal-content glass">
+            <button class="close-modal" id="close-modal">&times;</button>
+            <div id="modal-data">
+                <!-- Contenu dynamique via JS -->
+            </div>
+        </div>
+    </div>
+
+    <footer style="padding: 4rem 0; text-align: center; background: var(--bg);">
+        <div class="container">
+            <p>&copy; 2026 Mohamed. <span data-i18n="footer_rights">Tous droits réservés.</span></p>
+        </div>
+    </footer>
 
     <!-- Booking Modal -->
     <div class="modal" id="booking-modal">
@@ -419,6 +492,6 @@
     </script>
 
     <!-- Custom script with cache-buster -->
-    <script src="script.js?v=12"></script>
+    <script src="script.js?v=13"></script>
 </body>
 </html>

@@ -985,7 +985,12 @@ document.addEventListener('DOMContentLoaded', () => {
 
     // Modal Controls
     window.openBookingModal = function() {
+        console.log("Opening Booking Modal...");
         const modal = document.getElementById('booking-modal');
+        if (!modal) {
+            console.error("Booking modal element not found!");
+            return;
+        }
         modal.classList.add('active');
         document.body.style.overflow = 'hidden';
         
@@ -1001,7 +1006,7 @@ document.addEventListener('DOMContentLoaded', () => {
 
     window.closeBookingModal = function() {
         const modal = document.getElementById('booking-modal');
-        modal.classList.remove('active');
+        if (modal) modal.classList.remove('active');
         document.body.style.overflow = 'auto';
     };
 
