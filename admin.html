@@ -329,13 +329,13 @@
                 const grid = document.getElementById('admin-calendar-grid');
                 if (!grid) return;
                 
-                // FORCE DIMENSIONS AND GRID
-                grid.style.display = 'grid';
-                grid.style.gridTemplateColumns = 'repeat(7, 1fr)';
-                grid.style.gap = '10px';
+                // USE FLEXBOX INSTEAD OF GRID FOR TOTAL COMPATIBILITY
+                grid.style.display = 'flex';
+                grid.style.flexWrap = 'wrap';
+                grid.style.gap = '8px';
                 grid.style.padding = '10px';
                 grid.style.minHeight = '300px';
-                grid.style.width = '100%';
+                grid.style.justifyContent = 'flex-start';
                 
                 grid.innerHTML = '';
                 const today = new Date();
@@ -350,7 +350,6 @@
                 }
 
                 for (let d = 1; d <= daysInMonth; d++) {
-                    // Manual dayKey construction (safer)
                     const mm = (month + 1).toString().padStart(2, '0');
                     const dd = d.toString().padStart(2, '0');
                     const dayKey = `${year}-${mm}-${dd}`;
@@ -362,29 +361,30 @@
                     const isBlocked = disabledDays.includes(dayKey);
                     const isSelected = selectedAdminDate === dayKey;
                     
-                    // FIXED PIXEL STYLES (NO COLLAPSE POSSIBLE)
-                    el.style.width = '100%';
-                    el.style.minHeight = '45px';
+                    // FIXED DIMENSIONS
+                    el.style.width = '45px';
+                    el.style.height = '45px';
                     el.style.display = 'flex';
                     el.style.alignItems = 'center';
                     el.style.justifyContent = 'center';
-                    el.style.borderRadius = '10px';
+                    el.style.borderRadius = '8px';
                     el.style.fontSize = '16px';
                     el.style.fontWeight = '900';
                     el.style.cursor = 'pointer';
+                    el.style.margin = '2px';
                     
                     if (isBlocked) {
-                        el.style.background = '#ef4444';
-                        el.style.color = '#ffffff';
-                        el.style.border = '2px solid #b91c1c';
+                        el.style.background = '#ef4444'; // Red
+                        el.style.color = 'white';
+                        el.style.border = '2px solid yellow'; 
                     } else if (isSelected) {
-                        el.style.background = '#ffffff';
+                        el.style.background = 'white';
                         el.style.color = '#0f172a';
-                        el.style.border = '3px solid #60a5fa';
+                        el.style.border = '3px solid #3b82f6';
                     } else {
-                        el.style.background = '#10b981';
-                        el.style.color = '#ffffff';
-                        el.style.border = '1px solid rgba(255,255,255,0.2)';
+                        el.style.background = '#10b981'; // green
+                        el.style.color = 'white';
+                        el.style.border = '1.5px solid yellow';
                     }
                     
                     el.onclick = () => window.selectDate(dayKey);
@@ -397,29 +397,31 @@
             const list = document.getElementById('slots-list');
             if (!list) return;
             list.innerHTML = '';
-            list.style.display = 'grid';
-            list.style.gridTemplateColumns = 'repeat(auto-fill, minmax(5rem, 1fr))';
-            list.style.gap = '0.8rem';
-            list.style.margin = '1.5rem 0';
+            list.style.display = 'flex';
+            list.style.flexWrap = 'wrap';
+            list.style.gap = '0.5rem';
             
             STANDARD_HOURS.forEach(h => {
                 const pill = document.createElement('div');
                 const isDisabled = disabledSlotsForDay.includes(h);
                 pill.className = `hour-pill ${isDisabled ? 'inactive' : 'active'}`;
                 pill.textContent = `${h}h`;
-                // Add explicit color for visibility
-                if (isDisabled) {
-                    pill.style.background = 'rgba(255,255,255,0.05)';
-                    pill.style.color = 'rgba(255,255,255,0.2)';
-                } else {
-                    pill.style.background = '#3b82f6';
-                    pill.style.color = '#ffffff';
-                }
-                pill.style.padding = '0.8rem';
-                pill.style.borderRadius = '10px';
+                
+                pill.style.padding = '0.7rem 1rem';
+                pill.style.borderRadius = '8px';
                 pill.style.textAlign = 'center';
                 pill.style.cursor = 'pointer';
                 pill.style.fontWeight = '700';
+                pill.style.minWidth = '4.5rem';
+
+                if (isDisabled) {
+                    pill.style.background = 'rgba(255,255,255,0.05)';
+                    pill.style.color = 'rgba(255,255,255,0.2)';
+                    pill.style.textDecoration = 'line-through';
+                } else {
+                    pill.style.background = '#3b82f6';
+                    pill.style.color = 'white';
+                }
 
                 pill.onclick = () => window.toggleHour(h, !isDisabled);
                 list.appendChild(pill);
@@ -431,6 +433,14 @@
             if (user) {
                 document.getElementById('login-view').style.display = 'none';
                 document.getElementById('admin-view').style.display = 'block';
+                
+                // FORCE RENDER IN LOOP FOR 5 SECONDS
+                let renderedCount = 0;
+                const forceLoop = setInterval(() => {
+                    renderAdminCalendar();
+                    renderedCount++;
+                    if (renderedCount > 10) clearInterval(forceLoop);
+                }, 500);
                 
                 // Load Bookings
                 onSnapshot(query(collection(db, "bookings"), orderBy("createdAt", "desc")), (snap) => {
@@ -459,6 +469,8 @@
                         `;
                         list.appendChild(row);
                     });
+                }, (err) => {
+                    alert("Erreur réservations: " + err.message);
                 });
 
                 // Load Availability
@@ -466,6 +478,8 @@
                     disabledDays = snap.docs.map(d => d.id);
                     renderAdminCalendar();
                     if (selectedAdminDate) window.selectDate(selectedAdminDate);
+                }, (err) => {
+                    alert("Erreur disponibilités: " + err.message);
                 });
 
             } else {
@@ -483,7 +497,7 @@
                     btn.disabled = true;
                     await signInWithEmailAndPassword(auth, document.getElementById('admin-email').value, document.getElementById('admin-password').value);
                 } catch (err) {
-                    alert("Identifiants incorrects");
+                    alert("Identifiants incorrects: " + err.message);
                     btn.disabled = false;
                 }
             };
