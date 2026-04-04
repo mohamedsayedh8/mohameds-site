@@ -993,9 +993,9 @@ window.renderCalendar = function() {
     const monthYear = new Intl.DateTimeFormat(currentLang, { month: 'long', year: 'numeric' }).format(window.M_ACADEMIE_STATE.currentCalendarDate);
     monthDisplay.textContent = monthYear.charAt(0).toUpperCase() + monthYear.slice(1);
     
-    const firstDay = new Date(year, month, 1).getDay();
+    const firstDay = new Date(year, month, 1, 12, 0, 0).getDay();
+    const startingDay = (firstDay + 6) % 7;
     const daysInMonth = new Date(year, month + 1, 0).getDate();
-    let startingDay = firstDay === 0 ? 6 : firstDay - 1;
     
     const dayNames = currentLang === 'ar' ? ['ن','ث','ر','خ','ج','س','ح'] : ['Lun','Mar','Mer','Jeu','Ven','Sam','Dim'];
     dayNames.forEach(name => {

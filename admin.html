@@ -309,15 +309,20 @@
         window.toggleHour = async (h, disable) => {
             try {
                 if (!selectedAdminDate) return alert("Sélectionnez un jour d'abord");
-                let next = [...disabledSlotsForDay];
+                // Local quick update for feel
                 if (disable) {
-                    if (!next.includes(h)) next.push(h);
+                    if (!disabledSlotsForDay.includes(h)) disabledSlotsForDay.push(h);
                 } else {
-                    next = next.filter(hour => hour !== h);
+                    disabledSlotsForDay = disabledSlotsForDay.filter(hour => hour !== h);
                 }
-                await setDoc(doc(db, "day_configs", selectedAdminDate), { disabled_hours: next }, { merge: true });
-                window.showToast(disable ? `${h}h BLOQUÉ` : `${h}h OUVERT`);
-            } catch (err) { window.showToast("Erreur", "var(--danger)"); }
+                renderSlotsManager();
+
+                await setDoc(doc(db, "day_configs", selectedAdminDate), { disabled_hours: disabledSlotsForDay }, { merge: true });
+                window.showToast(disable ? `🔒 ${h}h bloqué` : `🔓 ${h}h ouvert`, disable ? "var(--danger)" : "var(--primary)");
+            } catch (err) { 
+                console.error("Toggle error:", err);
+                window.showToast("Erreur de sauvegarde", "var(--danger)"); 
+            }
         };
 
         window.addSlot = async () => {
@@ -351,12 +356,13 @@
                 grid.innerHTML = '';
 
                 const today = new Date();
+                today.setHours(12, 0, 0, 0); // Normalized to noon
                 const year = today.getFullYear();
                 const month = today.getMonth();
                 const daysInMonth = new Date(year, month + 1, 0).getDate();
                 
-                // CALC OFFSET (Monday is first column)
-                const firstDay = new Date(year, month, 1).getDay(); // 0: Sun, 1: Mon...
+                // CALC OFFSET (Monday is first column) - NOON BASED TO AVOID TIMEZONE SHIFTS
+                const firstDay = new Date(year, month, 1, 12, 0, 0).getDay(); 
                 const offset = (firstDay + 6) % 7; 
 
                 // 1. ADD WEEKDAY HEADERS
