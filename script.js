@@ -1020,24 +1020,24 @@ window.renderCalendar = function() {
         const el = document.createElement('div');
         el.className = 'calendar-day';
         el.textContent = d;
-        if (date < today || disabledDays.includes(dayKey)) {
+        if (date < today || window.M_ACADEMIE_STATE.disabledDays.includes(dayKey)) {
             el.classList.add('disabled');
         } else {
             el.classList.add('available');
             el.onclick = () => window.handleDayClick(date, el);
         }
-        if (selectedBookingDate && date.getTime() === selectedBookingDate.getTime()) el.classList.add('selected');
+        if (window.M_ACADEMIE_STATE.selectedBookingDate && date.getTime() === window.M_ACADEMIE_STATE.selectedBookingDate.getTime()) el.classList.add('selected');
         grid.appendChild(el);
     }
 };
 
 window.handleDayClick = function(date, el) {
-    selectedBookingDate = date;
+    window.M_ACADEMIE_STATE.selectedBookingDate = date;
     document.querySelectorAll('.calendar-day').forEach(d => d.classList.remove('selected'));
     el.classList.add('selected');
     const dateStr = new Intl.DateTimeFormat(currentLang, { weekday: 'long', day: 'numeric', month: 'long' }).format(date);
     document.getElementById('selected-date-display').textContent = dateStr;
-    renderSlots(date);
+    window.renderSlots(date);
 };
 
 window.renderSlots = function(date) {
@@ -1045,7 +1045,7 @@ window.renderSlots = function(date) {
     if (!container) return;
     container.innerHTML = '';
     
-    const hours = currentDaySlots || defaultHours;
+    const hours = window.M_ACADEMIE_STATE.currentDaySlots || window.M_ACADEMIE_STATE.defaultHours;
     
     hours.forEach(hour => {
         const slot = document.createElement('div');
