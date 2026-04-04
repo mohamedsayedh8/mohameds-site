@@ -917,11 +917,37 @@ window.closeMobileMenu = function() {
     document.getElementById('hamburger').classList.remove('open');
 };
 
-// --- GLOBAL BOOKING CONTROLLERS ---
-let selectedBookingDate = null;
-let selectedBookingSlot = null;
-let currentCalendarDate = new Date();
+// --- FIREBASE SYNC ---
+let disabledDays = [];
+let availableHours = [9, 10, 11, 12, 14, 15, 16, 17];
 
+function initAvailability() {
+    if (window.firebaseSDK && window.firebaseApp) {
+        const { getFirestore, collection, onSnapshot, query, doc } = window.firebaseSDK;
+        const db = getFirestore(window.firebaseApp);
+        
+        // Listen to disabled days
+        onSnapshot(collection(db, "disabled_days"), (snapshot) => {
+            disabledDays = snapshot.docs.map(doc => doc.id);
+            if (document.getElementById('booking-modal')?.classList.contains('active')) {
+                window.renderCalendar();
+            }
+        });
+
+        // Listen to slots config
+        onSnapshot(doc(db, "config", "slots"), (docSnap) => {
+            if (docSnap.exists()) {
+                availableHours = docSnap.data().hours || availableHours;
+            }
+        });
+    }
+}
+
+document.addEventListener('DOMContentLoaded', () => {
+    initAvailability();
+});
+
+// --- GLOBAL BOOKING CONTROLLERS ---
 window.openBookingModal = function() {
     console.log("Opening M Académie Modal...");
     const modal = document.getElementById('booking-modal');
@@ -1004,8 +1030,8 @@ window.handleDayClick = function(date, el) {
 window.renderSlots = function(date) {
     const container = document.getElementById('slots-grid');
     container.innerHTML = '';
-    const hours = [9, 10, 11, 12, 14, 15, 16, 17];
-    hours.forEach(hour => {
+    // Use availableHours from config or default
+    availableHours.forEach(hour => {
         const slot = document.createElement('div');
         slot.className = 'time-slot glass';
         slot.textContent = `${hour}:00 - ${hour+1}:00`;
