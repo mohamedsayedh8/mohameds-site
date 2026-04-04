@@ -929,19 +929,32 @@ window.M_ACADEMIE_STATE = {
     selectedBookingSlot: null,
     disabledDays: [],
     defaultHours: [9, 10, 11, 12, 13, 14, 15, 16, 17, 18, 19, 20],
-    currentDaySlots: null,
-    unsubscribeDayListener: null
+    dayConfigs: {}
 };
 
 function initAvailability() {
     if (window.firebaseSDK && window.firebaseApp) {
         const { getFirestore, collection, onSnapshot, doc } = window.firebaseSDK;
         const db = getFirestore(window.firebaseApp);
-        
+
+        // Jours entièrement bloqués
         onSnapshot(collection(db, "disabled_days"), (snapshot) => {
             window.M_ACADEMIE_STATE.disabledDays = snapshot.docs.map(doc => doc.id);
             if (document.getElementById('booking-modal')?.classList.contains('active')) {
                 window.renderCalendar();
+            }
+        });
+
+        // Heures bloquées par jour — temps réel, changes admin visibles immédiatement
+        onSnapshot(collection(db, "day_configs"), (snapshot) => {
+            window.M_ACADEMIE_STATE.dayConfigs = {};
+            snapshot.docs.forEach(d => {
+                window.M_ACADEMIE_STATE.dayConfigs[d.id] = d.data().disabled_hours || [];
+            });
+            // Si un jour est déjà sélectionné, on re-render les créneaux
+            if (window.M_ACADEMIE_STATE.selectedBookingDate &&
+                document.getElementById('booking-modal')?.classList.contains('active')) {
+                window.renderSlots(window.M_ACADEMIE_STATE.selectedBookingDate);
             }
         });
 
@@ -1067,32 +1080,25 @@ window.renderSlots = async function(date) {
 
     const dateStr = localDateStr(date);
     const allHours = window.M_ACADEMIE_STATE.defaultHours;
-    let disabledHours = [];
+    // day_configs en temps réel depuis le state (mis à jour par onSnapshot dans initAvailability)
+    const disabledHours = window.M_ACADEMIE_STATE.dayConfigs[dateStr] || [];
     let paidCountPerHour = {};
 
     if (window.firebaseSDK && window.firebaseApp) {
-        const { getFirestore, doc, getDoc, collection, query, where, getDocs } = window.firebaseSDK;
+        const { getFirestore, collection, query, where, getDocs } = window.firebaseSDK;
         const db = getFirestore(window.firebaseApp);
 
-        // Les deux requêtes en parallèle pour réduire le temps de chargement
-        const [dayConfigSnap, bookingsSnap] = await Promise.allSettled([
-            getDoc(doc(db, "day_configs", dateStr)),
-            getDocs(query(collection(db, "bookings"), where("date", "==", dateStr)))
-        ]);
-
-        if (dayConfigSnap.status === 'fulfilled' && dayConfigSnap.value.exists()) {
-            disabledHours = dayConfigSnap.value.data().disabled_hours || [];
-        }
-
-        if (bookingsSnap.status === 'fulfilled') {
-            bookingsSnap.value.forEach(docSnap => {
+        // Compter les réservations PAID par heure (filtre status côté client)
+        try {
+            const snap = await getDocs(query(collection(db, "bookings"), where("date", "==", dateStr)));
+            snap.forEach(docSnap => {
                 const data = docSnap.data();
                 if (data.status === 'paid') {
-                    const h = parseInt(data.time); // "12:00" -> 12
+                    const h = parseInt(data.time);
                     paidCountPerHour[h] = (paidCountPerHour[h] || 0) + 1;
                 }
             });
-        }
+        } catch (e) { console.warn("bookings count error:", e); }
     }
 
     container.innerHTML = '';
