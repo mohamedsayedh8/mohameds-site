@@ -982,6 +982,12 @@ window.renderCalendar = function() {
     if (!grid || !monthDisplay) return;
     grid.innerHTML = '';
     
+    // Safety check
+    if (!window.M_ACADEMIE_STATE || !window.M_ACADEMIE_STATE.currentCalendarDate) {
+        console.error("M_ACADEMIE_STATE not initialized");
+        return;
+    }
+
     const year = window.M_ACADEMIE_STATE.currentCalendarDate.getFullYear();
     const month = window.M_ACADEMIE_STATE.currentCalendarDate.getMonth();
     const monthYear = new Intl.DateTimeFormat(currentLang, { month: 'long', year: 'numeric' }).format(window.M_ACADEMIE_STATE.currentCalendarDate);
