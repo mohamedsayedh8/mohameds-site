@@ -311,18 +311,15 @@
             } catch (err) { window.showToast("Erreur", "var(--danger)"); }
         };
 
-        window.toggleHour = async (h, isCurrentlyEnabled) => {
+        window.toggleHour = async (h, isCurrentlyEnabled, pill) => {
             if (!selectedAdminDate) return alert("Cliquez sur un jour d'abord !");
-            const pill = event?.target;
             if (pill) pill.style.opacity = '0.5'; // Visual feedback
 
             try {
                 let currentDisabled = [...disabledSlotsForDay];
                 if (isCurrentlyEnabled) {
-                    // Block it
                     if (!currentDisabled.includes(h)) currentDisabled.push(h);
                 } else {
-                    // Unblock it
                     currentDisabled = currentDisabled.filter(x => x !== h);
                 }
                 
@@ -335,7 +332,6 @@
             } catch (err) {
                 console.error("Save error:", err);
                 alert("Erreur de sauvegarde Firebase. Vérifie tes permissions.");
-                window.showToast("Erreur", "var(--danger)");
             } finally {
                 if (pill) pill.style.opacity = '1';
             }
@@ -494,7 +490,7 @@
                         pill.style.boxShadow = '0 8px 20px rgba(59, 130, 246, 0.2)';
                     }
 
-                    pill.onclick = () => window.toggleHour(h, !isDisabled);
+                    pill.onclick = () => window.toggleHour(h, !isDisabled, pill);
                     list.appendChild(pill);
                 });
             } catch (err) { console.error("Slots render error:", err); }
