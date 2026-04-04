@@ -400,9 +400,9 @@
 
                 // 3. RENDER ACTUAL DAYS
                 for (let d = 1; d <= daysInMonth; d++) {
-                    const mm = (month + 1).toString().padStart(2, '0');
+                    const mm = (renderMonth + 1).toString().padStart(2, '0');
                     const dd = d.toString().padStart(2, '0');
-                    const dayKey = `${year}-${mm}-${dd}`;
+                    const dayKey = `${renderYear}-${mm}-${dd}`;
                     
                     const el = document.createElement('div');
                     el.className = 'calendar-day';
@@ -445,7 +445,7 @@
                 const monthDisplay = document.getElementById('admin-month-display');
                 if (monthDisplay) {
                     const months = ["Janvier", "Février", "Mars", "Avril", "Mai", "Juin", "Juillet", "Août", "Septembre", "Octobre", "Novembre", "Décembre"];
-                    monthDisplay.textContent = months[month] + " " + year;
+                    monthDisplay.textContent = months[renderMonth] + " " + renderYear;
                 }
             } catch (err) { console.error("Calendar render error:", err); }
         }
