@@ -993,20 +993,29 @@ window.renderCalendar = function() {
     const monthYear = new Intl.DateTimeFormat(currentLang, { month: 'long', year: 'numeric' }).format(window.M_ACADEMIE_STATE.currentCalendarDate);
     monthDisplay.textContent = monthYear.charAt(0).toUpperCase() + monthYear.slice(1);
     
-    const firstDay = new Date(year, month, 1, 12, 0, 0).getDay();
-    const startingDay = (firstDay + 6) % 7;
-    const daysInMonth = new Date(year, month + 1, 0).getDate();
-    
-    const dayNames = currentLang === 'ar' ? ['ن','ث','ر','خ','ج','س','ح'] : ['Lun','Mar','Mer','Jeu','Ven','Sam','Dim'];
+    // Header days: L M M J V S D (Monday start)
+    const dayNames = currentLang === 'ar' ? ['ن','ث','ر','خ','ج','س','ح'] : ['L','M','M','J','V','S','D'];
     dayNames.forEach(name => {
-        const el = document.createElement('div');
-        el.className = 'calendar-day-header';
-        el.textContent = name;
-        el.style.fontSize = '0.7rem';
-        el.style.fontWeight = '800';
-        el.style.opacity = '0.6';
-        grid.appendChild(el);
+        const hCell = document.createElement('div');
+        hCell.className = 'calendar-day-header';
+        hCell.textContent = name;
+        hCell.style.fontSize = '0.75rem';
+        hCell.style.fontWeight = '900';
+        hCell.style.color = 'var(--primary)';
+        hCell.style.textAlign = 'center';
+        hCell.style.paddingBottom = '10px';
+        hCell.style.opacity = '0.7';
+        grid.appendChild(hCell);
     });
+
+    // ISOLATED OFFSET CALCULATION
+    const renderYear = window.M_ACADEMIE_STATE.currentCalendarDate.getFullYear();
+    const renderMonth = window.M_ACADEMIE_STATE.currentCalendarDate.getMonth();
+    const firstDayDate = new Date(renderYear, renderMonth, 1, 12, 0, 0);
+    const dayOfWeek = firstDayDate.getDay(); // 0 is Sun, 1 is Mon...
+    const startingDay = (dayOfWeek + 6) % 7; // Map to Mon=0, Tue=1...
+    
+    const daysInMonth = new Date(renderYear, renderMonth + 1, 0).getDate();
 
     for (let i = 0; i < startingDay; i++) {
         const empty = document.createElement('div');
