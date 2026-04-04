@@ -1002,6 +1002,9 @@ window.renderCalendar = function() {
         const el = document.createElement('div');
         el.className = 'calendar-day-header';
         el.textContent = name;
+        el.style.fontSize = '0.7rem';
+        el.style.fontWeight = '800';
+        el.style.opacity = '0.6';
         grid.appendChild(el);
     });
 
