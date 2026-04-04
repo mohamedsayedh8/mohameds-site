@@ -384,7 +384,7 @@
                 const daysInMonth = new Date(renderYear, renderMonth + 1, 0).getDate();
 
                 // 1. ADD WEEKDAY HEADERS
-                const dayNames = currentLang === 'ar' ? ['ن','ث','ر','خ','ج','س','ح'] : ['L','M','M','J','V','S','D'];
+                const dayNames = ['L','M','M','J','V','S','D'];
                 dayNames.forEach(name => {
                     const hCell = document.createElement('div');
                     hCell.className = 'calendar-day-header';
@@ -527,7 +527,7 @@
                         const sName = data.studentName || 'Élève';
                         const sPhone = (data.studentPhone || '').replace(/[^0-9+]/g, '');
                         row.innerHTML = `
-                            <td><div style="font-weight:600; font-size:0.85rem;">${data.date || '---'}</div><div style="font-size:0.75rem; color:var(--primary); font-weight:700;">${data.time || '---'}:00</div></td>
+                            <td><div style="font-weight:600; font-size:0.85rem;">${data.date || '---'}</div><div style="font-size:0.75rem; color:var(--primary); font-weight:700;">${data.time || '---'}</div></td>
                             <td><div style="font-weight:600;">${sName}</div><div style="font-size:0.75rem; color:var(--text-muted);">${sPhone || '---'}</div></td>
                             <td><span class="status-pill status-${data.status || 'pending'}">${(data.status || 'En attente').toUpperCase()}</span></td>
                             <td>

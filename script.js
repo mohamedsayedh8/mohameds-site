@@ -1052,18 +1052,55 @@ window.handleDayClick = function(date, el) {
     window.renderSlots(date);
 };
 
-window.renderSlots = function(date) {
+window.renderSlots = async function(date) {
     const container = document.getElementById('slots-grid');
     if (!container) return;
+    container.innerHTML = '<div style="color:rgba(255,255,255,0.4); text-align:center; padding:1.5rem; font-size:0.85rem;">Chargement des créneaux...</div>';
+
+    const dateStr = date.toISOString().split('T')[0];
+    const allHours = window.M_ACADEMIE_STATE.defaultHours;
+    let disabledHours = [];
+    let paidCountPerHour = {};
+
+    if (window.firebaseSDK && window.firebaseApp) {
+        const { getFirestore, doc, getDoc, collection, query, where, getDocs } = window.firebaseSDK;
+        const db = getFirestore(window.firebaseApp);
+
+        // Heures bloquées manuellement par l'admin pour ce jour
+        try {
+            const dayConfig = await getDoc(doc(db, "day_configs", dateStr));
+            if (dayConfig.exists()) disabledHours = dayConfig.data().disabled_hours || [];
+        } catch (e) { console.warn("day_configs fetch error:", e); }
+
+        // Compter les réservations PAID par heure (max 8)
+        try {
+            const q = query(collection(db, "bookings"), where("date", "==", dateStr), where("status", "==", "paid"));
+            const snap = await getDocs(q);
+            snap.forEach(d => {
+                const h = parseInt(d.data().time); // "11:00" -> 11
+                paidCountPerHour[h] = (paidCountPerHour[h] || 0) + 1;
+            });
+        } catch (e) { console.warn("bookings count error:", e); }
+    }
+
     container.innerHTML = '';
-    
-    const hours = window.M_ACADEMIE_STATE.currentDaySlots || window.M_ACADEMIE_STATE.defaultHours;
-    
-    hours.forEach(hour => {
+
+    allHours.forEach(hour => {
+        const isAdminDisabled = disabledHours.includes(hour);
+        const paidCount = paidCountPerHour[hour] || 0;
+        const isFull = paidCount >= 8;
         const slot = document.createElement('div');
         slot.className = 'time-slot glass';
-        slot.textContent = `${hour}:00 - ${hour+1}:00`;
-        slot.onclick = () => window.handleSlotClick(`${hour}:00`);
+
+        if (isAdminDisabled || isFull) {
+            slot.textContent = isFull ? `${hour}:00 - ${hour+1}:00 (Complet)` : `${hour}:00 - ${hour+1}:00`;
+            slot.style.opacity = '0.35';
+            slot.style.cursor = 'not-allowed';
+            slot.style.textDecoration = 'line-through';
+        } else {
+            slot.textContent = `${hour}:00 - ${hour+1}:00`;
+            slot.onclick = () => window.handleSlotClick(`${hour}:00`);
+        }
         container.appendChild(slot);
     });
 };
