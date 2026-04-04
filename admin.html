@@ -151,35 +151,41 @@
                     <i class="fas fa-arrow-up" style="font-size: 1.5rem; margin-bottom: 1rem; display: block;"></i>
                     <p>Sélectionnez un jour pour gérer ses horaires spécifiques.</p>
                 </div>
-            </div>
-        </div>
-    </div>
-
-    <script type="module">
-        import { initializeApp } from "https://www.gstatic.com/firebasejs/10.7.1/firebase-app.js";
-        import { getFirestore, collection, onSnapshot, query, orderBy, doc, updateDoc, setDoc, deleteDoc, getDoc } from "https://www.gstatic.com/firebasejs/10.7.1/firebase-firestore.js";
-        import { getAuth, signInWithEmailAndPassword, onAuthStateChanged, signOut } from "https://www.gstatic.com/firebasejs/10.7.1/firebase-auth.js";
-
-        // Real Firebase Config
-        const firebaseConfig = {
-            apiKey: "AIzaSyDpZNOqxUfG7KZo2g3-7Py254P2GDSzRjo",
-            authDomain: "mohameds-booking.firebaseapp.com",
-            projectId: "mohameds-booking",
-            storageBucket: "mohameds-booking.firebasestorage.app",
-            messagingSenderId: "547186990707",
-            appId: "1:547186990707:web:8e273902d7f3bf2781d406",
-            measurementId: "G-G2HMBCFESR"
-        };
-
-        const app = initializeApp(firebaseConfig);
-        const db = getFirestore(app);
-        const auth = getAuth(app);
-
+            </div>    <script>
+        // --- GLOBAL ADMIN CONTROLLER ---
+        // Using window.firebaseSDK from index.html for consistency
+        
+        let db, auth;
         let disabledDays = [];
         let defaultHours = [9, 10, 11, 12, 13, 14, 15, 16, 17, 18, 19, 20];
         let selectedAdminDate = null;
         let daySpecificSlots = null;
         let unsubscribeDaySlots = null;
+
+        // Initialize from Global SDK
+        function initAdmin() {
+            if (!window.firebaseSDK || !window.firebaseApp) {
+                console.warn("Retrying admin init...");
+                setTimeout(initAdmin, 500);
+                return;
+            }
+            
+            const { getFirestore, getAuth, onAuthStateChanged } = window.firebaseSDK;
+            db = getFirestore(window.firebaseApp);
+            auth = getAuth(window.firebaseApp);
+
+            onAuthStateChanged(auth, (user) => {
+                if (user) {
+                    document.getElementById('login-view').style.display = 'none';
+                    document.getElementById('admin-view').style.display = 'block';
+                    loadBookings();
+                    loadAvailability();
+                } else {
+                    document.getElementById('login-view').style.display = 'block';
+                    document.getElementById('admin-view').style.display = 'none';
+                }
+            });
+        }
 
         // --- UTILITIES ---
         window.openWA = (phone, name) => {
@@ -188,98 +194,62 @@
         };
 
         window.markPaid = async (id) => {
+            const { doc, updateDoc } = window.firebaseSDK;
             await updateDoc(doc(db, "bookings", id), { status: 'paid' });
         };
 
-        window.addSlot = async () => {
-            const input = document.getElementById('new-slot-hour');
-            const hour = parseInt(input.value);
-            if (isNaN(hour) || hour < 0 || hour > 23) return;
-            
-            const currentSlots = daySpecificSlots || defaultHours;
-            if (currentSlots.includes(hour)) return;
-            
-            const newHours = [...currentSlots, hour].sort((a,b) => a-b);
-            await setDoc(doc(db, "day_configs", selectedAdminDate), { hours: newHours });
-            input.value = '';
-        };
-
-        window.removeSlot = async (hour) => {
-            const currentSlots = daySpecificSlots || defaultHours;
-            const newHours = currentSlots.filter(h => h !== hour);
-            await setDoc(doc(db, "day_configs", selectedAdminDate), { hours: newHours });
-        };
-
-        window.logout = () => signOut(auth);
-
-        // --- AUTH ---
-        onAuthStateChanged(auth, (user) => {
-            if (user) {
-                document.getElementById('login-view').style.display = 'none';
-                document.getElementById('admin-view').style.display = 'block';
-                loadBookings();
-                loadAvailability();
-            } else {
-                document.getElementById('login-view').style.display = 'block';
-                document.getElementById('admin-view').style.display = 'none';
-            }
-        });
+        window.logout = () => window.firebaseSDK.signOut(auth);
 
         // --- DATA LOADERS ---
         function loadBookings() {
-            try {
-                const q = query(collection(db, "bookings"), orderBy("createdAt", "desc"));
-                onSnapshot(q, (snapshot) => {
-                    const list = document.getElementById('bookings-list');
-                    if (!list) return;
-                    list.innerHTML = '';
-                    if (snapshot.empty) {
-                        list.innerHTML = '<tr><td colspan="4" style="text-align:center; padding:2rem; color:var(--text-muted);">Aucune réservation trouvée.</td></tr>';
-                        return;
-                    }
-                    snapshot.forEach((docSnap) => {
-                        const data = docSnap.data();
-                        const row = document.createElement('tr');
-                        const sName = data.studentName || 'Sans Nom';
-                        const sPhone = data.studentPhone || 'Pas de numéro';
-                        const sDate = data.date || '---';
-                        const sTime = data.time || '---';
-                        
-                        row.innerHTML = `
-                            <td><div style="font-weight:600; font-size:0.85rem;">${sDate}</div><div style="font-size:0.75rem; color:var(--primary);">${sTime}</div></td>
-                            <td><div style="font-weight:600;">${sName}</div><div style="font-size:0.75rem; color:var(--text-muted);">${sPhone}</div></td>
-                            <td><span class="status-pill status-${data.status || 'pending'}">${data.status || 'pending'}</span></td>
-                            <td>
-                                <div style="display:flex; gap:0.5rem;">
-                                    <button class="action-btn wa-btn" onclick="openWA('${sPhone}', '${sName.replace(/'/g, "\\'")}')" title="WhatsApp"><i class="fab fa-whatsapp"></i></button>
-                                    <button class="action-btn glass" onclick="markPaid('${docSnap.id}')" title="Valider Paiement" style="color:var(--accent);"><i class="fas fa-check"></i></button>
-                                </div>
-                            </td>
-                        `;
-                        list.appendChild(row);
-                    });
-                }, (err) => {
-                    console.error("Firestore Bookings Error:", err);
-                    alert("Erreur base de données (Réservations) : " + err.message);
+            const { collection, query, orderBy, onSnapshot } = window.firebaseSDK;
+            const q = query(collection(db, "bookings"), orderBy("createdAt", "desc"));
+            
+            onSnapshot(q, (snapshot) => {
+                const list = document.getElementById('bookings-list');
+                if (!list) return;
+                list.innerHTML = '';
+                
+                if (snapshot.empty) {
+                    list.innerHTML = '<tr><td colspan="4" style="text-align:center; padding:2rem; color:var(--text-muted); opacity:0.5;">Aucune réservation trouvée.</td></tr>';
+                    return;
+                }
+
+                snapshot.forEach((docSnap) => {
+                    const data = docSnap.data();
+                    const row = document.createElement('tr');
+                    const sName = data.studentName || 'Sans Nom';
+                    const sPhone = data.studentPhone || '---';
+                    
+                    row.innerHTML = `
+                        <td><div style="font-weight:600; font-size:0.85rem;">${data.date || '---'}</div><div style="font-size:0.75rem; color:var(--primary);">${data.time || '---'}</div></td>
+                        <td><div style="font-weight:600;">${sName}</div><div style="font-size:0.75rem; color:var(--text-muted); font-size:0.75rem;">${sPhone}</div></td>
+                        <td><span class="status-pill status-${data.status || 'pending'}">${data.status || 'En attente'}</span></td>
+                        <td>
+                            <div style="display:flex; gap:0.5rem;">
+                                <button class="action-btn wa-btn" onclick="openWA('${sPhone}', '${sName.replace(/'/g, "\\'")}')" title="WhatsApp"><i class="fab fa-whatsapp"></i></button>
+                                <button class="action-btn glass" onclick="markPaid('${docSnap.id}')" title="Valider Paiement" style="color:var(--accent);"><i class="fas fa-check"></i></button>
+                            </div>
+                        </td>
+                    `;
+                    list.appendChild(row);
                 });
-            } catch (err) {
-                console.error("Load bookings crash:", err);
-            }
+            }, (err) => alert("Erreur réservations: " + err.message));
         }
 
         function loadAvailability() {
+            const { collection, onSnapshot, getDoc, doc } = window.firebaseSDK;
+            
             onSnapshot(collection(db, "disabled_days"), (snapshot) => {
                 disabledDays = snapshot.docs.map(d => d.id);
                 renderAdminCalendar();
-            }, (err) => {
-                console.error("Firestore Availability Error:", err);
             });
 
             getDoc(doc(db, "config", "slots")).then(snap => {
                 if (snap.exists()) {
                     defaultHours = snap.data().hours.sort((a,b) => a-b);
                 }
-            }).catch(err => console.error("Config fetch error:", err));
+            });
         }
 
         function renderAdminCalendar() {
@@ -304,14 +274,15 @@
                 el.textContent = d;
                 
                 const isBlocked = disabledDays.includes(dayKey);
-                el.style.background = isBlocked ? 'rgba(239, 68, 68, 0.2)' : 'rgba(16, 185, 129, 0.2)';
-                el.style.border = isBlocked ? '1px solid #ef4444' : '1px solid #10b981';
-                el.style.color = 'white';
+                el.style.background = isBlocked ? 'rgba(239, 68, 68, 0.15)' : 'rgba(16, 185, 129, 0.1)';
+                el.style.border = isBlocked ? '1.5px solid #ef4444' : '1px solid rgba(16, 185, 129, 0.3)';
+                el.style.color = isBlocked ? '#fca5a5' : '#34d399';
                 el.style.fontWeight = '700';
 
                 if (selectedAdminDate === dayKey) {
+                    el.style.background = 'white';
+                    el.style.color = '#0f172a';
                     el.style.border = '2px solid white';
-                    el.style.boxShadow = '0 0 15px rgba(255,255,255,0.3)';
                 }
                 
                 el.onclick = () => selectDate(dayKey);
@@ -321,12 +292,8 @@
 
         async function selectDate(dayKey) {
             selectedAdminDate = dayKey;
-            renderAdminCalendar();
-            
             document.getElementById('no-day-selected').style.display = 'none';
             document.getElementById('day-detail-card').style.display = 'block';
-
-            const title = document.getElementById('selected-day-title');
             const subtitle = document.getElementById('selected-day-subtitle');
             const blockBtn = document.getElementById('block-day-btn');
             
