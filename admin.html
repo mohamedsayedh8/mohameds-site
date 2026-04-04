@@ -239,10 +239,10 @@
                     const data = docSnap.data();
                     const row = document.createElement('tr');
                     const sName = data.studentName || 'Sans Nom';
-                    const sPhone = data.studentPhone || '---';
+                    const sPhone = (data.studentPhone || '').replace(/[^0-9+]/g, '');
                     row.innerHTML = `
                         <td><div style="font-weight:600; font-size:0.85rem;">${data.date || '---'}</div><div style="font-size:0.75rem; color:var(--primary);">${data.time || '---'}</div></td>
-                        <td><div style="font-weight:600;">${sName}</div><div style="font-size:0.75rem; color:var(--text-muted); font-size:0.75rem;">${sPhone}</div></td>
+                        <td><div style="font-weight:600;">${sName}</div><div style="font-size:0.75rem; color:var(--text-muted); font-size:0.75rem;">${sPhone || '---'}</div></td>
                         <td><span class="status-pill status-${data.status || 'pending'}">${data.status || 'En attente'}</span></td>
                         <td>
                             <div style="display:flex; gap:0.5rem;">
@@ -260,6 +260,7 @@
             onSnapshot(collection(db, "disabled_days"), (snapshot) => {
                 disabledDays = snapshot.docs.map(d => d.id);
                 renderAdminCalendar();
+                if (selectedAdminDate) window.selectDate(selectedAdminDate);
             });
             getDoc(doc(db, "config", "slots")).then(snap => {
                 if (snap.exists()) defaultHours = snap.data().hours.sort((a,b) => a-b);
@@ -284,32 +285,39 @@
                 el.className = 'calendar-day';
                 el.textContent = d;
                 const isBlocked = disabledDays.includes(dayKey);
-                el.style.background = isBlocked ? 'rgba(239, 68, 68, 0.15)' : 'rgba(16, 185, 129, 0.1)';
-                el.style.border = isBlocked ? '1.5px solid #ef4444' : '1px solid rgba(16, 185, 129, 0.3)';
-                el.style.color = isBlocked ? '#fca5a5' : '#34d399';
+                el.style.background = isBlocked ? 'rgba(239, 68, 68, 0.15)' : (selectedAdminDate === dayKey ? 'white' : 'rgba(16, 185, 129, 0.1)');
+                el.style.border = isBlocked ? '1.5px solid #ef4444' : (selectedAdminDate === dayKey ? '2px solid white' : '1px solid rgba(16, 185, 129, 0.3)');
+                el.style.color = isBlocked ? '#fca5a5' : (selectedAdminDate === dayKey ? '#0f172a' : '#34d399');
                 el.style.fontWeight = '700';
-                if (selectedAdminDate === dayKey) {
-                    el.style.background = 'white';
-                    el.style.color = '#0f172a';
-                    el.style.border = '2px solid white';
-                }
-                el.onclick = () => selectDate(dayKey);
+                el.style.minHeight = '3rem';
+                el.onclick = () => window.selectDate(dayKey);
                 grid.appendChild(el);
             }
         }
 
         window.selectDate = async function(dayKey) {
             selectedAdminDate = dayKey;
-            document.getElementById('no-day-selected').style.display = 'none';
-            document.getElementById('day-detail-card').style.display = 'block';
+            console.log("Selecting date:", dayKey);
+            const view = document.getElementById('day-detail-card');
+            const placeholder = document.getElementById('no-day-selected');
+            if (placeholder) placeholder.style.display = 'none';
+            if (view) view.style.display = 'block';
+            
             const dateObj = new Date(dayKey);
             const formatted = new Intl.DateTimeFormat('fr-FR', { weekday: 'long', day: 'numeric', month: 'long' }).format(dateObj);
             document.getElementById('selected-day-title').textContent = formatted.charAt(0).toUpperCase() + formatted.slice(1);
+            
             const isBlocked = disabledDays.includes(dayKey);
             const blockBtn = document.getElementById('block-day-btn');
-            blockBtn.textContent = isBlocked ? "🔓 Débloquer ce jour" : "🔒 Bloquer ce jour";
-            blockBtn.onclick = () => toggleDayBlock(dayKey, !isBlocked);
+            blockBtn.textContent = isBlocked ? "🔓 Débloquer ce jour complet" : "🔒 Bloquer ce jour complet";
+            blockBtn.className = isBlocked ? "action-btn glass" : "action-btn danger";
+            blockBtn.style.width = "100%";
+            blockBtn.style.marginBottom = "1.5rem";
+            blockBtn.style.color = isBlocked ? "var(--primary)" : "var(--danger)";
+            blockBtn.onclick = () => window.toggleDayBlock(dayKey, !isBlocked);
+
             renderAdminCalendar();
+            
             if (unsubscribeDaySlots) unsubscribeDaySlots();
             unsubscribeDaySlots = onSnapshot(doc(db, "day_configs", dayKey), (snap) => {
                 daySpecificSlots = snap.exists() ? snap.data().hours.sort((a,b) => a-b) : null;
@@ -320,20 +328,26 @@
         window.toggleDayBlock = async function(dayKey, block) {
             if (block) await setDoc(doc(db, "disabled_days", dayKey), { blocked: true });
             else await deleteDoc(doc(db, "disabled_days", dayKey));
-            window.selectDate(dayKey);
+            // Snapshot will refresh UI
         };
 
         function renderSlotsManager() {
             const list = document.getElementById('slots-list');
+            if (!list) return;
             list.innerHTML = '';
+            list.style.display = 'flex';
+            list.style.flexWrap = 'wrap';
+            list.style.gap = '0.5rem';
+            list.style.marginBottom = '1.5rem';
+            
             const hours = daySpecificSlots || defaultHours;
             if (!daySpecificSlots) {
                 const info = document.createElement('p');
                 info.style.fontSize = '0.75rem';
                 info.style.color = 'var(--primary)';
                 info.style.width = '100%';
-                info.style.marginBottom = '1rem';
-                info.textContent = "(Utilise le planning standard 9h-20h)";
+                info.style.marginBottom = '0.5rem';
+                info.textContent = "(Standard 9h-20h)";
                 list.appendChild(info);
             }
 
@@ -345,13 +359,10 @@
                 badge.style.gap = '0.5rem';
                 badge.style.padding = '0.5rem 0.8rem';
                 badge.style.cursor = 'default';
-                badge.innerHTML = `${hour}h <i class="fas fa-times" style="cursor:pointer; color:var(--danger);" onclick="removeSlot(${hour})"></i>`;
+                badge.innerHTML = `${hour}h <i class="fas fa-times" style="cursor:pointer; color:var(--accent);" onclick="removeSlot(${hour})"></i>`;
                 list.appendChild(badge);
             });
         }
-    </script>
-</body>
-</html>
     </script>
 </body>
 </html>
