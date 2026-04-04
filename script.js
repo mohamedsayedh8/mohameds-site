@@ -160,7 +160,7 @@ const apps = {
         id: 'whatsapp_bot_cours',
         icon: '🤖',
         iconUrl: 'assets/images/whatsapp-bot-icon.png',
-        name: 'Assistant WhatsApp',
+        name: 'Assistant Cours',
         tagline: {
             fr: 'Votre assistant de cours bilingue.',
             en: 'Your bilingual course assistant.',
@@ -176,7 +176,7 @@ const apps = {
             en: ['Bilingual Assistant (French/Arabic)', 'Smart intent detection', 'Real-time admin statistics', 'Dynamic link management'],
             ar: ['مساعد ثنائي اللغة (فرنسي/عربي)', 'كشف ذكي للنية', 'إحصائيات إدارية فورية', 'إدارة ديناميكية للروابط']
         },
-        whatsapp: 'https://wa.me/33751410392',
+        whatsapp: 'https://wa.me/33759275623',
         screenshots: [
             'assets/images/whatsapp_bot_s1.png',
             'assets/images/whatsapp_bot_s2.png',
@@ -606,12 +606,14 @@ function openAppModal(appId) {
                         <i class="fab fa-telegram"></i> Ouvrir sur Telegram
                     </a>
                     ` : `
-                    <a href="${app.appStore}" target="_blank" class="btn ${app.appStore === '#' ? 'glass' : 'btn-primary'}" style="${app.appStore === '#' ? 'pointer-events:none;opacity:0.4;' : ''}">
+                    ${(app.appStore && app.appStore !== '#') ? `
+                    <a href="${app.appStore}" target="_blank" class="btn btn-primary">
                         <i class="fab fa-apple"></i> App Store
-                    </a>
-                    <a href="${app.playStore}" target="_blank" class="btn glass" style="${app.playStore === '#' ? 'pointer-events:none;opacity:0.4;' : ''}">
+                    </a>` : ''}
+                    ${(app.playStore && app.playStore !== '#') ? `
+                    <a href="${app.playStore}" target="_blank" class="btn glass">
                         <i class="fab fa-google-play"></i> Google Play
-                    </a>
+                    </a>` : ''}
                     `}
                     ${app.whatsapp ? `
                     <a href="${app.whatsapp}" target="_blank" class="btn glass" style="background:rgba(37,211,102,0.12); color:#25D366; border-color:rgba(37,211,102,0.25);">
