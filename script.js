@@ -1036,9 +1036,12 @@ window.handleDayClick = function(date, el) {
 
 window.renderSlots = function(date) {
     const container = document.getElementById('slots-grid');
+    if (!container) return;
     container.innerHTML = '';
-    // Use availableHours from config or default
-    availableHours.forEach(hour => {
+    
+    const hours = currentDaySlots || defaultHours;
+    
+    hours.forEach(hour => {
         const slot = document.createElement('div');
         slot.className = 'time-slot glass';
         slot.textContent = `${hour}:00 - ${hour+1}:00`;
