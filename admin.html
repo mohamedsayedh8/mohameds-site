@@ -143,7 +143,6 @@
                         <div style="display: flex; gap: 0.5rem;">
                             <input type="number" id="new-slot-hour" placeholder="Ajouter (ex: 21)" style="flex: 1; margin: 0; padding: 0.6rem;">
                             <button class="btn btn-primary" onclick="addSlot()"><i class="fas fa-plus"></i></button>
-                        </div>
                     </div>
                 </div>
                 
@@ -154,6 +153,53 @@
             </div>
         </div>
     </div>
+
+    <style>
+        /* Toast Notification */
+        #toast {
+            position: fixed;
+            top: 2rem;
+            right: 2rem;
+            padding: 1rem 1.5rem;
+            background: rgba(16, 185, 129, 0.95);
+            color: white;
+            border-radius: 1rem;
+            backdrop-filter: blur(10px);
+            box-shadow: 0 10px 25px rgba(0,0,0,0.3);
+            border: 1px solid rgba(255,255,255,0.2);
+            transform: translateY(-150%);
+            transition: transform 0.4s cubic-bezier(0.18, 0.89, 0.32, 1.28);
+            z-index: 9999;
+            font-weight: 600;
+        }
+        #toast.show { transform: translateY(0); }
+        
+        .hour-pill {
+            padding: 0.6rem 1rem;
+            border-radius: 0.75rem;
+            font-size: 0.9rem;
+            font-weight: 600;
+            cursor: pointer;
+            transition: all 0.3s ease;
+            text-align: center;
+            min-width: 4rem;
+            border: 1.5px solid rgba(255,255,255,0.1);
+        }
+        .hour-pill.active {
+            background: var(--primary);
+            color: white;
+            box-shadow: 0 5px 15px rgba(37, 99, 235, 0.3);
+        }
+        .hour-pill.inactive {
+            background: rgba(255,255,255,0.05);
+            color: var(--text-muted);
+            text-decoration: line-through;
+            opacity: 0.5;
+            border-color: transparent;
+        }
+    </style>
+
+    <div id="toast">Action réussie !</div>
 
     <script type="module">
         import { initializeApp } from "https://www.gstatic.com/firebasejs/10.7.1/firebase-app.js";
@@ -176,10 +222,19 @@
         const auth = getAuth(app);
 
         let disabledDays = [];
-        let defaultHours = [9, 10, 11, 12, 13, 14, 15, 16, 17, 18, 19, 20];
+        const STANDARD_HOURS = [9, 10, 11, 12, 13, 14, 15, 16, 17, 18, 19, 20];
+        let disabledSlotsForDay = [];
         let selectedAdminDate = null;
-        let daySpecificSlots = null;
-        let unsubscribeDaySlots = null;
+        let unsubscribeSlots = null;
+
+        // --- TOAST UTILITY ---
+        window.showToast = (msg, color = "rgba(16, 185, 129, 0.95)") => {
+            const t = document.getElementById('toast');
+            t.textContent = msg;
+            t.style.background = color;
+            t.classList.add('show');
+            setTimeout(() => t.classList.remove('show'), 3000);
+        };
 
         // --- AUTH ---
         onAuthStateChanged(auth, (user) => {
@@ -188,7 +243,6 @@
                 document.getElementById('admin-view').style.display = 'block';
                 loadBookings();
                 loadAvailability();
-                renderAdminCalendar();
             } else {
                 document.getElementById('login-view').style.display = 'block';
                 document.getElementById('admin-view').style.display = 'none';
@@ -203,23 +257,26 @@
                 const pass = document.getElementById('admin-password').value;
                 const btn = e.target.querySelector('button');
                 try {
-                    if (btn) btn.disabled = true;
+                    btn.disabled = true;
                     await signInWithEmailAndPassword(auth, email, pass);
+                    window.showToast("Bienvenue Mohamed !");
                 } catch (err) {
-                    alert("Erreur de connexion : " + err.message);
-                    if (btn) btn.disabled = false;
+                    alert("Erreur: " + err.message);
+                    btn.disabled = false;
                 }
             };
         }
 
         // --- UTILITIES ---
         window.openWA = (phone, name) => {
-            const msg = encodeURIComponent(`Bonjour ${name}, c'est Mohamed de M Académie. Je vous contacte pour votre réservation. Voici le lien pour le paiement : https://revolut.me/mohamed`);
-            window.open(`https://wa.me/${phone.replace(/\s/g, '')}?text=${msg}`, '_blank');
+            const clean = (phone || '').replace(/[^0-9+]/g, '');
+            if (!clean) return alert("Numéro invalide");
+            window.open(`https://wa.me/${clean}`, '_blank');
         };
 
         window.markPaid = async (id) => {
             await updateDoc(doc(db, "bookings", id), { status: 'paid' });
+            window.showToast("Réservation marquée comme payée !");
         };
 
         window.logout = () => signOut(auth);
@@ -232,7 +289,7 @@
                 if (!list) return;
                 list.innerHTML = '';
                 if (snapshot.empty) {
-                    list.innerHTML = '<tr><td colspan="4" style="text-align:center; padding:2rem; color:var(--text-muted); opacity:0.5;">Aucune réservation trouvée.</td></tr>';
+                    list.innerHTML = '<tr><td colspan="4" style="text-align:center; padding:3rem; color:var(--text-muted); opacity:0.5;">Aucune réservation trouvée.</td></tr>';
                     return;
                 }
                 snapshot.forEach((docSnap) => {
@@ -241,19 +298,19 @@
                     const sName = data.studentName || 'Sans Nom';
                     const sPhone = (data.studentPhone || '').replace(/[^0-9+]/g, '');
                     row.innerHTML = `
-                        <td><div style="font-weight:600; font-size:0.85rem;">${data.date || '---'}</div><div style="font-size:0.75rem; color:var(--primary);">${data.time || '---'}</div></td>
-                        <td><div style="font-weight:600;">${sName}</div><div style="font-size:0.75rem; color:var(--text-muted); font-size:0.75rem;">${sPhone || '---'}</div></td>
-                        <td><span class="status-pill status-${data.status || 'pending'}">${data.status || 'En attente'}</span></td>
+                        <td><div style="font-weight:600; font-size:0.85rem;">${data.date || '---'}</div><div style="font-size:0.75rem; color:var(--primary);">${data.time || '---'}:00</div></td>
+                        <td><div style="font-weight:600;">${sName}</div><div style="font-size:0.75rem; color:var(--text-muted);">${sPhone || '---'}</div></td>
+                        <td><span class="status-pill status-${data.status || 'pending'}">${data.status || 'pending'}</span></td>
                         <td>
                             <div style="display:flex; gap:0.5rem;">
-                                <button class="action-btn wa-btn" onclick="openWA('${sPhone}', '${sName.replace(/'/g, "\\'")}')" title="WhatsApp"><i class="fab fa-whatsapp"></i></button>
-                                <button class="action-btn glass" onclick="markPaid('${docSnap.id}')" title="Valider Paiement" style="color:var(--accent);"><i class="fas fa-check"></i></button>
+                                <button class="action-btn wa-btn" onclick="openWA('${sPhone}', '${sName.replace(/'/g, "\\'")}')"><i class="fab fa-whatsapp"></i></button>
+                                <button class="action-btn glass" onclick="markPaid('${docSnap.id}')" style="color:var(--accent);"><i class="fas fa-check"></i></button>
                             </div>
                         </td>
                     `;
                     list.appendChild(row);
                 });
-            }, (err) => alert("Erreur réservations: " + err.message));
+            });
         }
 
         function loadAvailability() {
@@ -261,9 +318,6 @@
                 disabledDays = snapshot.docs.map(d => d.id);
                 renderAdminCalendar();
                 if (selectedAdminDate) window.selectDate(selectedAdminDate);
-            });
-            getDoc(doc(db, "config", "slots")).then(snap => {
-                if (snap.exists()) defaultHours = snap.data().hours.sort((a,b) => a-b);
             });
         }
 
@@ -285,23 +339,22 @@
                 el.className = 'calendar-day';
                 el.textContent = d;
                 const isBlocked = disabledDays.includes(dayKey);
-                el.style.background = isBlocked ? 'rgba(239, 68, 68, 0.15)' : (selectedAdminDate === dayKey ? 'white' : 'rgba(16, 185, 129, 0.1)');
-                el.style.border = isBlocked ? '1.5px solid #ef4444' : (selectedAdminDate === dayKey ? '2px solid white' : '1px solid rgba(16, 185, 129, 0.3)');
-                el.style.color = isBlocked ? '#fca5a5' : (selectedAdminDate === dayKey ? '#0f172a' : '#34d399');
-                el.style.fontWeight = '700';
-                el.style.minHeight = '3rem';
+                const isSelected = selectedAdminDate === dayKey;
+                
+                el.style.background = isBlocked ? 'rgba(239, 68, 68, 0.2)' : (isSelected ? 'white' : 'rgba(16, 185, 129, 0.1)');
+                el.style.border = isSelected ? '2.5px solid white' : (isBlocked ? '1px solid #ef4444' : '1px solid rgba(16, 185, 129, 0.3)');
+                el.style.color = isSelected ? '#0f172a' : (isBlocked ? '#ef4444' : '#34d399');
+                el.style.fontWeight = '800';
+                el.style.cursor = 'pointer';
                 el.onclick = () => window.selectDate(dayKey);
                 grid.appendChild(el);
             }
         }
 
-        window.selectDate = async function(dayKey) {
+        window.selectDate = async (dayKey) => {
             selectedAdminDate = dayKey;
-            console.log("Selecting date:", dayKey);
-            const view = document.getElementById('day-detail-card');
-            const placeholder = document.getElementById('no-day-selected');
-            if (placeholder) placeholder.style.display = 'none';
-            if (view) view.style.display = 'block';
+            document.getElementById('no-day-selected').style.display = 'none';
+            document.getElementById('day-detail-card').style.display = 'block';
             
             const dateObj = new Date(dayKey);
             const formatted = new Intl.DateTimeFormat('fr-FR', { weekday: 'long', day: 'numeric', month: 'long' }).format(dateObj);
@@ -309,60 +362,63 @@
             
             const isBlocked = disabledDays.includes(dayKey);
             const blockBtn = document.getElementById('block-day-btn');
-            blockBtn.textContent = isBlocked ? "🔓 Débloquer ce jour complet" : "🔒 Bloquer ce jour complet";
-            blockBtn.className = isBlocked ? "action-btn glass" : "action-btn danger";
-            blockBtn.style.width = "100%";
-            blockBtn.style.marginBottom = "1.5rem";
-            blockBtn.style.color = isBlocked ? "var(--primary)" : "var(--danger)";
+            blockBtn.textContent = isBlocked ? "🔓 Débloquer le jour entier" : "🔒 Bloquer le jour entier";
+            blockBtn.style.background = isBlocked ? 'var(--primary)' : 'rgba(239, 68, 68, 0.15)';
+            blockBtn.style.color = isBlocked ? 'white' : 'var(--danger)';
+            blockBtn.style.border = isBlocked ? 'none' : '1px solid var(--danger)';
             blockBtn.onclick = () => window.toggleDayBlock(dayKey, !isBlocked);
-
+            
             renderAdminCalendar();
             
-            if (unsubscribeDaySlots) unsubscribeDaySlots();
-            unsubscribeDaySlots = onSnapshot(doc(db, "day_configs", dayKey), (snap) => {
-                daySpecificSlots = snap.exists() ? snap.data().hours.sort((a,b) => a-b) : null;
+            if (unsubscribeSlots) unsubscribeSlots();
+            unsubscribeSlots = onSnapshot(doc(db, "day_configs", dayKey), (snap) => {
+                disabledSlotsForDay = snap.exists() ? (snap.data().disabled_hours || []) : [];
                 renderSlotsManager();
             });
         };
 
-        window.toggleDayBlock = async function(dayKey, block) {
-            if (block) await setDoc(doc(db, "disabled_days", dayKey), { blocked: true });
-            else await deleteDoc(doc(db, "disabled_days", dayKey));
-            // Snapshot will refresh UI
+        window.toggleDayBlock = async (dayKey, block) => {
+            if (block) {
+                await setDoc(doc(db, "disabled_days", dayKey), { blocked: true });
+                window.showToast("Jour bloqué complet !", "var(--danger)");
+            } else {
+                await deleteDoc(doc(db, "disabled_days", dayKey));
+                window.showToast("Jour débloqué !");
+            }
         };
 
         function renderSlotsManager() {
             const list = document.getElementById('slots-list');
             if (!list) return;
             list.innerHTML = '';
-            list.style.display = 'flex';
-            list.style.flexWrap = 'wrap';
-            list.style.gap = '0.5rem';
-            list.style.marginBottom = '1.5rem';
+            list.style.display = 'grid';
+            list.style.gridTemplateColumns = 'repeat(auto-fill, minmax(4.5rem, 1fr))';
+            list.style.gap = '0.75rem';
+            list.style.margin = '1.5rem 0';
             
-            const hours = daySpecificSlots || defaultHours;
-            if (!daySpecificSlots) {
-                const info = document.createElement('p');
-                info.style.fontSize = '0.75rem';
-                info.style.color = 'var(--primary)';
-                info.style.width = '100%';
-                info.style.marginBottom = '0.5rem';
-                info.textContent = "(Standard 9h-20h)";
-                list.appendChild(info);
-            }
-
-            hours.forEach(hour => {
-                const badge = document.createElement('span');
-                badge.className = 'status-pill glass';
-                badge.style.display = 'flex';
-                badge.style.alignItems = 'center';
-                badge.style.gap = '0.5rem';
-                badge.style.padding = '0.5rem 0.8rem';
-                badge.style.cursor = 'default';
-                badge.innerHTML = `${hour}h <i class="fas fa-times" style="cursor:pointer; color:var(--accent);" onclick="removeSlot(${hour})"></i>`;
-                list.appendChild(badge);
+            STANDARD_HOURS.forEach(h => {
+                const pill = document.createElement('div');
+                const isDisabled = disabledSlotsForDay.includes(h);
+                pill.className = `hour-pill ${isDisabled ? 'inactive' : 'active'}`;
+                pill.textContent = `${h}h`;
+                pill.onclick = () => window.toggleHour(h, !isDisabled);
+                list.appendChild(pill);
             });
         }
+
+        window.toggleHour = async (h, disable) => {
+            const dayKey = selectedAdminDate;
+            let next = [...disabledSlotsForDay];
+            if (disable) {
+                if (!next.includes(h)) next.push(h);
+            } else {
+                next = next.filter(hour => hour !== h);
+            }
+            await setDoc(doc(db, "day_configs", dayKey), { disabled_hours: next }, { merge: true });
+            window.showToast(disable ? `${h}h bloqué` : `${h}h ouvert`);
+        };
+
+        window.addSlot = async () => { /* Not needed with toggle system */ };
     </script>
 </body>
 </html>
