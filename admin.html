@@ -1,0 +1,163 @@
+<!DOCTYPE html>
+<html lang="fr">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Admin - Mohamed's Booking</title>
+    <link rel="stylesheet" href="style.css">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.1/css/all.min.css">
+    <style>
+        body { background: #0f172a; padding: 2rem; }
+        .admin-card { max-width: 1000px; margin: 0 auto; padding: 2rem; border-radius: 2rem; }
+        .admin-header { display: flex; justify-content: space-between; align-items: center; margin-bottom: 2rem; }
+        .bookings-table { width: 100%; border-collapse: collapse; margin-top: 1rem; }
+        .bookings-table th, .bookings-table td { padding: 1rem; text-align: left; border-bottom: 1px solid rgba(255,255,255,0.05); }
+        .status-pill { padding: 0.2rem 0.6rem; border-radius: 1rem; font-size: 0.75rem; font-weight: 700; }
+        .status-pending { background: rgba(245, 158, 11, 0.1); color: #f59e0b; }
+        .status-paid { background: rgba(16, 185, 129, 0.1); color: #10b981; }
+        .action-btn { padding: 0.5rem 1rem; border-radius: 0.5rem; font-size: 0.8rem; cursor: pointer; border: none; margin-right: 0.5rem; }
+        .wa-btn { background: #25D366; color: white; }
+        .login-container { max-width: 400px; margin: 10vh auto; text-align: center; }
+        .calendar-manage { margin-top: 3rem; background: rgba(255,255,255,0.02); padding: 2rem; border-radius: 1.5rem; }
+        .sync-box { margin-top: 2rem; padding: 1rem; background: rgba(59, 130, 246, 0.1); border-radius: 1rem; border: 1px solid rgba(59, 130, 246, 0.2); }
+    </style>
+</head>
+<body>
+    <div id="login-view" class="login-container glass admin-card" style="display: block;">
+        <h2 style="margin-bottom: 1.5rem;">Admin Login</h2>
+        <form id="login-form">
+            <div class="form-group" style="text-align: left;">
+                <label>Email</label>
+                <input type="email" id="admin-email" required>
+            </div>
+            <div class="form-group" style="text-align: left;">
+                <label>Mot de passe</label>
+                <input type="password" id="admin-password" required>
+            </div>
+            <button type="submit" class="btn btn-primary w-100">Se connecter</button>
+        </form>
+    </div>
+
+    <div id="admin-view" class="glass admin-card" style="display: none;">
+        <div class="admin-header">
+            <div>
+                <h1>Dashboard Réservations</h1>
+                <p style="color: var(--text-muted);">Gérez vos cours et vos disponibilités.</p>
+            </div>
+            <button class="btn glass" onclick="logout()">Déconnexion</button>
+        </div>
+
+        <div class="sync-box">
+            <h3 style="font-size: 1rem; color: #60a5fa;"><i class="fas fa-calendar-alt"></i> Synchronisation iPhone</h3>
+            <p style="font-size: 0.85rem; margin: 0.5rem 0;">Copiez ce lien et ajoutez-le comme "Calendrier avec abonnement" sur votre iPhone.</p>
+            <code style="display: block; background: rgba(0,0,0,0.2); padding: 0.5rem; border-radius: 0.5rem; font-size: 0.75rem;">https://us-central1-mohameds-net.cloudfunctions.net/icalFeed?id=SECRET_KEY</code>
+        </div>
+
+        <div style="margin-top: 2rem;">
+            <h3>Dernières Réservations</h3>
+            <table class="bookings-table">
+                <thead>
+                    <tr>
+                        <th>Date</th>
+                        <th>Heure</th>
+                        <th>Élève</th>
+                        <th>Téléphone</th>
+                        <th>Status</th>
+                        <th>Actions</th>
+                    </tr>
+                </thead>
+                <tbody id="bookings-list">
+                    <!-- Rows injected here -->
+                </tbody>
+            </table>
+        </div>
+
+        <div class="calendar-manage">
+            <h3>Gérer les disponibilités</h3>
+            <p style="font-size: 0.85rem; color: var(--text-muted); margin-bottom: 1rem;">Cliquez sur un jour dans le site principal pour le bloquer/débloquer (Interface bientôt disponible ici).</p>
+            <a href="index.html" class="btn glass" target="_blank">Voir le site</a>
+        </div>
+    </div>
+
+    <script type="module">
+        import { initializeApp } from "https://www.gstatic.com/firebasejs/10.7.1/firebase-app.js";
+        import { getFirestore, collection, onSnapshot, query, orderBy, doc, updateDoc } from "https://www.gstatic.com/firebasejs/10.7.1/firebase-firestore.js";
+        import { getAuth, signInWithEmailAndPassword, onAuthStateChanged, signOut } from "https://www.gstatic.com/firebasejs/10.7.1/firebase-auth.js";
+
+        // Real Firebase Config
+        const firebaseConfig = {
+            apiKey: "AIzaSyDpZNOqxUfG7KZo2g3-7Py254P2GDSzRjo",
+            authDomain: "mohameds-booking.firebaseapp.com",
+            projectId: "mohameds-booking",
+            storageBucket: "mohameds-booking.firebasestorage.app",
+            messagingSenderId: "547186990707",
+            appId: "1:547186990707:web:8e273902d7f3bf2781d406",
+            measurementId: "G-G2HMBCFESR"
+        };
+
+        const app = initializeApp(firebaseConfig);
+        const db = getFirestore(app);
+        const auth = getAuth(app);
+
+        // Auth Logic
+        const loginForm = document.getElementById('login-form');
+        loginForm.onsubmit = async (e) => {
+            e.preventDefault();
+            const email = document.getElementById('admin-email').value;
+            const pass = document.getElementById('admin-password').value;
+            try {
+                await signInWithEmailAndPassword(auth, email, pass);
+            } catch (err) {
+                alert("Erreur de connexion : " + err.message);
+            }
+        };
+
+        window.logout = () => signOut(auth);
+
+        onAuthStateChanged(auth, (user) => {
+            if (user) {
+                document.getElementById('login-view').style.display = 'none';
+                document.getElementById('admin-view').style.display = 'block';
+                loadBookings();
+            } else {
+                document.getElementById('login-view').style.display = 'block';
+                document.getElementById('admin-view').style.display = 'none';
+            }
+        });
+
+        // Load Bookings
+        function loadBookings() {
+            const q = query(collection(db, "bookings"), orderBy("createdAt", "desc"));
+            onSnapshot(q, (snapshot) => {
+                const list = document.getElementById('bookings-list');
+                list.innerHTML = '';
+                snapshot.forEach((doc) => {
+                    const data = doc.data();
+                    const row = document.createElement('tr');
+                    row.innerHTML = `
+                        <td>${data.date}</td>
+                        <td>${data.time}</td>
+                        <td>${data.studentName}</td>
+                        <td>${data.studentPhone}</td>
+                        <td><span class="status-pill status-${data.status}">${data.status}</span></td>
+                        <td>
+                            <button class="action-btn wa-btn" onclick="openWA('${data.studentPhone}', '${data.studentName}')"><i class="fab fa-whatsapp"></i></button>
+                            <button class="action-btn glass" onclick="markPaid('${doc.id}')"><i class="fas fa-check"></i></button>
+                        </td>
+                    `;
+                    list.appendChild(row);
+                });
+            });
+        }
+
+        window.openWA = (phone, name) => {
+            const msg = encodeURIComponent(`Bonjour ${name}, c'est Mohamed. Voici le lien Revolut pour confirmer votre cours : https://revolut.me/mohamed`);
+            window.open(`https://wa.me/${phone.replace(/\s/g, '')}?text=${msg}`, '_blank');
+        };
+
+        window.markPaid = async (id) => {
+            await updateDoc(doc(db, "bookings", id), { status: 'paid' });
+        };
+    </script>
+</body>
+</html>

@@ -228,9 +228,22 @@ const translations = {
         app_locsy_tagline: 'L\'IA qui réinvente vos voyages.',
         app_mo_frame_tagline: 'Créez des posts stylés en un clic.',
         app_kinto_tagline: 'Gérez vos dépenses avec l\'IA.',
-        app_whatsapp_bot_tagline: 'Votre assistant de cours bilingue.',
-        status_available: 'Disponible',
-        status_new: 'Bientôt',
+        app_booking_title: 'Réserver un cours',
+        app_booking_tagline: 'Choisissez votre créneau en un clic.',
+        booking_modal_title: 'Réserver votre cours',
+        booking_modal_subtitle: 'Choisissez un jour et une heure disponible.',
+        select_hour: 'Sélectionnez une heure',
+        back: 'Retour',
+        form_title: 'Vos informations',
+        label_name: 'Prénom',
+        label_phone: 'Téléphone WhatsApp',
+        label_email: 'Email (Optionnel)',
+        form_disclaimer: 'Vérifiez bien votre numéro pour recevoir le lien de paiement Revolut et l\'accès au cours.',
+        btn_confirm: 'Confirmer la réservation',
+        success_title: 'Mission Validée !',
+        success_desc: 'Vous allez recevoir un lien sur WhatsApp et par mail pour le paiement et confirmer votre réservation.',
+        btn_close: 'Fermer',
+        status_booking: 'Réservation en ligne',
         status_bot: 'Bot Telegram',
         contact_title: 'Travaillons ensemble',
         contact_subtitle: 'Une idée de projet ? Contactez-moi.',
@@ -290,9 +303,22 @@ const translations = {
         app_locsy_tagline: 'AI reinventing your travels.',
         app_mo_frame_tagline: 'Create styled posts in one click.',
         app_kinto_tagline: 'Track your spending with AI.',
-        app_whatsapp_bot_tagline: 'Your bilingual course assistant.',
-        status_available: 'Available',
-        status_new: 'Coming soon',
+        app_booking_title: 'Book a lesson',
+        app_booking_tagline: 'Choose your slot in one click.',
+        booking_modal_title: 'Book your course',
+        booking_modal_subtitle: 'Choose an available day and time.',
+        select_hour: 'Select an hour',
+        back: 'Back',
+        form_title: 'Your information',
+        label_name: 'First name',
+        label_phone: 'WhatsApp phone',
+        label_email: 'Email (Optional)',
+        form_disclaimer: 'Check your number to receive the payment link and course access.',
+        btn_confirm: 'Confirm booking',
+        success_title: 'Booking Confirmed!',
+        success_desc: 'You will receive a WhatsApp and email link for payment and confirmation.',
+        btn_close: 'Close',
+        status_booking: 'Online Booking',
         status_bot: 'Telegram Bot',
         contact_title: 'Let\'s work together',
         contact_subtitle: 'Have a project in mind? Get in touch.',
@@ -352,9 +378,22 @@ const translations = {
         app_locsy_tagline: 'الذكاء الاصطناعي يعيد ابتكار رحلاتك.',
         app_mo_frame_tagline: 'اصنع منشورات مميزة بضغطة واحدة.',
         app_kinto_tagline: 'تتبع مصاريفك بالذكاء الاصطناعي.',
-        app_whatsapp_bot_tagline: 'مساعدك الشخصي للدروس (فرنسي/عربي).',
-        status_available: 'متاح',
-        status_new: 'قريباً',
+        app_booking_title: 'حجز درس',
+        app_booking_tagline: 'اختر موعدك بضغطة واحدة.',
+        booking_modal_title: 'احجز درسك',
+        booking_modal_subtitle: 'اختر يوماً ووقتاً متاحاً.',
+        select_hour: 'اختر الساعة',
+        back: 'رجوع',
+        form_title: 'معلوماتك',
+        label_name: 'الاسم الأول',
+        label_phone: 'رقم واتساب',
+        label_email: 'البريد الإلكتروني (اختياري)',
+        form_disclaimer: 'تأكد من صحة رقمك لتلقي رابط الدفع وتفاصيل الدرس.',
+        btn_confirm: 'تأكيد الحجز',
+        success_title: 'تم الحجز بنجاح!',
+        success_desc: 'ستتلقى رابطاً عبر واتساب والبريد الإلكتروني للدفع وتأكيد الحجز.',
+        btn_close: 'إغلاق',
+        status_booking: 'حجز أونلاين',
         status_bot: 'بوت Telegram',
         contact_title: 'لنعمل معاً',
         contact_subtitle: 'لديك فكرة مشروع؟ تواصل معي.',
@@ -903,7 +942,237 @@ document.addEventListener('DOMContentLoaded', () => {
         closeModalBtn.addEventListener('click', closeModal);
     }
     
+    const closeBookingBtn = document.getElementById('close-booking');
+    if (closeBookingBtn) {
+        closeBookingBtn.addEventListener('click', closeBookingModal);
+    }
+
     window.addEventListener('click', (e) => {
-        if (e.target.classList.contains('modal')) closeModal();
+        if (e.target.classList.contains('modal')) {
+            closeModal();
+            closeBookingModal();
+        }
     });
+
+    // --- Booking System Logic ---
+    let bookingFirestore;
+    let currentCalendarDate = new Date(); // Month being viewed
+    let selectedBookingDate = null;      // Specific day selected
+    let selectedBookingSlot = null;      // Specific hour selected
+
+    // Real Firebase Config
+    const firebaseConfig = {
+        apiKey: "AIzaSyDpZNOqxUfG7KZo2g3-7Py254P2GDSzRjo",
+        authDomain: "mohameds-booking.firebaseapp.com",
+        projectId: "mohameds-booking",
+        storageBucket: "mohameds-booking.firebasestorage.app",
+        messagingSenderId: "547186990707",
+        appId: "1:547186990707:web:8e273902d7f3bf2781d406",
+        measurementId: "G-G2HMBCFESR"
+    };
+
+    // Initialize Firebase
+    if (window.firebaseSDK) {
+        const { initializeApp, getFirestore } = window.firebaseSDK;
+        try {
+            const app = initializeApp(firebaseConfig);
+            bookingFirestore = getFirestore(app);
+            console.log("Firebase initialized for Booking System");
+        } catch (e) {
+            console.error("Firebase init error:", e.message);
+        }
+    }
+
+    // Modal Controls
+    window.openBookingModal = function() {
+        const modal = document.getElementById('booking-modal');
+        modal.classList.add('active');
+        document.body.style.overflow = 'hidden';
+        
+        // Reset View
+        document.getElementById('slot-selection-view').style.display = 'block';
+        document.getElementById('booking-form-view').style.display = 'none';
+        document.getElementById('booking-success-view').style.display = 'none';
+        
+        selectedBookingDate = null;
+        selectedBookingSlot = null;
+        renderCalendar();
+    };
+
+    window.closeBookingModal = function() {
+        const modal = document.getElementById('booking-modal');
+        modal.classList.remove('active');
+        document.body.style.overflow = 'auto';
+    };
+
+    // Calendar Rendering
+    function renderCalendar() {
+        const grid = document.getElementById('calendar-grid');
+        const monthDisplay = document.getElementById('current-month-display');
+        grid.innerHTML = '';
+        
+        const year = currentCalendarDate.getFullYear();
+        const month = currentCalendarDate.getMonth();
+        
+        // Display Month Name
+        const monthYear = new Intl.DateTimeFormat(currentLang, { month: 'long', year: 'numeric' }).format(currentCalendarDate);
+        monthDisplay.textContent = monthYear.charAt(0).toUpperCase() + monthYear.slice(1);
+        
+        // Get Days
+        const firstDay = new Date(year, month, 1).getDay();
+        const daysInMonth = new Date(year, month + 1, 0).getDate();
+        
+        // Adjust for Monday start (standard in FR/AR)
+        let startingDay = firstDay === 0 ? 6 : firstDay - 1;
+        
+        // Add Header
+        const dayNames = currentLang === 'ar' 
+            ? ['ن', 'ث', 'ر', 'خ', 'ج', 'س', 'ح'] 
+            : ['Lun', 'Mar', 'Mer', 'Jeu', 'Ven', 'Sam', 'Dim'];
+            
+        dayNames.forEach(name => {
+            const el = document.createElement('div');
+            el.className = 'calendar-day-header';
+            el.textContent = name;
+            grid.appendChild(el);
+        });
+
+        // Empty Slots Before 1st
+        for (let i = 0; i < startingDay; i++) {
+            const empty = document.createElement('div');
+            empty.className = 'calendar-day empty';
+            grid.appendChild(empty);
+        }
+
+        // Fill Days
+        const today = new Date();
+        today.setHours(0,0,0,0);
+
+        // Fetch Disabled Dates from local state or Firestore (Simulation for now)
+        let disabledDates = []; 
+        if (bookingFirestore) {
+            // In a real scenario, we'd fetch this from collection("disabledDates")
+        }
+
+        for (let d = 1; d <= daysInMonth; d++) {
+            const date = new Date(year, month, d);
+            const dateKey = date.toISOString().split('T')[0];
+            const el = document.createElement('div');
+            el.className = 'calendar-day';
+            el.textContent = d;
+
+            const isPast = date < today;
+            const isManuallyDisabled = disabledDates.includes(dateKey);
+
+            if (isPast || isManuallyDisabled) {
+                el.classList.add('disabled');
+            } else {
+                el.classList.add('available');
+                el.onclick = () => handleDayClick(date, el);
+            }
+
+            if (selectedBookingDate && date.getTime() === selectedBookingDate.getTime()) {
+                el.classList.add('selected');
+            }
+
+            grid.appendChild(el);
+        }
+    }
+
+    // Month Navigation
+    document.getElementById('prev-month').onclick = () => {
+        currentCalendarDate.setMonth(currentCalendarDate.getMonth() - 1);
+        renderCalendar();
+    };
+    document.getElementById('next-month').onclick = () => {
+        currentCalendarDate.setMonth(currentCalendarDate.getMonth() + 1);
+        renderCalendar();
+    };
+
+    // Day Selection
+    function handleDayClick(date, el) {
+        selectedBookingDate = date;
+        
+        // UI Selection
+        document.querySelectorAll('.calendar-day').forEach(d => d.classList.remove('selected'));
+        el.classList.add('selected');
+        
+        // Header Update
+        const dateStr = new Intl.DateTimeFormat(currentLang, { weekday: 'long', day: 'numeric', month: 'long' }).format(date);
+        document.getElementById('selected-date-display').textContent = dateStr;
+        
+        // Render Slots
+        renderSlots(date);
+    }
+
+    function renderSlots(date) {
+        const container = document.getElementById('slots-grid');
+        container.innerHTML = '';
+        
+        // Simulation of hours (9h to 18h)
+        const hours = [9, 10, 11, 12, 14, 15, 16, 17];
+        
+        hours.forEach(hour => {
+            const slot = document.createElement('div');
+            slot.className = 'time-slot glass';
+            slot.textContent = `${hour}:00 - ${hour+1}:00`;
+            
+            // Randomly disable some slots for demo
+            if (Math.random() > 0.8) {
+                slot.classList.add('disabled');
+            } else {
+                slot.onclick = () => handleSlotClick(`${hour}:00`);
+            }
+            
+            container.appendChild(slot);
+        });
+    }
+
+    function handleSlotClick(time) {
+        selectedBookingSlot = time;
+        document.getElementById('slot-selection-view').style.display = 'none';
+        document.getElementById('booking-form-view').style.display = 'block';
+    }
+
+    document.getElementById('back-to-slots').onclick = () => {
+        document.getElementById('slot-selection-view').style.display = 'block';
+        document.getElementById('booking-form-view').style.display = 'none';
+    };
+
+    // Form Submission
+    const bookingForm = document.getElementById('booking-form');
+    bookingForm.onsubmit = async (e) => {
+        e.preventDefault();
+        
+        const name = document.getElementById('student-name').value;
+        const phone = document.getElementById('student-phone').value;
+        const email = document.getElementById('student-email').value;
+        
+        const bookingData = {
+            date: selectedBookingDate.toISOString().split('T')[0],
+            time: selectedBookingSlot,
+            studentName: name,
+            studentPhone: phone,
+            studentEmail: email,
+            status: 'pending',
+            createdAt: new Date().toISOString()
+        };
+
+        console.log("Saving booking:", bookingData);
+
+        // Firebase Integration
+        if (bookingFirestore) {
+            try {
+                const { collection, addDoc } = window.firebaseSDK;
+                await addDoc(collection(bookingFirestore, "bookings"), bookingData);
+            } catch (err) {
+                console.error("Firestore save error:", err);
+                // Fallback for demo if Firebase fails
+            }
+        }
+
+        // Show Success
+        document.getElementById('booking-form-view').style.display = 'none';
+        document.getElementById('booking-success-view').style.display = 'block';
+    };
 });
