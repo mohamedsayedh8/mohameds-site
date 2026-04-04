@@ -328,6 +328,14 @@
             try {
                 const grid = document.getElementById('admin-calendar-grid');
                 if (!grid) return;
+                
+                // Force grid styles inline
+                grid.style.display = 'grid';
+                grid.style.gridTemplateColumns = 'repeat(7, 1fr)';
+                grid.style.gap = '8px';
+                grid.style.marginTop = '1.5rem';
+                grid.style.minHeight = '250px';
+                
                 grid.innerHTML = '';
                 const today = new Date();
                 const year = today.getFullYear();
@@ -350,12 +358,31 @@
                     const isBlocked = disabledDays.includes(dayKey);
                     const isSelected = selectedAdminDate === dayKey;
                     
-                    el.style.background = isBlocked ? 'rgba(239, 68, 68, 0.2)' : (isSelected ? 'white' : 'rgba(16, 185, 129, 0.1)');
-                    el.style.border = isSelected ? '2.5px solid white' : (isBlocked ? '1px solid #ef4444' : '1px solid rgba(16, 185, 129, 0.3)');
-                    el.style.color = isSelected ? '#0f172a' : (isBlocked ? '#ef4444' : '#34d399');
+                    el.style.aspectRatio = '1/1';
+                    el.style.display = 'flex';
+                    el.style.alignItems = 'center';
+                    el.style.justifyContent = 'center';
+                    el.style.borderRadius = '0.8rem';
+                    el.style.fontSize = '0.9rem';
                     el.style.fontWeight = '800';
                     el.style.cursor = 'pointer';
-                    el.style.minHeight = '3.2rem';
+                    el.style.transition = '0.2s';
+                    
+                    if (isBlocked) {
+                        el.style.background = 'rgba(239, 68, 68, 0.25)';
+                        el.style.border = '1.5px solid #ef4444';
+                        el.style.color = '#fca5a5';
+                    } else if (isSelected) {
+                        el.style.background = 'white';
+                        el.style.border = '2px solid white';
+                        el.style.color = '#0f172a';
+                        el.style.boxShadow = '0 0 15px rgba(255,255,255,0.3)';
+                    } else {
+                        el.style.background = 'rgba(16, 185, 129, 0.15)';
+                        el.style.border = '1px solid rgba(16, 185, 129, 0.3)';
+                        el.style.color = '#34d399';
+                    }
+                    
                     el.onclick = () => window.selectDate(dayKey);
                     grid.appendChild(el);
                 }
