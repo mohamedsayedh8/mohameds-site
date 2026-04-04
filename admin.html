@@ -120,9 +120,13 @@
 
             <div>
                 <div class="card glass">
-                    <div class="calendar-nav-admin">
-                        <h3><i class="fas fa-calendar-check" style="color: var(--accent);"></i> Disponibilités</h3>
-                        <span id="admin-month-display" style="font-weight: 800; color: var(--primary);">Avril</span>
+                    <div class="calendar-nav-admin" style="display: flex; justify-content: space-between; align-items: center; margin-bottom: 1.5rem;">
+                        <h3 style="margin:0;"><i class="fas fa-calendar-check" style="color: var(--accent);"></i> Disponibilités</h3>
+                        <div style="display: flex; align-items: center; gap: 1rem;">
+                            <button class="btn glass" onclick="changeMonth(-1)" style="padding: 0.3rem 0.6rem;"><i class="fas fa-chevron-left"></i></button>
+                            <span id="admin-month-display" style="font-weight: 800; color: var(--primary); min-width: 100px; text-align: center; text-transform: capitalize;"></span>
+                            <button class="btn glass" onclick="changeMonth(1)" style="padding: 0.3rem 0.6rem;"><i class="fas fa-chevron-right"></i></button>
+                        </div>
                     </div>
                     <div id="admin-calendar-grid" class="calendar-grid">
                         <!-- Mini calendar -->
