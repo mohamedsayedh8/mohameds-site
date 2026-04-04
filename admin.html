@@ -342,26 +342,47 @@
                 const grid = document.getElementById('admin-calendar-grid');
                 if (!grid) return;
                 
-                // USE FLEXBOX INSTEAD OF GRID FOR TOTAL COMPATIBILITY
                 grid.style.display = 'flex';
                 grid.style.flexWrap = 'wrap';
-                grid.style.gap = '8px';
                 grid.style.padding = '10px';
-                grid.style.minHeight = '250px';
+                grid.style.minHeight = '300px';
                 grid.style.justifyContent = 'flex-start';
-                
                 grid.innerHTML = '';
+
                 const today = new Date();
                 const year = today.getFullYear();
                 const month = today.getMonth();
                 const daysInMonth = new Date(year, month + 1, 0).getDate();
                 
-                const monthDisplay = document.getElementById('admin-month-display');
-                if (monthDisplay) {
-                    const months = ["Janvier", "Février", "Mars", "Avril", "Mai", "Juin", "Juillet", "Août", "Septembre", "Octobre", "Novembre", "Décembre"];
-                    monthDisplay.textContent = months[month] + " " + year;
+                // CALC OFFSET (Monday is first column)
+                const firstDay = new Date(year, month, 1).getDay(); // 0: Sun, 1: Mon...
+                const offset = (firstDay + 6) % 7; 
+
+                // 1. ADD WEEKDAY HEADERS
+                const days = ['L', 'M', 'M', 'J', 'V', 'S', 'D'];
+                days.forEach(day => {
+                    const el = document.createElement('div');
+                    el.className = 'calendar-header-day';
+                    el.textContent = day;
+                    el.style.width = '12.5%';
+                    el.style.textAlign = 'center';
+                    el.style.fontSize = '0.65rem';
+                    el.style.color = 'var(--primary)';
+                    el.style.fontWeight = '900';
+                    el.style.marginBottom = '10px';
+                    el.style.opacity = '0.6';
+                    grid.appendChild(el);
+                });
+
+                // 2. FILL OFFSET SLOTS
+                for (let i = 0; i < offset; i++) {
+                    const el = document.createElement('div');
+                    el.style.width = '12.5%';
+                    el.style.aspectRatio = '1/1';
+                    grid.appendChild(el);
                 }
 
+                // 3. RENDER ACTUAL DAYS
                 for (let d = 1; d <= daysInMonth; d++) {
                     const mm = (month + 1).toString().padStart(2, '0');
                     const dd = d.toString().padStart(2, '0');
@@ -374,34 +395,42 @@
                     const isBlocked = disabledDays.includes(dayKey);
                     const isSelected = selectedAdminDate === dayKey;
                     
-                    // FIXED DIMENSIONS
-                    el.style.width = '42px';
-                    el.style.height = '42px';
+                    el.style.width = '12.5%';
+                    el.style.aspectRatio = '1/1';
                     el.style.display = 'flex';
                     el.style.alignItems = 'center';
                     el.style.justifyContent = 'center';
-                    el.style.borderRadius = '8px';
-                    el.style.fontSize = '16px';
-                    el.style.fontWeight = '900';
+                    el.style.borderRadius = '12px';
+                    el.style.fontSize = '0.9rem';
+                    el.style.fontWeight = '800';
                     el.style.cursor = 'pointer';
-                    el.style.margin = '2px';
+                    el.style.margin = '1px';
+                    el.style.transition = '0.3s cubic-bezier(0.4, 0, 0.2, 1)';
                     
                     if (isBlocked) {
-                        el.style.background = '#ef4444';
-                        el.style.color = 'white';
-                        el.style.border = '1.5px solid rgba(255,255,255,0.3)'; 
+                        el.style.background = 'rgba(239, 68, 68, 0.15)'; // Deep Red tint
+                        el.style.color = '#f87171';
+                        el.style.border = '1px solid rgba(239, 68, 68, 0.3)';
                     } else if (isSelected) {
-                        el.style.background = 'white';
+                        el.style.background = '#ffffff';
                         el.style.color = '#0f172a';
-                        el.style.border = '3px solid #3b82f6';
+                        el.style.border = '2px solid var(--primary)';
+                        el.style.boxShadow = '0 0 20px rgba(96, 165, 250, 0.4)';
+                        el.style.transform = 'scale(1.05)';
                     } else {
-                        el.style.background = '#059669'; // Emerald green
-                        el.style.color = 'white';
-                        el.style.border = '1px solid rgba(255,255,255,0.1)';
+                        el.style.background = 'rgba(16, 185, 129, 0.1)'; // Deep Green tint
+                        el.style.color = '#34d399';
+                        el.style.border = '1px solid rgba(16, 185, 129, 0.2)';
                     }
                     
                     el.onclick = () => window.selectDate(dayKey);
                     grid.appendChild(el);
+                }
+                
+                const monthDisplay = document.getElementById('admin-month-display');
+                if (monthDisplay) {
+                    const months = ["Janvier", "Février", "Mars", "Avril", "Mai", "Juin", "Juillet", "Août", "Septembre", "Octobre", "Novembre", "Décembre"];
+                    monthDisplay.textContent = months[month] + " " + year;
                 }
             } catch (err) { console.error("Calendar render error:", err); }
         }
@@ -413,9 +442,8 @@
                 list.innerHTML = '';
                 list.style.display = 'flex';
                 list.style.flexWrap = 'wrap';
-                list.style.gap = '0.5rem';
+                list.style.gap = '0.6rem';
                 
-                // Use standard hours if none provided
                 const hoursToRender = [9, 10, 11, 12, 13, 14, 15, 16, 17, 18, 19, 20];
                 
                 hoursToRender.forEach(h => {
@@ -423,20 +451,23 @@
                     const isDisabled = (disabledSlotsForDay || []).includes(h);
                     pill.textContent = `${h}h`;
                     
-                    pill.style.padding = '0.7rem 1rem';
-                    pill.style.borderRadius = '8px';
+                    pill.style.padding = '0.8rem 1.2rem';
+                    pill.style.borderRadius = '12px';
                     pill.style.textAlign = 'center';
                     pill.style.cursor = 'pointer';
                     pill.style.fontWeight = '700';
-                    pill.style.minWidth = '4.5rem';
+                    pill.style.minWidth = '5rem';
+                    pill.style.transition = '0.3s';
+                    pill.style.border = '1px solid var(--border)';
 
                     if (isDisabled) {
-                        pill.style.background = 'rgba(255,255,255,0.05)';
-                        pill.style.color = 'rgba(255,255,255,0.3)';
+                        pill.style.background = 'rgba(255,255,255,0.03)';
+                        pill.style.color = 'rgba(255,255,255,0.2)';
                         pill.style.textDecoration = 'line-through';
                     } else {
-                        pill.style.background = '#3b82f6';
+                        pill.style.background = 'var(--primary)';
                         pill.style.color = 'white';
+                        pill.style.boxShadow = '0 5px 15px rgba(59, 130, 246, 0.2)';
                     }
 
                     pill.onclick = () => window.toggleHour(h, !isDisabled);
@@ -450,23 +481,18 @@
             const debugEl = document.getElementById('auth-debug');
             if (user) {
                 if (debugEl) {
-                    debugEl.innerHTML = `<i class="fas fa-user-shield"></i> Connecté: <span style="color:white;">${user.email}</span>`;
-                    debugEl.style.background = "rgba(16, 185, 129, 0.2)";
-                    debugEl.style.color = "var(--accent)";
+                    debugEl.innerHTML = `<i class="fas fa-user-shield"></i> <span style="opacity:0.6;">Connecté:</span> <span style="color:white;">${user.email}</span>`;
+                    debugEl.style.background = "rgba(59, 130, 246, 0.15)";
+                    debugEl.style.color = "var(--primary)";
                 }
                 
                 document.getElementById('login-view').style.display = 'none';
                 document.getElementById('admin-view').style.display = 'block';
                 
-                // FORCE RENDER IN LOOP FOR 5 SECONDS
-                let renderedCount = 0;
-                const forceLoop = setInterval(() => {
-                    renderAdminCalendar();
-                    renderedCount++;
-                    if (renderedCount > 10) clearInterval(forceLoop);
-                }, 500);
+                // Load once
+                renderAdminCalendar();
                 
-                // Load Bookings
+                // Real-time loops
                 onSnapshot(query(collection(db, "bookings"), orderBy("createdAt", "desc")), (snap) => {
                     const list = document.getElementById('bookings-list');
                     if (!list) return;
