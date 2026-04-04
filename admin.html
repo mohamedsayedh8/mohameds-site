@@ -175,26 +175,25 @@
         #toast.show { transform: translateY(0); }
         
         .hour-pill {
-            padding: 0.6rem 1rem;
+            padding: 0.8rem 1rem;
             border-radius: 0.75rem;
             font-size: 0.9rem;
-            font-weight: 600;
+            font-weight: 700;
             cursor: pointer;
-            transition: all 0.3s ease;
+            transition: all 0.2s ease;
             text-align: center;
-            min-width: 4rem;
             border: 1.5px solid rgba(255,255,255,0.1);
         }
         .hour-pill.active {
             background: var(--primary);
             color: white;
-            box-shadow: 0 5px 15px rgba(37, 99, 235, 0.3);
+            box-shadow: 0 5px 20px rgba(37, 99, 235, 0.3);
+            border-color: rgba(255,255,255,0.3);
         }
         .hour-pill.inactive {
             background: rgba(255,255,255,0.05);
-            color: var(--text-muted);
+            color: rgba(255,255,255,0.2);
             text-decoration: line-through;
-            opacity: 0.5;
             border-color: transparent;
         }
     </style>
@@ -206,7 +205,7 @@
         import { getFirestore, collection, onSnapshot, query, orderBy, doc, updateDoc, setDoc, deleteDoc, getDoc } from "https://www.gstatic.com/firebasejs/10.7.1/firebase-firestore.js";
         import { getAuth, signInWithEmailAndPassword, onAuthStateChanged, signOut } from "https://www.gstatic.com/firebasejs/10.7.1/firebase-auth.js";
 
-        // Admin Autonomous Config
+        // CONFIG
         const firebaseConfig = {
             apiKey: "AIzaSyDpZNOqxUfG7KZo2g3-7Py254P2GDSzRjo",
             authDomain: "mohameds-booking.firebaseapp.com",
@@ -221,152 +220,60 @@
         const db = getFirestore(app);
         const auth = getAuth(app);
 
+        // GLOBAL STATE
         let disabledDays = [];
         const STANDARD_HOURS = [9, 10, 11, 12, 13, 14, 15, 16, 17, 18, 19, 20];
         let disabledSlotsForDay = [];
         let selectedAdminDate = null;
         let unsubscribeSlots = null;
 
-        // --- TOAST UTILITY ---
+        // --- GLOBAL EXPORTS ---
         window.showToast = (msg, color = "rgba(16, 185, 129, 0.95)") => {
             const t = document.getElementById('toast');
-            t.textContent = msg;
-            t.style.background = color;
-            t.classList.add('show');
-            setTimeout(() => t.classList.remove('show'), 3000);
+            if (t) {
+                t.textContent = msg;
+                t.style.background = color;
+                t.classList.add('show');
+                setTimeout(() => t.classList.remove('show'), 3000);
+            }
         };
 
-        // --- AUTH ---
-        onAuthStateChanged(auth, (user) => {
-            if (user) {
-                document.getElementById('login-view').style.display = 'none';
-                document.getElementById('admin-view').style.display = 'block';
-                loadBookings();
-                loadAvailability();
-            } else {
-                document.getElementById('login-view').style.display = 'block';
-                document.getElementById('admin-view').style.display = 'none';
-            }
-        });
-
-        const loginForm = document.getElementById('login-form');
-        if (loginForm) {
-            loginForm.onsubmit = async (e) => {
-                e.preventDefault();
-                const email = document.getElementById('admin-email').value;
-                const pass = document.getElementById('admin-password').value;
-                const btn = e.target.querySelector('button');
-                try {
-                    btn.disabled = true;
-                    await signInWithEmailAndPassword(auth, email, pass);
-                    window.showToast("Bienvenue Mohamed !");
-                } catch (err) {
-                    alert("Erreur: " + err.message);
-                    btn.disabled = false;
-                }
-            };
-        }
-
-        // --- UTILITIES ---
         window.openWA = (phone, name) => {
             const clean = (phone || '').replace(/[^0-9+]/g, '');
-            if (!clean) return alert("Numéro invalide");
+            if (!clean || clean.length < 5) return alert("Numéro invalide pour WhatsApp");
             window.open(`https://wa.me/${clean}`, '_blank');
         };
 
         window.markPaid = async (id) => {
-            await updateDoc(doc(db, "bookings", id), { status: 'paid' });
-            window.showToast("Réservation marquée comme payée !");
+            try {
+                await updateDoc(doc(db, "bookings", id), { status: 'paid' });
+                window.showToast("Paiement validé !");
+            } catch (err) { window.showToast("Erreur", "var(--danger)"); }
         };
 
         window.logout = () => signOut(auth);
 
-        // --- DATA LOADERS ---
-        function loadBookings() {
-            const q = query(collection(db, "bookings"), orderBy("createdAt", "desc"));
-            onSnapshot(q, (snapshot) => {
-                const list = document.getElementById('bookings-list');
-                if (!list) return;
-                list.innerHTML = '';
-                if (snapshot.empty) {
-                    list.innerHTML = '<tr><td colspan="4" style="text-align:center; padding:3rem; color:var(--text-muted); opacity:0.5;">Aucune réservation trouvée.</td></tr>';
-                    return;
-                }
-                snapshot.forEach((docSnap) => {
-                    const data = docSnap.data();
-                    const row = document.createElement('tr');
-                    const sName = data.studentName || 'Sans Nom';
-                    const sPhone = (data.studentPhone || '').replace(/[^0-9+]/g, '');
-                    row.innerHTML = `
-                        <td><div style="font-weight:600; font-size:0.85rem;">${data.date || '---'}</div><div style="font-size:0.75rem; color:var(--primary);">${data.time || '---'}:00</div></td>
-                        <td><div style="font-weight:600;">${sName}</div><div style="font-size:0.75rem; color:var(--text-muted);">${sPhone || '---'}</div></td>
-                        <td><span class="status-pill status-${data.status || 'pending'}">${data.status || 'pending'}</span></td>
-                        <td>
-                            <div style="display:flex; gap:0.5rem;">
-                                <button class="action-btn wa-btn" onclick="openWA('${sPhone}', '${sName.replace(/'/g, "\\'")}')"><i class="fab fa-whatsapp"></i></button>
-                                <button class="action-btn glass" onclick="markPaid('${docSnap.id}')" style="color:var(--accent);"><i class="fas fa-check"></i></button>
-                            </div>
-                        </td>
-                    `;
-                    list.appendChild(row);
-                });
-            });
-        }
-
-        function loadAvailability() {
-            onSnapshot(collection(db, "disabled_days"), (snapshot) => {
-                disabledDays = snapshot.docs.map(d => d.id);
-                renderAdminCalendar();
-                if (selectedAdminDate) window.selectDate(selectedAdminDate);
-            });
-        }
-
-        function renderAdminCalendar() {
-            const grid = document.getElementById('admin-calendar-grid');
-            const monthDisplay = document.getElementById('admin-month-display');
-            if (!grid || !monthDisplay) return;
-            grid.innerHTML = '';
-            const today = new Date();
-            const year = today.getFullYear();
-            const month = today.getMonth();
-            const daysInMonth = new Date(year, month + 1, 0).getDate();
-            const monthName = new Intl.DateTimeFormat('fr-FR', { month: 'long', year: 'numeric' }).format(today);
-            monthDisplay.textContent = monthName.charAt(0).toUpperCase() + monthName.slice(1);
-            for (let d = 1; d <= daysInMonth; d++) {
-                const date = new Date(year, month, d);
-                const dayKey = date.toISOString().split('T')[0];
-                const el = document.createElement('div');
-                el.className = 'calendar-day';
-                el.textContent = d;
-                const isBlocked = disabledDays.includes(dayKey);
-                const isSelected = selectedAdminDate === dayKey;
-                
-                el.style.background = isBlocked ? 'rgba(239, 68, 68, 0.2)' : (isSelected ? 'white' : 'rgba(16, 185, 129, 0.1)');
-                el.style.border = isSelected ? '2.5px solid white' : (isBlocked ? '1px solid #ef4444' : '1px solid rgba(16, 185, 129, 0.3)');
-                el.style.color = isSelected ? '#0f172a' : (isBlocked ? '#ef4444' : '#34d399');
-                el.style.fontWeight = '800';
-                el.style.cursor = 'pointer';
-                el.onclick = () => window.selectDate(dayKey);
-                grid.appendChild(el);
-            }
-        }
-
         window.selectDate = async (dayKey) => {
             selectedAdminDate = dayKey;
-            document.getElementById('no-day-selected').style.display = 'none';
-            document.getElementById('day-detail-card').style.display = 'block';
+            const view = document.getElementById('day-detail-card');
+            const placeholder = document.getElementById('no-day-selected');
+            if (placeholder) placeholder.style.display = 'none';
+            if (view) view.style.display = 'block';
             
             const dateObj = new Date(dayKey);
             const formatted = new Intl.DateTimeFormat('fr-FR', { weekday: 'long', day: 'numeric', month: 'long' }).format(dateObj);
-            document.getElementById('selected-day-title').textContent = formatted.charAt(0).toUpperCase() + formatted.slice(1);
+            const title = document.getElementById('selected-day-title');
+            if (title) title.textContent = formatted.charAt(0).toUpperCase() + formatted.slice(1);
             
-            const isBlocked = disabledDays.includes(dayKey);
             const blockBtn = document.getElementById('block-day-btn');
-            blockBtn.textContent = isBlocked ? "🔓 Débloquer le jour entier" : "🔒 Bloquer le jour entier";
-            blockBtn.style.background = isBlocked ? 'var(--primary)' : 'rgba(239, 68, 68, 0.15)';
-            blockBtn.style.color = isBlocked ? 'white' : 'var(--danger)';
-            blockBtn.style.border = isBlocked ? 'none' : '1px solid var(--danger)';
-            blockBtn.onclick = () => window.toggleDayBlock(dayKey, !isBlocked);
+            if (blockBtn) {
+                const isBlocked = disabledDays.includes(dayKey);
+                blockBtn.textContent = isBlocked ? "🔓 Débloquer le jour entier" : "🔒 Bloquer le jour entier";
+                blockBtn.style.background = isBlocked ? 'var(--primary)' : 'rgba(239, 68, 68, 0.15)';
+                blockBtn.style.color = isBlocked ? 'white' : 'var(--danger)';
+                blockBtn.style.border = isBlocked ? 'none' : '1px solid var(--danger)';
+                blockBtn.onclick = () => window.toggleDayBlock(dayKey, !isBlocked);
+            }
             
             renderAdminCalendar();
             
@@ -378,14 +285,82 @@
         };
 
         window.toggleDayBlock = async (dayKey, block) => {
-            if (block) {
-                await setDoc(doc(db, "disabled_days", dayKey), { blocked: true });
-                window.showToast("Jour bloqué complet !", "var(--danger)");
-            } else {
-                await deleteDoc(doc(db, "disabled_days", dayKey));
-                window.showToast("Jour débloqué !");
+            try {
+                if (block) {
+                    await setDoc(doc(db, "disabled_days", dayKey), { blocked: true });
+                    window.showToast("JOUR BLOQUÉ 🔒", "var(--danger)");
+                } else {
+                    await deleteDoc(doc(db, "disabled_days", dayKey));
+                    window.showToast("JOUR OUVERT 🔓");
+                }
+            } catch (err) { window.showToast("Erreur", "var(--danger)"); }
+        };
+
+        window.toggleHour = async (h, disable) => {
+            try {
+                let next = [...disabledSlotsForDay];
+                if (disable) {
+                    if (!next.includes(h)) next.push(h);
+                } else {
+                    next = next.filter(hour => hour !== h);
+                }
+                await setDoc(doc(db, "day_configs", selectedAdminDate), { disabled_hours: next }, { merge: true });
+                window.showToast(disable ? `${h}h BLOQUÉ` : `${h}h OUVERT`);
+            } catch (err) { window.showToast("Erreur", "var(--danger)"); }
+        };
+
+        window.addSlot = async () => {
+            const input = document.getElementById('new-slot-hour');
+            const h = parseInt(input.value);
+            if (isNaN(h) || h < 0 || h > 23) return;
+            const docRef = doc(db, "config", "slots");
+            const snap = await getDoc(docRef);
+            let current = snap.exists() ? snap.data().hours : [9, 10, 11, 12, 13, 14, 15, 16, 17, 18, 19, 20];
+            if (!current.includes(h)) {
+                await setDoc(docRef, { hours: [...current, h].sort((a,b)=>a-b) });
+                window.showToast(`Heure ${h}h ajoutée au planning`);
+                input.value = '';
             }
         };
+
+        // --- RENDERING ---
+        function renderAdminCalendar() {
+            try {
+                const grid = document.getElementById('admin-calendar-grid');
+                if (!grid) return;
+                grid.innerHTML = '';
+                const today = new Date();
+                const year = today.getFullYear();
+                const month = today.getMonth();
+                const daysInMonth = new Date(year, month + 1, 0).getDate();
+                
+                const monthDisplay = document.getElementById('admin-month-display');
+                if (monthDisplay) {
+                    const monthName = new Intl.DateTimeFormat('fr-FR', { month: 'long', year: 'numeric' }).format(today);
+                    monthDisplay.textContent = monthName.charAt(0).toUpperCase() + monthName.slice(1);
+                }
+
+                for (let d = 1; d <= daysInMonth; d++) {
+                    const date = new Date(year, month, d);
+                    const dayKey = date.toISOString().split('T')[0];
+                    const el = document.createElement('div');
+                    el.className = 'calendar-day';
+                    el.textContent = d;
+                    
+                    const isBlocked = disabledDays.includes(dayKey);
+                    const isSelected = selectedAdminDate === dayKey;
+                    
+                    el.style.background = isBlocked ? 'rgba(239, 68, 68, 0.2)' : (isSelected ? 'white' : 'rgba(16, 185, 129, 0.1)');
+                    el.style.border = isSelected ? '2.5px solid white' : (isBlocked ? '1px solid #ef4444' : '1px solid rgba(16, 185, 129, 0.3)');
+                    el.style.color = isSelected ? '#0f172a' : (isBlocked ? '#ef4444' : '#34d399');
+                    el.style.fontWeight = '800';
+                    el.style.cursor = 'pointer';
+                    el.style.minHeight = '3.2rem';
+                    el.onclick = () => window.selectDate(dayKey);
+                    grid.appendChild(el);
+                }
+            } catch (err) { console.error("Calendar render error:", err); }
+        }
 
         function renderSlotsManager() {
             const list = document.getElementById('slots-list');
@@ -406,19 +381,68 @@
             });
         }
 
-        window.toggleHour = async (h, disable) => {
-            const dayKey = selectedAdminDate;
-            let next = [...disabledSlotsForDay];
-            if (disable) {
-                if (!next.includes(h)) next.push(h);
-            } else {
-                next = next.filter(hour => hour !== h);
-            }
-            await setDoc(doc(db, "day_configs", dayKey), { disabled_hours: next }, { merge: true });
-            window.showToast(disable ? `${h}h bloqué` : `${h}h ouvert`);
-        };
+        // --- AUTH & LOADERS ---
+        onAuthStateChanged(auth, (user) => {
+            if (user) {
+                document.getElementById('login-view').style.display = 'none';
+                document.getElementById('admin-view').style.display = 'block';
+                
+                // Load Bookings
+                onSnapshot(query(collection(db, "bookings"), orderBy("createdAt", "desc")), (snap) => {
+                    const list = document.getElementById('bookings-list');
+                    if (!list) return;
+                    list.innerHTML = '';
+                    if (snap.empty) {
+                        list.innerHTML = '<tr><td colspan="4" style="text-align:center; padding:3rem; color:var(--text-muted); opacity:0.5;">Aucune réservation trouvée.</td></tr>';
+                        return;
+                    }
+                    snap.forEach((docSnap) => {
+                        const data = docSnap.data();
+                        const row = document.createElement('tr');
+                        const sName = data.studentName || 'Élève';
+                        const sPhone = (data.studentPhone || '').replace(/[^0-9+]/g, '');
+                        row.innerHTML = `
+                            <td><div style="font-weight:600; font-size:0.85rem;">${data.date || '---'}</div><div style="font-size:0.75rem; color:var(--primary); font-weight:700;">${data.time || '---'}:00</div></td>
+                            <td><div style="font-weight:600;">${sName}</div><div style="font-size:0.75rem; color:var(--text-muted);">${sPhone || '---'}</div></td>
+                            <td><span class="status-pill status-${data.status || 'pending'}">${(data.status || 'En attente').toUpperCase()}</span></td>
+                            <td>
+                                <div style="display:flex; gap:0.5rem;">
+                                    <button class="action-btn wa-btn" onclick="openWA('${sPhone}', '${sName.replace(/'/g, "\\'")}')"><i class="fab fa-whatsapp"></i></button>
+                                    <button class="action-btn glass" onclick="markPaid('${docSnap.id}')" style="color:var(--accent);"><i class="fas fa-check"></i></button>
+                                </div>
+                            </td>
+                        `;
+                        list.appendChild(row);
+                    });
+                });
 
-        window.addSlot = async () => { /* Not needed with toggle system */ };
+                // Load Availability
+                onSnapshot(collection(db, "disabled_days"), (snap) => {
+                    disabledDays = snap.docs.map(d => d.id);
+                    renderAdminCalendar();
+                    if (selectedAdminDate) window.selectDate(selectedAdminDate);
+                });
+
+            } else {
+                document.getElementById('login-view').style.display = 'block';
+                document.getElementById('admin-view').style.display = 'none';
+            }
+        });
+
+        const loginForm = document.getElementById('login-form');
+        if (loginForm) {
+            loginForm.onsubmit = async (e) => {
+                e.preventDefault();
+                const btn = e.target.querySelector('button');
+                try {
+                    btn.disabled = true;
+                    await signInWithEmailAndPassword(auth, document.getElementById('admin-email').value, document.getElementById('admin-password').value);
+                } catch (err) {
+                    alert("Identifiants incorrects");
+                    btn.disabled = false;
+                }
+            };
+        }
     </script>
 </body>
 </html>
