@@ -254,34 +254,44 @@
         window.logout = () => signOut(auth);
 
         window.selectDate = async (dayKey) => {
-            selectedAdminDate = dayKey;
-            const view = document.getElementById('day-detail-card');
-            const placeholder = document.getElementById('no-day-selected');
-            if (placeholder) placeholder.style.display = 'none';
-            if (view) view.style.display = 'block';
-            
-            const dateObj = new Date(dayKey);
-            const formatted = new Intl.DateTimeFormat('fr-FR', { weekday: 'long', day: 'numeric', month: 'long' }).format(dateObj);
-            const title = document.getElementById('selected-day-title');
-            if (title) title.textContent = formatted.charAt(0).toUpperCase() + formatted.slice(1);
-            
-            const blockBtn = document.getElementById('block-day-btn');
-            if (blockBtn) {
-                const isBlocked = disabledDays.includes(dayKey);
-                blockBtn.textContent = isBlocked ? "🔓 Débloquer le jour entier" : "🔒 Bloquer le jour entier";
-                blockBtn.style.background = isBlocked ? 'var(--primary)' : 'rgba(239, 68, 68, 0.15)';
-                blockBtn.style.color = isBlocked ? 'white' : 'var(--danger)';
-                blockBtn.style.border = isBlocked ? 'none' : '1px solid var(--danger)';
-                blockBtn.onclick = () => window.toggleDayBlock(dayKey, !isBlocked);
+            try {
+                selectedAdminDate = dayKey;
+                const view = document.getElementById('day-detail-card');
+                const placeholder = document.getElementById('no-day-selected');
+                if (placeholder) placeholder.style.display = 'none';
+                if (view) view.style.display = 'block';
+                
+                const dateObj = new Date(dayKey);
+                const formatted = new Intl.DateTimeFormat('fr-FR', { weekday: 'long', day: 'numeric', month: 'long' }).format(dateObj);
+                const title = document.getElementById('selected-day-title');
+                if (title) title.textContent = formatted.charAt(0).toUpperCase() + formatted.slice(1);
+                
+                const blockBtn = document.getElementById('block-day-btn');
+                if (blockBtn) {
+                    const isBlocked = disabledDays.includes(dayKey);
+                    blockBtn.textContent = isBlocked ? "🔓 Débloquer le jour entier" : "🔒 Bloquer le jour entier";
+                    blockBtn.style.background = isBlocked ? 'var(--primary)' : 'rgba(239, 68, 68, 0.15)';
+                    blockBtn.style.color = isBlocked ? 'white' : 'var(--danger)';
+                    blockBtn.style.border = isBlocked ? 'none' : '1px solid var(--danger)';
+                    blockBtn.onclick = () => window.toggleDayBlock(dayKey, !isBlocked);
+                }
+                
+                renderAdminCalendar();
+                
+                // CRUCIAL: Load slot config for this specific day
+                if (unsubscribeSlots) unsubscribeSlots();
+                unsubscribeSlots = onSnapshot(doc(db, "day_configs", dayKey), (snap) => {
+                    disabledSlotsForDay = snap.exists() ? (snap.data().disabled_hours || []) : [];
+                    renderSlotsManager();
+                }, (err) => {
+                    console.error("Slots load error:", err);
+                    alert("Erreur accès horaires: " + err.message);
+                    // Fallback: render anyway
+                    renderSlotsManager();
+                });
+            } catch (err) {
+                alert("Erreur sélection date: " + err.message);
             }
-            
-            renderAdminCalendar();
-            
-            if (unsubscribeSlots) unsubscribeSlots();
-            unsubscribeSlots = onSnapshot(doc(db, "day_configs", dayKey), (snap) => {
-                disabledSlotsForDay = snap.exists() ? (snap.data().disabled_hours || []) : [];
-                renderSlotsManager();
-            });
         };
 
         window.toggleDayBlock = async (dayKey, block) => {
@@ -298,6 +308,7 @@
 
         window.toggleHour = async (h, disable) => {
             try {
+                if (!selectedAdminDate) return alert("Sélectionnez un jour d'abord");
                 let next = [...disabledSlotsForDay];
                 if (disable) {
                     if (!next.includes(h)) next.push(h);
@@ -313,14 +324,16 @@
             const input = document.getElementById('new-slot-hour');
             const h = parseInt(input.value);
             if (isNaN(h) || h < 0 || h > 23) return;
-            const docRef = doc(db, "config", "slots");
-            const snap = await getDoc(docRef);
-            let current = snap.exists() ? snap.data().hours : [9, 10, 11, 12, 13, 14, 15, 16, 17, 18, 19, 20];
-            if (!current.includes(h)) {
-                await setDoc(docRef, { hours: [...current, h].sort((a,b)=>a-b) });
-                window.showToast(`Heure ${h}h ajoutée au planning`);
-                input.value = '';
-            }
+            try {
+                const docRef = doc(db, "config", "slots");
+                const snap = await getDoc(docRef);
+                let current = snap.exists() ? snap.data().hours : [9, 10, 11, 12, 13, 14, 15, 16, 17, 18, 19, 20];
+                if (!current.includes(h)) {
+                    await setDoc(docRef, { hours: [...current, h].sort((a,b)=>a-b) });
+                    window.showToast(`Heure ${h}h ajoutée au planning`);
+                    input.value = '';
+                }
+            } catch (err) { alert("Erreur ajout heure: " + err.message); }
         };
 
         // --- RENDERING ---
@@ -334,7 +347,7 @@
                 grid.style.flexWrap = 'wrap';
                 grid.style.gap = '8px';
                 grid.style.padding = '10px';
-                grid.style.minHeight = '300px';
+                grid.style.minHeight = '250px';
                 grid.style.justifyContent = 'flex-start';
                 
                 grid.innerHTML = '';
@@ -362,8 +375,8 @@
                     const isSelected = selectedAdminDate === dayKey;
                     
                     // FIXED DIMENSIONS
-                    el.style.width = '45px';
-                    el.style.height = '45px';
+                    el.style.width = '42px';
+                    el.style.height = '42px';
                     el.style.display = 'flex';
                     el.style.alignItems = 'center';
                     el.style.justifyContent = 'center';
@@ -374,17 +387,17 @@
                     el.style.margin = '2px';
                     
                     if (isBlocked) {
-                        el.style.background = '#ef4444'; // Red
+                        el.style.background = '#ef4444';
                         el.style.color = 'white';
-                        el.style.border = '2px solid yellow'; 
+                        el.style.border = '1.5px solid rgba(255,255,255,0.3)'; 
                     } else if (isSelected) {
                         el.style.background = 'white';
                         el.style.color = '#0f172a';
                         el.style.border = '3px solid #3b82f6';
                     } else {
-                        el.style.background = '#10b981'; // green
+                        el.style.background = '#059669'; // Emerald green
                         el.style.color = 'white';
-                        el.style.border = '1.5px solid yellow';
+                        el.style.border = '1px solid rgba(255,255,255,0.1)';
                     }
                     
                     el.onclick = () => window.selectDate(dayKey);
@@ -394,38 +407,42 @@
         }
 
         function renderSlotsManager() {
-            const list = document.getElementById('slots-list');
-            if (!list) return;
-            list.innerHTML = '';
-            list.style.display = 'flex';
-            list.style.flexWrap = 'wrap';
-            list.style.gap = '0.5rem';
-            
-            STANDARD_HOURS.forEach(h => {
-                const pill = document.createElement('div');
-                const isDisabled = disabledSlotsForDay.includes(h);
-                pill.className = `hour-pill ${isDisabled ? 'inactive' : 'active'}`;
-                pill.textContent = `${h}h`;
+            try {
+                const list = document.getElementById('slots-list');
+                if (!list) return;
+                list.innerHTML = '';
+                list.style.display = 'flex';
+                list.style.flexWrap = 'wrap';
+                list.style.gap = '0.5rem';
                 
-                pill.style.padding = '0.7rem 1rem';
-                pill.style.borderRadius = '8px';
-                pill.style.textAlign = 'center';
-                pill.style.cursor = 'pointer';
-                pill.style.fontWeight = '700';
-                pill.style.minWidth = '4.5rem';
+                // Use standard hours if none provided
+                const hoursToRender = [9, 10, 11, 12, 13, 14, 15, 16, 17, 18, 19, 20];
+                
+                hoursToRender.forEach(h => {
+                    const pill = document.createElement('div');
+                    const isDisabled = (disabledSlotsForDay || []).includes(h);
+                    pill.textContent = `${h}h`;
+                    
+                    pill.style.padding = '0.7rem 1rem';
+                    pill.style.borderRadius = '8px';
+                    pill.style.textAlign = 'center';
+                    pill.style.cursor = 'pointer';
+                    pill.style.fontWeight = '700';
+                    pill.style.minWidth = '4.5rem';
 
-                if (isDisabled) {
-                    pill.style.background = 'rgba(255,255,255,0.05)';
-                    pill.style.color = 'rgba(255,255,255,0.2)';
-                    pill.style.textDecoration = 'line-through';
-                } else {
-                    pill.style.background = '#3b82f6';
-                    pill.style.color = 'white';
-                }
+                    if (isDisabled) {
+                        pill.style.background = 'rgba(255,255,255,0.05)';
+                        pill.style.color = 'rgba(255,255,255,0.3)';
+                        pill.style.textDecoration = 'line-through';
+                    } else {
+                        pill.style.background = '#3b82f6';
+                        pill.style.color = 'white';
+                    }
 
-                pill.onclick = () => window.toggleHour(h, !isDisabled);
-                list.appendChild(pill);
-            });
+                    pill.onclick = () => window.toggleHour(h, !isDisabled);
+                    list.appendChild(pill);
+                });
+            } catch (err) { console.error("Slots render error:", err); }
         }
 
         // --- AUTH & LOADERS ---
