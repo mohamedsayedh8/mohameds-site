@@ -329,12 +329,13 @@
                 const grid = document.getElementById('admin-calendar-grid');
                 if (!grid) return;
                 
-                // Force grid styles inline
+                // FORCE DIMENSIONS AND GRID
                 grid.style.display = 'grid';
                 grid.style.gridTemplateColumns = 'repeat(7, 1fr)';
-                grid.style.gap = '8px';
-                grid.style.marginTop = '1.5rem';
-                grid.style.minHeight = '250px';
+                grid.style.gap = '10px';
+                grid.style.padding = '10px';
+                grid.style.minHeight = '300px';
+                grid.style.width = '100%';
                 
                 grid.innerHTML = '';
                 const today = new Date();
@@ -344,13 +345,16 @@
                 
                 const monthDisplay = document.getElementById('admin-month-display');
                 if (monthDisplay) {
-                    const monthName = new Intl.DateTimeFormat('fr-FR', { month: 'long', year: 'numeric' }).format(today);
-                    monthDisplay.textContent = monthName.charAt(0).toUpperCase() + monthName.slice(1);
+                    const months = ["Janvier", "Février", "Mars", "Avril", "Mai", "Juin", "Juillet", "Août", "Septembre", "Octobre", "Novembre", "Décembre"];
+                    monthDisplay.textContent = months[month] + " " + year;
                 }
 
                 for (let d = 1; d <= daysInMonth; d++) {
-                    const date = new Date(year, month, d);
-                    const dayKey = date.toISOString().split('T')[0];
+                    // Manual dayKey construction (safer)
+                    const mm = (month + 1).toString().padStart(2, '0');
+                    const dd = d.toString().padStart(2, '0');
+                    const dayKey = `${year}-${mm}-${dd}`;
+                    
                     const el = document.createElement('div');
                     el.className = 'calendar-day';
                     el.textContent = d;
@@ -358,29 +362,29 @@
                     const isBlocked = disabledDays.includes(dayKey);
                     const isSelected = selectedAdminDate === dayKey;
                     
-                    el.style.aspectRatio = '1/1';
+                    // FIXED PIXEL STYLES (NO COLLAPSE POSSIBLE)
+                    el.style.width = '100%';
+                    el.style.minHeight = '45px';
                     el.style.display = 'flex';
                     el.style.alignItems = 'center';
                     el.style.justifyContent = 'center';
-                    el.style.borderRadius = '0.8rem';
-                    el.style.fontSize = '0.9rem';
-                    el.style.fontWeight = '800';
+                    el.style.borderRadius = '10px';
+                    el.style.fontSize = '16px';
+                    el.style.fontWeight = '900';
                     el.style.cursor = 'pointer';
-                    el.style.transition = '0.2s';
                     
                     if (isBlocked) {
-                        el.style.background = 'rgba(239, 68, 68, 0.25)';
-                        el.style.border = '1.5px solid #ef4444';
-                        el.style.color = '#fca5a5';
+                        el.style.background = '#ef4444';
+                        el.style.color = '#ffffff';
+                        el.style.border = '2px solid #b91c1c';
                     } else if (isSelected) {
-                        el.style.background = 'white';
-                        el.style.border = '2px solid white';
+                        el.style.background = '#ffffff';
                         el.style.color = '#0f172a';
-                        el.style.boxShadow = '0 0 15px rgba(255,255,255,0.3)';
+                        el.style.border = '3px solid #60a5fa';
                     } else {
-                        el.style.background = 'rgba(16, 185, 129, 0.15)';
-                        el.style.border = '1px solid rgba(16, 185, 129, 0.3)';
-                        el.style.color = '#34d399';
+                        el.style.background = '#10b981';
+                        el.style.color = '#ffffff';
+                        el.style.border = '1px solid rgba(255,255,255,0.2)';
                     }
                     
                     el.onclick = () => window.selectDate(dayKey);
@@ -394,8 +398,8 @@
             if (!list) return;
             list.innerHTML = '';
             list.style.display = 'grid';
-            list.style.gridTemplateColumns = 'repeat(auto-fill, minmax(4.5rem, 1fr))';
-            list.style.gap = '0.75rem';
+            list.style.gridTemplateColumns = 'repeat(auto-fill, minmax(5rem, 1fr))';
+            list.style.gap = '0.8rem';
             list.style.margin = '1.5rem 0';
             
             STANDARD_HOURS.forEach(h => {
@@ -403,6 +407,20 @@
                 const isDisabled = disabledSlotsForDay.includes(h);
                 pill.className = `hour-pill ${isDisabled ? 'inactive' : 'active'}`;
                 pill.textContent = `${h}h`;
+                // Add explicit color for visibility
+                if (isDisabled) {
+                    pill.style.background = 'rgba(255,255,255,0.05)';
+                    pill.style.color = 'rgba(255,255,255,0.2)';
+                } else {
+                    pill.style.background = '#3b82f6';
+                    pill.style.color = '#ffffff';
+                }
+                pill.style.padding = '0.8rem';
+                pill.style.borderRadius = '10px';
+                pill.style.textAlign = 'center';
+                pill.style.cursor = 'pointer';
+                pill.style.fontWeight = '700';
+
                 pill.onclick = () => window.toggleHour(h, !isDisabled);
                 list.appendChild(pill);
             });
