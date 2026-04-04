@@ -170,9 +170,28 @@
                 return;
             }
             
-            const { getFirestore, getAuth, onAuthStateChanged } = window.firebaseSDK;
+            const { getFirestore, getAuth, onAuthStateChanged, signInWithEmailAndPassword } = window.firebaseSDK;
             db = getFirestore(window.firebaseApp);
             auth = getAuth(window.firebaseApp);
+
+            // --- LOGIN HANDLER ---
+            const loginForm = document.getElementById('login-form');
+            if (loginForm) {
+                loginForm.onsubmit = async (e) => {
+                    e.preventDefault();
+                    const email = document.getElementById('admin-email').value;
+                    const pass = document.getElementById('admin-password').value;
+                    const btn = e.target.querySelector('button');
+                    
+                    try {
+                        if (btn) btn.disabled = true;
+                        await signInWithEmailAndPassword(auth, email, pass);
+                    } catch (err) {
+                        alert("Erreur de connexion : " + err.message);
+                        if (btn) btn.disabled = false;
+                    }
+                };
+            }
 
             onAuthStateChanged(auth, (user) => {
                 if (user) {
