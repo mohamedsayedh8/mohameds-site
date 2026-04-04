@@ -155,6 +155,35 @@ const apps = {
         ],
         gradient: 'linear-gradient(135deg, #7c3aed, #4f46e5)',
         status: 'Bot'
+    },
+    whatsapp_bot_cours: {
+        id: 'whatsapp_bot_cours',
+        icon: '🤖',
+        iconUrl: 'assets/images/whatsapp-bot-icon.png',
+        name: 'Assistant WhatsApp',
+        tagline: {
+            fr: 'Votre assistant de cours bilingue.',
+            en: 'Your bilingual course assistant.',
+            ar: 'مساعدك الشخصي للدروس (فرنسي/عربي).'
+        },
+        description: {
+            fr: 'Un assistant WhatsApp intelligent (Français/Arabe) conçu pour une gestion fluide des cours. Il guide les élèves, fournit les liens de cours et tests, et propose une interface d\'administration complète pour suivre les statistiques en temps réel.',
+            en: 'A smart WhatsApp assistant (French/Arabic) designed for smooth course management. It guides students, provides course and test links, and offers a full admin interface to track statistics in real-time.',
+            ar: 'مساعد واتساب ذكي (فرنسي/عربي) مصمم لإدارة الدروس بسلاسة. يقوم بتوجيه الطلاب، وتوفير روابط الدروس والاختبارات، ويوفر واجهة إدارة كاملة لمتابعة الإحصائيات في الوقت الفعلي.'
+        },
+        features: {
+            fr: ['Assistant bilingue (Français/Arabe)', 'Détection intelligente d\'intention', 'Statistiques admin en temps réel', 'Gestion dynamique des liens'],
+            en: ['Bilingual Assistant (French/Arabic)', 'Smart intent detection', 'Real-time admin statistics', 'Dynamic link management'],
+            ar: ['مساعد ثنائي اللغة (فرنسي/عربي)', 'كشف ذكي للنية', 'إحصائيات إدارية فورية', 'إدارة ديناميكية للروابط']
+        },
+        whatsapp: 'https://wa.me/33751410392',
+        screenshots: [
+            'assets/images/whatsapp_bot_s1.png',
+            'assets/images/whatsapp_bot_s2.png',
+            'assets/images/whatsapp_bot_s3.png'
+        ],
+        gradient: 'linear-gradient(135deg, #25D366, #128C7E)',
+        status: 'Bot WhatsApp'
     }
 };
 
@@ -199,6 +228,7 @@ const translations = {
         app_locsy_tagline: 'L\'IA qui réinvente vos voyages.',
         app_mo_frame_tagline: 'Créez des posts stylés en un clic.',
         app_kinto_tagline: 'Gérez vos dépenses avec l\'IA.',
+        app_whatsapp_bot_tagline: 'Votre assistant de cours bilingue.',
         status_available: 'Disponible',
         status_new: 'Bientôt',
         status_bot: 'Bot Telegram',
@@ -260,6 +290,7 @@ const translations = {
         app_locsy_tagline: 'AI reinventing your travels.',
         app_mo_frame_tagline: 'Create styled posts in one click.',
         app_kinto_tagline: 'Track your spending with AI.',
+        app_whatsapp_bot_tagline: 'Your bilingual course assistant.',
         status_available: 'Available',
         status_new: 'Coming soon',
         status_bot: 'Telegram Bot',
@@ -321,6 +352,7 @@ const translations = {
         app_locsy_tagline: 'الذكاء الاصطناعي يعيد ابتكار رحلاتك.',
         app_mo_frame_tagline: 'اصنع منشورات مميزة بضغطة واحدة.',
         app_kinto_tagline: 'تتبع مصاريفك بالذكاء الاصطناعي.',
+        app_whatsapp_bot_tagline: 'مساعدك الشخصي للدروس (فرنسي/عربي).',
         status_available: 'متاح',
         status_new: 'قريباً',
         status_bot: 'بوت Telegram',
