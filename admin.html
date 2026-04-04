@@ -226,7 +226,6 @@
                 renderAdminCalendar();
             });
 
-            // Ensure default config exists
             getDoc(doc(db, "config", "slots")).then(snap => {
                 if (!snap.exists()) {
                     setDoc(doc(db, "config", "slots"), { hours: defaultHours });
@@ -239,6 +238,8 @@
         function renderAdminCalendar() {
             const grid = document.getElementById('admin-calendar-grid');
             const monthDisplay = document.getElementById('admin-month-display');
+            if (!grid || !monthDisplay) return;
+            
             grid.innerHTML = '';
             const today = new Date();
             const year = today.getFullYear();
@@ -259,7 +260,7 @@
                 el.style.background = isBlocked ? 'rgba(239, 68, 68, 0.2)' : 'rgba(16, 185, 129, 0.2)';
                 el.style.border = isBlocked ? '1px solid #ef4444' : '1px solid #10b981';
                 el.style.color = 'white';
-                el.style.cursor = 'pointer';
+                el.style.fontWeight = '700';
 
                 if (selectedAdminDate === dayKey) el.classList.add('selected-admin');
                 
@@ -272,23 +273,22 @@
             selectedAdminDate = dayKey;
             renderAdminCalendar();
             
+            document.getElementById('no-day-selected').style.display = 'none';
+            document.getElementById('day-detail-card').style.display = 'block';
+
             const title = document.getElementById('selected-day-title');
             const subtitle = document.getElementById('selected-day-subtitle');
-            const ui = document.getElementById('slots-manager-ui');
             const blockBtn = document.getElementById('block-day-btn');
             
-            title.innerHTML = `<i class="fas fa-clock"></i> Heures du ${dayKey}`;
-            subtitle.textContent = "Modifiez les créneaux pour ce jour spécifique.";
-            ui.style.display = 'block';
+            title.textContent = `Heures du ${new Date(dayKey).toLocaleDateString('fr-FR', { day: 'numeric', month: 'long' })}`;
+            subtitle.textContent = "Configuration spécifique pour cette date.";
 
             const isBlocked = disabledDays.includes(dayKey);
-            blockBtn.textContent = isBlocked ? "Débloquer le jour" : "Bloquer le jour complet";
-            blockBtn.style.background = isBlocked ? 'rgba(16, 185, 129, 0.1)' : 'rgba(239, 68, 68, 0.1)';
-            blockBtn.style.borderColor = isBlocked ? '#10b981' : '#ef4444';
-            blockBtn.style.color = isBlocked ? '#10b981' : '#ef4444';
+            blockBtn.textContent = isBlocked ? "Débloquer ce jour" : "Bloquer ce jour complet";
+            blockBtn.style.color = isBlocked ? 'var(--accent)' : 'var(--danger)';
+            blockBtn.style.borderColor = isBlocked ? 'var(--accent)' : 'var(--danger)';
             blockBtn.onclick = () => toggleDay(dayKey, isBlocked);
 
-            // Listen to specific day slots
             if (unsubscribeDaySlots) unsubscribeDaySlots();
             unsubscribeDaySlots = onSnapshot(doc(db, "day_configs", dayKey), (snap) => {
                 daySpecificSlots = snap.exists() ? snap.data().hours.sort((a,b) => a-b) : null;
@@ -360,5 +360,4 @@
         };
     </script>
 </body>
-</html>
 </html>

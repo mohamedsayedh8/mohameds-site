@@ -816,9 +816,6 @@ document.addEventListener('DOMContentLoaded', () => {
 
     // --- Booking System Logic ---
     let bookingFirestore;
-    let currentCalendarDate = new Date(); // Month being viewed
-    let selectedBookingDate = null;      // Specific day selected
-    let selectedBookingSlot = null;      // Specific hour selected
 
     // Real Firebase Config
     const firebaseConfig = {
@@ -923,6 +920,11 @@ let defaultHours = [9, 10, 11, 12, 13, 14, 15, 16, 17, 18, 19, 20];
 let currentDaySlots = null;
 let unsubscribeDayListener = null;
 
+// Global State
+let currentCalendarDate = new Date();
+let selectedBookingDate = null;
+let selectedBookingSlot = null;
+
 function initAvailability() {
     if (window.firebaseSDK && window.firebaseApp) {
         const { getFirestore, collection, onSnapshot, doc } = window.firebaseSDK;
@@ -961,8 +963,8 @@ window.openBookingModal = function() {
     document.getElementById('booking-form-view').style.display = 'none';
     document.getElementById('booking-success-view').style.display = 'none';
     
-    selectedBookingDate = null;
-    selectedBookingSlot = null;
+    window.selectedBookingDate = null;
+    window.selectedBookingSlot = null;
     window.renderCalendar();
 };
 
@@ -982,9 +984,9 @@ window.renderCalendar = function() {
     if (!grid || !monthDisplay) return;
     grid.innerHTML = '';
     
-    const year = currentCalendarDate.getFullYear();
-    const month = currentCalendarDate.getMonth();
-    const monthYear = new Intl.DateTimeFormat(currentLang, { month: 'long', year: 'numeric' }).format(currentCalendarDate);
+    const year = window.currentCalendarDate.getFullYear();
+    const month = window.currentCalendarDate.getMonth();
+    const monthYear = new Intl.DateTimeFormat(currentLang, { month: 'long', year: 'numeric' }).format(window.currentCalendarDate);
     monthDisplay.textContent = monthYear.charAt(0).toUpperCase() + monthYear.slice(1);
     
     const firstDay = new Date(year, month, 1).getDay();
