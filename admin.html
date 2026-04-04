@@ -151,59 +151,64 @@
                     <i class="fas fa-arrow-up" style="font-size: 1.5rem; margin-bottom: 1rem; display: block;"></i>
                     <p>Sélectionnez un jour pour gérer ses horaires spécifiques.</p>
                 </div>
-            </div>    <script>
-        // --- GLOBAL ADMIN CONTROLLER ---
-        // Using window.firebaseSDK from index.html for consistency
-        
-        let db, auth;
+            </div>
+        </div>
+    </div>
+
+    <script type="module">
+        import { initializeApp } from "https://www.gstatic.com/firebasejs/10.7.1/firebase-app.js";
+        import { getFirestore, collection, onSnapshot, query, orderBy, doc, updateDoc, setDoc, deleteDoc, getDoc } from "https://www.gstatic.com/firebasejs/10.7.1/firebase-firestore.js";
+        import { getAuth, signInWithEmailAndPassword, onAuthStateChanged, signOut } from "https://www.gstatic.com/firebasejs/10.7.1/firebase-auth.js";
+
+        // Admin Autonomous Config
+        const firebaseConfig = {
+            apiKey: "AIzaSyDpZNOqxUfG7KZo2g3-7Py254P2GDSzRjo",
+            authDomain: "mohameds-booking.firebaseapp.com",
+            projectId: "mohameds-booking",
+            storageBucket: "mohameds-booking.firebasestorage.app",
+            messagingSenderId: "547186990707",
+            appId: "1:547186990707:web:8e273902d7f3bf2781d406",
+            measurementId: "G-G2HMBCFESR"
+        };
+
+        const app = initializeApp(firebaseConfig);
+        const db = getFirestore(app);
+        const auth = getAuth(app);
+
         let disabledDays = [];
         let defaultHours = [9, 10, 11, 12, 13, 14, 15, 16, 17, 18, 19, 20];
         let selectedAdminDate = null;
         let daySpecificSlots = null;
         let unsubscribeDaySlots = null;
 
-        // Initialize from Global SDK
-        function initAdmin() {
-            if (!window.firebaseSDK || !window.firebaseApp) {
-                console.warn("Retrying admin init...");
-                setTimeout(initAdmin, 500);
-                return;
+        // --- AUTH ---
+        onAuthStateChanged(auth, (user) => {
+            if (user) {
+                document.getElementById('login-view').style.display = 'none';
+                document.getElementById('admin-view').style.display = 'block';
+                loadBookings();
+                loadAvailability();
+            } else {
+                document.getElementById('login-view').style.display = 'block';
+                document.getElementById('admin-view').style.display = 'none';
             }
-            
-            const { getFirestore, getAuth, onAuthStateChanged, signInWithEmailAndPassword } = window.firebaseSDK;
-            db = getFirestore(window.firebaseApp);
-            auth = getAuth(window.firebaseApp);
+        });
 
-            // --- LOGIN HANDLER ---
-            const loginForm = document.getElementById('login-form');
-            if (loginForm) {
-                loginForm.onsubmit = async (e) => {
-                    e.preventDefault();
-                    const email = document.getElementById('admin-email').value;
-                    const pass = document.getElementById('admin-password').value;
-                    const btn = e.target.querySelector('button');
-                    
-                    try {
-                        if (btn) btn.disabled = true;
-                        await signInWithEmailAndPassword(auth, email, pass);
-                    } catch (err) {
-                        alert("Erreur de connexion : " + err.message);
-                        if (btn) btn.disabled = false;
-                    }
-                };
-            }
-
-            onAuthStateChanged(auth, (user) => {
-                if (user) {
-                    document.getElementById('login-view').style.display = 'none';
-                    document.getElementById('admin-view').style.display = 'block';
-                    loadBookings();
-                    loadAvailability();
-                } else {
-                    document.getElementById('login-view').style.display = 'block';
-                    document.getElementById('admin-view').style.display = 'none';
+        const loginForm = document.getElementById('login-form');
+        if (loginForm) {
+            loginForm.onsubmit = async (e) => {
+                e.preventDefault();
+                const email = document.getElementById('admin-email').value;
+                const pass = document.getElementById('admin-password').value;
+                const btn = e.target.querySelector('button');
+                try {
+                    if (btn) btn.disabled = true;
+                    await signInWithEmailAndPassword(auth, email, pass);
+                } catch (err) {
+                    alert("Erreur de connexion : " + err.message);
+                    if (btn) btn.disabled = false;
                 }
-            });
+            };
         }
 
         // --- UTILITIES ---
@@ -213,33 +218,27 @@
         };
 
         window.markPaid = async (id) => {
-            const { doc, updateDoc } = window.firebaseSDK;
             await updateDoc(doc(db, "bookings", id), { status: 'paid' });
         };
 
-        window.logout = () => window.firebaseSDK.signOut(auth);
+        window.logout = () => signOut(auth);
 
         // --- DATA LOADERS ---
         function loadBookings() {
-            const { collection, query, orderBy, onSnapshot } = window.firebaseSDK;
             const q = query(collection(db, "bookings"), orderBy("createdAt", "desc"));
-            
             onSnapshot(q, (snapshot) => {
                 const list = document.getElementById('bookings-list');
                 if (!list) return;
                 list.innerHTML = '';
-                
                 if (snapshot.empty) {
                     list.innerHTML = '<tr><td colspan="4" style="text-align:center; padding:2rem; color:var(--text-muted); opacity:0.5;">Aucune réservation trouvée.</td></tr>';
                     return;
                 }
-
                 snapshot.forEach((docSnap) => {
                     const data = docSnap.data();
                     const row = document.createElement('tr');
                     const sName = data.studentName || 'Sans Nom';
                     const sPhone = data.studentPhone || '---';
-                    
                     row.innerHTML = `
                         <td><div style="font-weight:600; font-size:0.85rem;">${data.date || '---'}</div><div style="font-size:0.75rem; color:var(--primary);">${data.time || '---'}</div></td>
                         <td><div style="font-weight:600;">${sName}</div><div style="font-size:0.75rem; color:var(--text-muted); font-size:0.75rem;">${sPhone}</div></td>
@@ -257,17 +256,12 @@
         }
 
         function loadAvailability() {
-            const { collection, onSnapshot, getDoc, doc } = window.firebaseSDK;
-            
             onSnapshot(collection(db, "disabled_days"), (snapshot) => {
                 disabledDays = snapshot.docs.map(d => d.id);
                 renderAdminCalendar();
             });
-
             getDoc(doc(db, "config", "slots")).then(snap => {
-                if (snap.exists()) {
-                    defaultHours = snap.data().hours.sort((a,b) => a-b);
-                }
+                if (snap.exists()) defaultHours = snap.data().hours.sort((a,b) => a-b);
             });
         }
 
@@ -275,77 +269,63 @@
             const grid = document.getElementById('admin-calendar-grid');
             const monthDisplay = document.getElementById('admin-month-display');
             if (!grid || !monthDisplay) return;
-            
             grid.innerHTML = '';
             const today = new Date();
             const year = today.getFullYear();
             const month = today.getMonth();
             const daysInMonth = new Date(year, month + 1, 0).getDate();
-            
             const monthName = new Intl.DateTimeFormat('fr-FR', { month: 'long', year: 'numeric' }).format(today);
             monthDisplay.textContent = monthName.charAt(0).toUpperCase() + monthName.slice(1);
-
             for (let d = 1; d <= daysInMonth; d++) {
                 const date = new Date(year, month, d);
                 const dayKey = date.toISOString().split('T')[0];
                 const el = document.createElement('div');
                 el.className = 'calendar-day';
                 el.textContent = d;
-                
                 const isBlocked = disabledDays.includes(dayKey);
                 el.style.background = isBlocked ? 'rgba(239, 68, 68, 0.15)' : 'rgba(16, 185, 129, 0.1)';
                 el.style.border = isBlocked ? '1.5px solid #ef4444' : '1px solid rgba(16, 185, 129, 0.3)';
                 el.style.color = isBlocked ? '#fca5a5' : '#34d399';
                 el.style.fontWeight = '700';
-
                 if (selectedAdminDate === dayKey) {
                     el.style.background = 'white';
                     el.style.color = '#0f172a';
                     el.style.border = '2px solid white';
                 }
-                
                 el.onclick = () => selectDate(dayKey);
                 grid.appendChild(el);
             }
         }
 
-        async function selectDate(dayKey) {
+        window.selectDate = async function(dayKey) {
             selectedAdminDate = dayKey;
             document.getElementById('no-day-selected').style.display = 'none';
             document.getElementById('day-detail-card').style.display = 'block';
-            const subtitle = document.getElementById('selected-day-subtitle');
-            const blockBtn = document.getElementById('block-day-btn');
-            
-            title.textContent = `Heures du ${new Date(dayKey).toLocaleDateString('fr-FR', { day: 'numeric', month: 'long' })}`;
-            subtitle.textContent = "Cliquez sur une heure pour la supprimer ou ajoutez-en une.";
-
+            const dateObj = new Date(dayKey);
+            const formatted = new Intl.DateTimeFormat('fr-FR', { weekday: 'long', day: 'numeric', month: 'long' }).format(dateObj);
+            document.getElementById('selected-day-title').textContent = formatted.charAt(0).toUpperCase() + formatted.slice(1);
             const isBlocked = disabledDays.includes(dayKey);
-            blockBtn.textContent = isBlocked ? "Débloquer ce jour" : "Bloquer ce jour complet";
-            blockBtn.style.color = isBlocked ? 'var(--accent)' : 'var(--danger)';
-            blockBtn.style.borderColor = isBlocked ? 'var(--accent)' : 'var(--danger)';
-            blockBtn.onclick = () => toggleDay(dayKey, isBlocked);
-
+            const blockBtn = document.getElementById('block-day-btn');
+            blockBtn.textContent = isBlocked ? "🔓 Débloquer ce jour" : "🔒 Bloquer ce jour";
+            blockBtn.onclick = () => toggleDayBlock(dayKey, !isBlocked);
+            renderAdminCalendar();
             if (unsubscribeDaySlots) unsubscribeDaySlots();
             unsubscribeDaySlots = onSnapshot(doc(db, "day_configs", dayKey), (snap) => {
                 daySpecificSlots = snap.exists() ? snap.data().hours.sort((a,b) => a-b) : null;
-                renderSlotsList();
+                renderSlotsManager();
             });
-        }
+        };
 
-        async function toggleDay(dayKey, isCurrentlyBlocked) {
-            if (isCurrentlyBlocked) {
-                await deleteDoc(doc(db, "disabled_days", dayKey));
-            } else {
-                await setDoc(doc(db, "disabled_days", dayKey), { blocked: true });
-            }
-        }
+        window.toggleDayBlock = async function(dayKey, block) {
+            if (block) await setDoc(doc(db, "disabled_days", dayKey), { blocked: true });
+            else await deleteDoc(doc(db, "disabled_days", dayKey));
+            window.selectDate(dayKey);
+        };
 
-        function renderSlotsList() {
+        function renderSlotsManager() {
             const list = document.getElementById('slots-list');
-            if (!list) return;
             list.innerHTML = '';
             const hours = daySpecificSlots || defaultHours;
-            
             if (!daySpecificSlots) {
                 const info = document.createElement('p');
                 info.style.fontSize = '0.75rem';
