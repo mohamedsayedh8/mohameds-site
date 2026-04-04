@@ -242,6 +242,8 @@ const translations = {
         btn_confirm: 'Confirmer la réservation',
         success_title: 'Demande reçue !',
         success_desc: 'Merci ! Nous allons vous envoyer par WhatsApp et par mail un lien pour procéder au paiement ainsi que les informations pour accéder au cours.',
+        legend_available: 'Jour disponible',
+        legend_full: 'Complet / Pas de cours',
         btn_close: 'Fermer',
         status_booking: 'Réservation en ligne',
         status_bot: 'Bot Telegram',
@@ -317,6 +319,8 @@ const translations = {
         btn_confirm: 'Confirm booking',
         success_title: 'Request Received!',
         success_desc: 'Thank you! We will send you a payment link and course access details via WhatsApp and email.',
+        legend_available: 'Available Day',
+        legend_full: 'Full / No Lessons',
         btn_close: 'Close',
         status_booking: 'Online Booking',
         status_bot: 'Telegram Bot',
@@ -392,6 +396,8 @@ const translations = {
         btn_confirm: 'تأكيد الحجز',
         success_title: 'تم استلام طلبك!',
         success_desc: 'شكراً لك! سنرسل لك رابط الدفع وتفاصيل الوصول إلى الدرس عبر الواتساب والبريد الإلكتروني.',
+        legend_available: 'يوم متاح',
+        legend_full: 'ممتلئ / لا توجد دروس',
         btn_close: 'إغلاق',
         status_booking: 'حجز أونلاين',
         status_bot: 'بوت Telegram',
@@ -1019,4 +1025,52 @@ window.nextMonth = function() { currentCalendarDate.setMonth(currentCalendarDate
 window.backToSlots = function() {
     document.getElementById('slot-selection-view').style.display = 'block';
     document.getElementById('booking-form-view').style.display = 'none';
+};
+
+window.submitBooking = async (e) => {
+    e.preventDefault();
+    console.log("Submitting booking...");
+
+    if (!selectedBookingDate || !selectedBookingSlot) {
+        alert("Erreur: Date ou heure non sélectionnée.");
+        return;
+    }
+
+    const name = document.getElementById('student-name').value;
+    const phone = document.getElementById('student-phone').value;
+    const email = document.getElementById('student-email').value;
+    
+    const bookingData = {
+        date: selectedBookingDate.toISOString().split('T')[0],
+        time: selectedBookingSlot,
+        studentName: name,
+        studentPhone: phone,
+        studentEmail: email,
+        status: 'pending',
+        createdAt: new Date().toISOString()
+    };
+
+    console.log("Saving to Firestore:", bookingData);
+
+    // Firebase Save
+    if (window.firebaseSDK) {
+        try {
+            // Need to get db from a global or previous init
+            // For now use the initialized app in admin or similar
+            const { getFirestore, collection, addDoc } = window.firebaseSDK;
+            // Since script.js initializes apps/logic, we assume firebase is ready
+            // Re-initialize if needed or use existing reference
+            const app = window.firebaseApp; // Assume it was set or we set it now
+            if (app) {
+                const db = getFirestore(app);
+                await addDoc(collection(db, "bookings"), bookingData);
+            }
+        } catch (err) {
+            console.error("Firestore error:", err);
+        }
+    }
+
+    // Show Success UI
+    document.getElementById('booking-form-view').style.display = 'none';
+    document.getElementById('booking-success-view').style.display = 'block';
 };
