@@ -288,33 +288,49 @@ section { padding: 8rem 0; }
   display: flex; gap: 1rem; perspective: 1000px;
 }
 
-/* iPhone Emulation */
+/* iPhone Emulation - Elite Pro */
 .iphone-device {
-  width: 140px; height: 280px;
-  background: #000; border-radius: 20px;
-  border: 3px solid #333; overflow: hidden;
-  position: relative; box-shadow: 0 20px 40px rgba(0,0,0,0.5);
+  width: 160px; height: 320px;
+  background: var(--bg-deep); border-radius: 32px;
+  border: 11px solid #1e293b; 
+  box-shadow: 0 40px 100px -20px rgba(0,0,0,0.6), inset 0 0 10px rgba(0,0,0,0.5);
+  position: relative; overflow: hidden;
   transition: var(--transition-elastic);
+  z-index: 1;
 }
 
-.card-mini .iphone-device { width: 90px; height: 180px; }
+.iphone-device::before {
+  content: ''; position: absolute; top: 0; left: 50%; transform: translateX(-50%);
+  width: 60px; height: 18px; background: #000;
+  border-bottom-left-radius: 12px; border-bottom-right-radius: 12px;
+  z-index: 10;
+}
+
+.card-mini .iphone-device { width: 110px; height: 220px; border-width: 8px; }
+.card-mini .iphone-device::before { width: 40px; height: 12px; }
 
 .iphone-screen { width: 100%; height: 100%; object-fit: cover; }
 
-.card-icon-floating {
-  position: absolute; bottom: 1.5rem; right: 1.5rem;
-  width: 60px; height: 60px; border-radius: 16px;
-  box-shadow: 0 10px 20px rgba(0,0,0,0.3);
-  background: white; padding: 10px;
-  z-index: 2; transform: rotate(5deg);
+/* Visibility & Theme Fixes */
+.timeline-content h3, .timeline-content p, .about-text p, .section-title p {
+  color: var(--text);
 }
 
-.card-icon-floating.mini { width: 44px; height: 44px; padding: 6px; border-radius: 10px; }
-.card-icon-floating img { width: 100%; height: 100%; object-fit: contain; }
+.stat-card span {
+  color: var(--primary) !important;
+}
 
-.app-card-content {
-  padding: 1.8rem; z-index: 1;
-  background: linear-gradient(to top, var(--bg-deep), transparent);
+body.light-mode .app-card-content h3 {
+  color: #0f172a;
+}
+
+body.light-mode .tagline {
+  color: #64748b;
+}
+
+body.light-mode .timeline-date {
+  color: var(--primary);
+  opacity: 1;
 }
 
 .app-card-header { display: flex; justify-content: space-between; align-items: center; margin-bottom: 0.5rem; }
