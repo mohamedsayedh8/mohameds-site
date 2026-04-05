@@ -25,11 +25,9 @@ const apps = {
         whatsapp: 'https://whatsapp.com/channel/0029VaoV6x48F2pG8N21vS3s',
         screenshots: [
             'assets/images/zikr_screen_1.png',
-            'assets/images/zikr_screen_2.png',
-            'assets/images/zikr_screen_3.png'
+            'assets/images/zikr_screen_1.png',
+            'assets/images/zikr_screen_1.png'
         ],
-        privacy: 'zikr-privacy.html',
-        terms: 'zikr-terms.html',
         gradient: 'linear-gradient(135deg, #10b981, #059669)',
         status: 'Disponible'
     },
@@ -53,15 +51,11 @@ const apps = {
             en: ['HD Audio/Video Calls', 'Moment Sharing (Videos)', 'Instant Messaging', 'Daily Stories & News'],
             ar: ['مكالمات صوت وفيديو HD', 'مشاركة اللحظات (فيديو)', 'رسائل فورية', 'قصص وأخبار يومية']
         },
-        appStore: '#',
-        playStore: '#',
         screenshots: [
             'assets/images/m_screen_1.png',
-            'assets/images/m_screen_2.png',
-            'assets/images/m_screen_3.png'
+            'assets/images/m_screen_1.png',
+            'assets/images/m_screen_1.png'
         ],
-        privacy: 'm-privacy.html',
-        terms: 'm-terms.html',
         gradient: 'linear-gradient(135deg, #3b82f6, #2563eb)',
         status: 'Bientôt'
     },
@@ -86,12 +80,7 @@ const apps = {
             ar: ['مولد مسارات بالذكاء الاصطناعي', 'استكشاف الأماكن السرية', 'رفيق سفر صوتي', 'خرائط تفاعلية ثلاثية الأبعاد']
         },
         appStore: 'https://apps.apple.com/fr/app/locsy/id6760738424',
-        playStore: '#',
-        screenshots: [
-            'assets/images/locsy_s1_final.png'
-        ],
-        privacy: 'locsy-privacy.html',
-        terms: 'locsy-terms.html',
+        screenshots: ['assets/images/locsy_s1_final.png'],
         gradient: 'linear-gradient(135deg, #262626, #0a0a0a)',
         status: 'Disponible'
     },
@@ -106,84 +95,22 @@ const apps = {
             ar: 'تتبع مصاريفك بالذكاء الاصطناعي.'
         },
         description: {
-            fr: 'Kinto est une application de gestion financière personnelle propulsée par l\'IA. Scannez vos reçus automatiquement, suivez vos dépenses par catégorie, définissez des budgets mensuels et atteignez vos objectifs d\'épargne. Disponible sans compte — vos données sont sauvegardées localement.',
-            en: 'Kinto is an AI-powered personal finance app. Automatically scan receipts, track expenses by category, set monthly budgets and reach your savings goals. Available without an account — your data is saved locally.',
-            ar: 'فينورا تطبيق إدارة مالية شخصية مدعوم بالذكاء الاصطناعي. امسح الفواتير تلقائياً، تتبع المصاريف حسب الفئة، حدد ميزانيات شهرية وحقق أهداف الادخار. متاح بدون حساب — بياناتك محفوظة محلياً.'
+            fr: 'Kinto est une application de gestion financière personnelle propulsée par l\'IA. Scannez vos reçus automatiquement, suivez vos dépenses par catégorie, définissez des budgets mensuels et atteignez vos objectifs d\'épargne.',
+            en: 'Kinto is an AI-powered personal finance app. Automatically scan receipts, track expenses by category, set monthly budgets and reach your savings goals.',
+            ar: 'فينورا تطبيق إدارة مالية شخصية مدعوم بالذكاء الاصطناعي. امسح الفواتير تلقائياً، تتبع المصاريف حسب الفئة، حدد ميزانيات شهرية وحقق أهداف الادخار.'
         },
         features: {
-            fr: ['Scanner de reçus IA', 'Suivi des dépenses & revenus', 'Budget mensuel par catégorie', 'Objectifs d\'épargne intelligents', 'Mode invité (sans compte)', 'Premium : scans illimités + export'],
-            en: ['AI Receipt Scanner', 'Expense & Income Tracking', 'Monthly Budget by Category', 'Smart Savings Goals', 'Guest Mode (no account needed)', 'Premium: Unlimited scans + export'],
-            ar: ['ماسح فواتير بالذكاء الاصطناعي', 'تتبع المصاريف والإيرادات', 'ميزانية شهرية حسب الفئة', 'أهداف ادخار ذكية', 'وضع الزائر (بدون حساب)', 'بريميوم: مسح غير محدود + تصدير']
+            fr: ['Scanner de reçus IA', 'Suivi des dépenses', 'Budget mensuel', 'Objectifs d\'épargne', 'Mode invité'],
+            en: ['AI Receipt Scanner', 'Expense Tracking', 'Monthly Budget', 'Savings Goals', 'Guest Mode'],
+            ar: ['ماسح فواتير بالذكاء الاصطناعي', 'تتبع المصاريف', 'ميزانية شهرية', 'أهداف ادخار', 'وضع الزائر']
         },
-        appStore: '#',
-        playStore: '#',
         screenshots: [
             'assets/images/kinto-screen1.png',
             'assets/images/kinto-screen2.png',
-            'assets/images/kinto-screen3.png',
+            'assets/images/kinto-screen3.png'
         ],
-        privacy: 'kinto-privacy.html',
-        terms: 'kinto-terms.html',
         gradient: 'linear-gradient(135deg, #7C6AF7, #5B4BD4)',
-        status: "Bientôt sur l'App Store"
-    },
-    mo_frame: {
-        id: 'mo_frame',
-        icon: '🖼️',
-        iconUrl: 'assets/images/mo-frame-icon.png',
-        name: 'Mo Frame',
-        tagline: {
-            fr: 'Créez des posts stylés en un clic.',
-            en: 'Create styled posts in one click.',
-            ar: 'اصنع منشورات مميزة بضغطة واحدة.'
-        },
-        description: {
-            fr: 'Un bot Telegram qui transforme vos textes et photos en posts stylés professionnels. Choisissez votre style (Dark/Light), personnalisez votre profil et partagez instantanément. Premium disponible (150 Stars/mois).',
-            en: 'A Telegram bot that transforms your text and photos into professional styled posts. Choose your style (Dark/Light), customize your profile and share instantly. Premium available (150 Stars/month).',
-            ar: 'بوت Telegram يحول نصوصك وصورك إلى منشورات احترافية. اختر أسلوبك (داكن/فاتح)، خصص بروفيلك وشارك فوراً. بريميوم متاح (150 نجمة/شهر).'
-        },
-        features: {
-            fr: ['Génération de posts stylés', 'Styles Twitter Dark & Light', 'Profil personnalisable', 'Premium illimité (150 Stars)'],
-            en: ['Styled post generation', 'Twitter Dark & Light styles', 'Customizable profile', 'Unlimited Premium (150 Stars)'],
-            ar: ['إنشاء منشورات مميزة', 'أسلوب Twitter داكن وفاتح', 'ملف تعريف مخصص', 'بريميوم غير محدود (150 نجمة)']
-        },
-        telegram: 'https://t.me/Moframe_bot',
-        screenshots: [
-            'assets/images/mo_frame_s1_final.png',
-            'assets/images/mo_frame_s2_final.png',
-            'assets/images/mo_frame_s3_final.png'
-        ],
-        gradient: 'linear-gradient(135deg, #7c3aed, #4f46e5)',
-        status: 'Bot'
-    },
-    whatsapp_bot_cours: {
-        id: 'whatsapp_bot_cours',
-        icon: '🤖',
-        iconUrl: 'assets/images/whatsapp-bot-icon.png',
-        name: 'M Académie',
-        tagline: {
-            fr: 'Votre assistant de cours bilingue.',
-            en: 'Your bilingual course assistant.',
-            ar: 'مساعدك الشخصي للدروس (فرنسي/عربي).'
-        },
-        description: {
-            fr: 'Un assistant WhatsApp intelligent (Français/Arabe) conçu pour une gestion fluide des cours. Il guide les élèves, fournit les liens de cours et tests, et propose une interface d\'administration complète pour suivre les statistiques en temps réel.',
-            en: 'A smart WhatsApp assistant (French/Arabic) designed for smooth course management. It guides students, provides course and test links, and offers a full admin interface to track statistics in real-time.',
-            ar: 'مساعد واتساب ذكي (فرنسي/عربي) مصمم لإدارة الدروس بسلاسة. يقوم بتوجيه الطلاب، وتوفير روابط الدروس والاختبارات، ويوفر واجهة إدارة كاملة لمتابعة الإحصائيات في الوقت الفعلي.'
-        },
-        features: {
-            fr: ['Assistant bilingue (Français/Arabe)', 'Détection intelligente d\'intention', 'Statistiques admin en temps réel', 'Gestion dynamique des liens'],
-            en: ['Bilingual Assistant (French/Arabic)', 'Smart intent detection', 'Real-time admin statistics', 'Dynamic link management'],
-            ar: ['مساعد ثنائي اللغة (فرنسي/عربي)', 'كشف ذكي للنية', 'إحصائيات إدارية فورية', 'إدارة ديناميكية للروابط']
-        },
-        whatsapp: 'https://wa.me/33759275623',
-        screenshots: [
-            'assets/images/cal_elite_1.png',
-            'assets/images/cal_elite_2.png',
-            'assets/images/cal_elite_3.png'
-        ],
-        gradient: 'linear-gradient(135deg, #25D366, #128C7E)',
-        status: 'Bot WhatsApp'
+        status: 'Bientôt'
     },
     restopass: {
         id: 'restopass',
@@ -196,1057 +123,217 @@ const apps = {
             ar: 'مطعمك رقمي في 5 دقائق.'
         },
         description: {
-            fr: 'RestoPass est une solution SaaS complète pour la restauration moderne. Digitalisez votre menu avec un QR code interactif, fidélisez vos clients avec des cartes Apple & Google Wallet, et pilotez votre activité via un dashboard analytics puissant.',
-            en: 'RestoPass is a complete SaaS solution for modern dining. Digitize your menu with interactive QR codes, build customer loyalty with Apple & Google Wallet cards, and manage your business via a powerful analytics dashboard.',
-            ar: 'RestoPass هو حل SaaS كامل للمطاعم الحديثة. قم ببرمجة قائمتك باستخدام رمز QR تفاعلي، واكسب ولاء عملائك باستخدام بطاقات Apple & Google Wallet، وأدر عملك من خلال لوحة تحليلات قوية.'
+            fr: 'RestoPass est une solution SaaS complète pour la restauration moderne. Digitalisez votre menu avec un QR code interactif, fidélisez vos clients avec des cartes Apple & Google Wallet.',
+            en: 'RestoPass is a complete SaaS solution for modern dining. Digitize your menu with interactive QR codes, build customer loyalty with Apple & Google Wallet cards.',
+            ar: 'RestoPass هو حل SaaS كامل للمطاعم الحديثة. قم ببرمجة قائمتك باستخدام رمز QR تفاعلي، واكسب ولاء عملائك.'
         },
         features: {
-            fr: ['Menu QR Code interactif', 'Fidélité Apple & Google Wallet', 'Dashboard Analytics complet', 'Notifications clients push'],
-            en: ['Interactive QR Code Menu', 'Apple & Google Wallet Loyalty', 'Full Analytics Dashboard', 'Push Customer Notifications'],
-            ar: ['قائمة QR Code تفاعلية', 'ولاء Apple & Google Wallet', 'لوحة تحليلات كاملة', 'إشعارات دفع للعملاء']
+            fr: ['Menu QR Code', 'Fidélité Wallet', 'Dashboard Analytics', 'Push Notifications'],
+            en: ['QR Code Menu', 'Wallet Loyalty', 'Analytics Dashboard', 'Push Notifications'],
+            ar: ['قائمة QR Code', 'ولاء Wallet', 'لوحة تحليلات', 'إشعارات دفع']
         },
-        appStore: '#',
-        playStore: '#',
         screenshots: [
             'assets/images/restopass_s1.png',
             'assets/images/restopass_s2.png',
             'assets/images/restopass_s3.png'
         ],
-        privacy: 'restopass-privacy.html',
-        terms: 'restopass-terms.html',
         gradient: 'linear-gradient(135deg, #f97316, #ea580c)',
         status: 'Disponible'
     }
 };
 
-// --- Language Support ---
+// --- Translations ---
 const translations = {
     fr: {
-        nav_home: 'Accueil',
-        nav_apps: 'Mes Apps',
-        nav_contact: 'Contact',
+        nav_home: 'Accueil', nav_apps: 'Projets', nav_contact: 'Contact',
         hero_title: 'Inspirer le futur par le <span class="gradient-text">code et l\'IA</span>',
-        hero_desc: 'Développeur passionné par la création d\'expériences mobiles innovantes. Zikr, M App et Locsy — mes projets 2026.',
-        hero_cta_apps: 'Voir mes apps',
-        about_title: 'Passionné par l\'innovation',
-        about_p1: 'Je suis Mohamed Sayed, un développeur dédié à la création d\'expériences utilisateur exceptionnelles, en combinant rigueur technique et créativité.',
-        about_stat_apps: 'Apps en 2026',
-        about_stat_year: 'Année de lancement',
-        skills_title: 'Compétences',
-        skill_dev_title: 'Développement',
-        skill_dev_desc: 'Swift, Flutter, Node.js',
-        skill_ai_title: 'Intelligence Artificielle',
-        skill_ai_desc: 'Gemini AI, Prompt Engineering',
-        skill_prod_title: 'Produit & Design',
-        skill_prod_desc: 'UX/UI, Lancement App Store',
-        timeline_title: 'Parcours 2026',
-        timeline_subtitle: 'Une année consacrée à l\'innovation.',
-        timeline_locsy_date: 'Mars 2026',
-        timeline_locsy_title: 'Lancement de Locsy',
-        timeline_locsy_p: 'Application de planification de voyages avec intelligence artificielle Gemini.',
-        timeline_zikr_date: 'Mars 2026',
-        timeline_zikr_title: 'Lancement de Zikr',
-        timeline_zikr_p: 'Application spirituelle iOS complète : Coran, Adhkar, Qibla et Imam IA.',
-        timeline_m_date: 'Bientôt',
-        timeline_m_title: 'Lancement de M App',
-        timeline_m_p: 'Réseau social avec Reels, messagerie instantanée et communauté.',
-        timeline_kinto_date: 'Avril 2026',
-        timeline_kinto_title: 'Lancement de Kinto',
-        timeline_kinto_p: 'App de finance personnelle avec scanner de reçus IA et gestion de budget.',
-        timeline_restopass_date: 'Mai 2026',
-        timeline_restopass_title: 'Lancement de RestoPass',
-        timeline_restopass_p: 'Solution SaaS pour restaurants : Menu QR, Fidélité & Wallet.',
-        portfolio_title: 'Mes Applications',
-        portfolio_subtitle: 'Six applications originales créées en 2026.',
-        app_zikr_tagline: 'Votre compagnon spirituel quotidien.',
-        app_m_tagline: 'Social, Vidéos & Reels.',
-        app_locsy_tagline: 'L\'IA qui réinvente vos voyages.',
-        app_mo_frame_tagline: 'Créez des posts stylés en un clic.',
-        app_kinto_tagline: 'Gérez vos dépenses avec l\'IA.',
-        app_restopass_tagline: 'Votre restaurant digitalisé en 5 minutes.',
-        app_booking_title: 'M Académie',
-        app_booking_tagline: 'Choisissez votre créneau en un clic.',
-        booking_modal_title: 'M Académie - Réservation',
-        booking_modal_subtitle: 'Choisissez un jour et une heure disponible.',
-        select_hour: 'Sélectionnez une heure',
-        back: 'Retour',
-        form_title: 'Vos informations',
-        label_name: 'Prénom',
-        label_phone: 'Téléphone WhatsApp',
-        label_email: 'Email (Optionnel)',
-        form_disclaimer: 'Vérifiez bien votre numéro pour recevoir le lien de paiement Revolut et l\'accès au cours.',
-        btn_confirm: 'Confirmer la réservation',
-        success_title: 'Demande reçue !',
-        success_desc: 'Merci ! Nous allons vous envoyer par WhatsApp et par mail un lien pour procéder au paiement ainsi que les informations pour accéder au cours.',
-        legend_available: 'Jour disponible',
-        legend_full: 'Complet / Pas de cours',
-        btn_close: 'Fermer',
-        status_booking: 'Réservation en ligne',
-        status_bot: 'Bot Telegram',
-        contact_title: 'Travaillons ensemble',
-        contact_subtitle: 'Une idée de projet ? Contactez-moi.',
-        modal_features: 'Fonctionnalités',
-        modal_download: 'Télécharger',
-        modal_legal: 'Informations légales',
-        modal_privacy: 'Confidentialité',
-        modal_terms: 'Conditions d\'utilisation',
-        footer_rights: 'Tous droits réservés.',
-        faq_title: 'Questions fréquentes',
-        faq_q1: 'Comment puis-je télécharger Zikr ?',
-        faq_a1: 'Zikr est disponible sur l\'App Store. Recherchez "Zikr" ou cliquez sur le bouton App Store dans la fiche de l\'application.',
-        faq_q2: 'M App et Locsy sont-ils disponibles ?',
-        faq_a2: 'M App et Locsy seront lancés en 2026. Restez connecté pour être informé en avant-première.',
-        faq_q3: 'Comment vous contacter ?',
-        faq_a3: 'Envoyez-moi un email à contact@mohameds.net ou suivez-moi sur Instagram pour les dernières nouvelles.',
-        faq_q4: 'Proposez-vous des collaborations ?',
-        faq_a4: 'Oui ! Je suis ouvert aux projets freelance et aux collaborations. Contactez-moi directement.',
-        faq_btn: 'FAQ',
+        hero_desc: 'Développeur Elite créant des expériences mobiles et SaaS innovantes.',
+        hero_cta_apps: 'Explorer mes projets',
+        portfolio_title: 'Ecosystème Digital',
+        portfolio_subtitle: 'Solutions mobiles, IA et plateformes SaaS.',
+        timeline_title: 'Parcours Elite',
+        status_available: 'Disponible', status_new: 'Nouveau',
+        footer_rights: 'Tous droits réservés.'
     },
     en: {
-        nav_home: 'Home',
-        nav_apps: 'My Apps',
-        nav_contact: 'Contact',
-        hero_title: 'Inspiring the future through <span class="gradient-text">code and AI</span>',
-        hero_desc: 'Mobile developer passionate about building innovative experiences. Zikr, M App and Locsy — my 2026 projects.',
-        hero_cta_apps: 'Explore my apps',
-        about_title: 'Driven by innovation',
-        about_p1: 'I\'m Mohamed Sayed, a developer focused on crafting outstanding mobile experiences, blending technical precision with creative vision.',
-        about_stat_apps: 'Apps in 2026',
-        about_stat_year: 'Launch Year',
-        skills_title: 'Skills',
-        skill_dev_title: 'Development',
-        skill_dev_desc: 'Swift, Flutter, Node.js',
-        skill_ai_title: 'Artificial Intelligence',
-        skill_ai_desc: 'Gemini AI, Prompt Engineering',
-        skill_prod_title: 'Product & Design',
-        skill_prod_desc: 'UX/UI, App Store Launch',
-        timeline_title: '2026 Journey',
-        timeline_subtitle: 'A year dedicated to innovation.',
-        timeline_locsy_date: 'March 2026',
-        timeline_locsy_title: 'Launching Locsy',
-        timeline_locsy_p: 'AI-powered travel planning app using Gemini AI.',
-        timeline_zikr_date: 'March 2026',
-        timeline_zikr_title: 'Launching Zikr',
-        timeline_zikr_p: 'Complete spiritual iOS app: Quran, Adhkar, Qibla and AI Imam.',
-        timeline_m_date: 'Coming Soon',
-        timeline_m_title: 'Launching M App',
-        timeline_m_p: 'Social network with Reels, instant messaging and community features.',
-        timeline_kinto_date: 'April 2026',
-        timeline_kinto_title: 'Launching Kinto',
-        timeline_kinto_p: 'Personal finance app with AI receipt scanner and smart budget management.',
-        timeline_restopass_date: 'May 2026',
-        timeline_restopass_title: 'Launching RestoPass',
-        timeline_restopass_p: 'SaaS solution for restaurants: QR Menu, Loyalty & Wallet.',
-        portfolio_title: 'My Applications',
-        portfolio_subtitle: 'Six original apps built in 2026.',
-        app_zikr_tagline: 'Your daily spiritual companion.',
-        app_m_tagline: 'Social, Videos & Reels.',
-        app_locsy_tagline: 'AI reinventing your travels.',
-        app_mo_frame_tagline: 'Create styled posts in one click.',
-        app_kinto_tagline: 'Track your spending with AI.',
-        app_restopass_tagline: 'Your restaurant digitized in 5 minutes.',
-        app_booking_title: 'M Academy',
-        app_booking_tagline: 'Choose your slot in one click.',
-        booking_modal_title: 'M Academy - Booking',
-        booking_modal_subtitle: 'Choose an available day and time.',
-        select_hour: 'Select an hour',
-        back: 'Back',
-        form_title: 'Your information',
-        label_name: 'First name',
-        label_phone: 'WhatsApp phone',
-        label_email: 'Email (Optional)',
-        form_disclaimer: 'Check your number to receive the payment link and course access.',
-        btn_confirm: 'Confirm booking',
-        success_title: 'Request Received!',
-        success_desc: 'Thank you! We will send you a payment link and course access details via WhatsApp and email.',
-        legend_available: 'Available Day',
-        legend_full: 'Full / No Lessons',
-        btn_close: 'Close',
-        status_booking: 'Online Booking',
-        status_bot: 'Telegram Bot',
-        contact_title: 'Let\'s work together',
-        contact_subtitle: 'Have a project in mind? Get in touch.',
-        modal_features: 'Features',
-        modal_download: 'Download',
-        modal_legal: 'Legal',
-        modal_privacy: 'Privacy Policy',
-        modal_terms: 'Terms of Service',
-        footer_rights: 'All rights reserved.',
-        faq_title: 'Frequently Asked Questions',
-        faq_q1: 'How do I download Zikr?',
-        faq_a1: 'Zikr is available on the App Store. Search for "Zikr" or tap the App Store button on its app page.',
-        faq_q2: 'Are M App and Locsy available?',
-        faq_a2: 'M App and Locsy are launching in 2026. Stay tuned for early access announcements.',
-        faq_q3: 'How can I contact you?',
-        faq_a3: 'Send me an email at contact@mohameds.net or follow me on Instagram for the latest updates.',
-        faq_q4: 'Do you take freelance projects?',
-        faq_a4: 'Yes! I am open to freelance projects and collaborations. Feel free to reach out directly.',
-        faq_btn: 'FAQ',
+        nav_home: 'Home', nav_apps: 'Projects', nav_contact: 'Contact',
+        hero_title: 'Inspiring the future with <span class="gradient-text">code and AI</span>',
+        hero_desc: 'Elite developer crafting innovative mobile and SaaS experiences.',
+        hero_cta_apps: 'Explore projects',
+        portfolio_title: 'Digital Ecosystem',
+        portfolio_subtitle: 'Mobile, AI and SaaS solutions.',
+        timeline_title: 'Elite Journey',
+        status_available: 'Available', status_new: 'New',
+        footer_rights: 'All rights reserved.'
     },
     ar: {
-        nav_home: 'الرئيسية',
-        nav_apps: 'تطبيقاتي',
-        nav_contact: 'تواصل',
+        nav_home: 'الرئيسية', nav_apps: 'المشاريع', nav_contact: 'تواصل',
         hero_title: 'نُلهم المستقبل بـ<span class="gradient-text">البرمجة والذكاء الاصطناعي</span>',
-        hero_desc: 'مطوّر شغوف بصناعة تجارب موبايل مبتكرة. Zikr وM App وLocsy — مشاريعي لعام 2026.',
-        hero_cta_apps: 'اكتشف تطبيقاتي',
-        about_title: 'شغوف بالإبداع',
-        about_p1: 'أنا محمد سيد، مطوّر متخصص في بناء تجارب مستخدم متميزة، أجمع بين الدقة التقنية والإبداع لتحويل الأفكار إلى واقع.',
-        about_stat_apps: 'تطبيقات في 2026',
-        about_stat_year: 'سنة الإطلاق',
-        skills_title: 'المهارات',
-        skill_dev_title: 'تطوير البرمجيات',
-        skill_dev_desc: 'Swift, Flutter, Node.js',
-        skill_ai_title: 'الذكاء الاصطناعي',
-        skill_ai_desc: 'Gemini AI, Prompt Engineering',
-        skill_prod_title: 'المنتج والتصميم',
-        skill_prod_desc: 'UX/UI، إطلاق التطبيقات',
-        timeline_title: 'مسيرة 2026',
-        timeline_subtitle: 'عام مخصص للابتكار.',
-        timeline_locsy_date: 'مارس 2026',
-        timeline_locsy_title: 'إطلاق Locsy',
-        timeline_locsy_p: 'تطبيق ذكي لتخطيط الرحلات بالذكاء الاصطناعي Gemini.',
-        timeline_zikr_date: 'مارس 2026',
-        timeline_zikr_title: 'إطلاق Zikr',
-        timeline_zikr_p: 'تطبيق إسلامي شامل: قرآن، أذكار، قبلة وإمام ذكاء اصطناعي.',
-        timeline_m_date: 'قريباً',
-        timeline_m_title: 'إطلاق M App',
-        timeline_m_p: 'شبكة اجتماعية بـReels ومحادثات فورية ومجتمع نشط.',
-        timeline_kinto_date: 'أبريل 2026',
-        timeline_kinto_title: 'إطلاق Kinto',
-        timeline_kinto_p: 'تطبيق مالية شخصية مع ماسح فواتير ذكي وإدارة الميزانية.',
-        timeline_restopass_date: 'مايو 2026',
-        timeline_restopass_title: 'إطلاق RestoPass',
-        timeline_restopass_p: 'حل SaaS للمطاعم: قائمة QR، ولاء وWallet.',
-        portfolio_title: 'تطبيقاتي',
-        portfolio_subtitle: 'ستة تطبيقات أصلية أطلقتها في 2026.',
-        app_zikr_tagline: 'رفيقك الروحي اليومي.',
-        app_m_tagline: 'تواصل، فيديوهات وReels.',
-        app_locsy_tagline: 'الذكاء الاصطناعي يعيد ابتكار رحلاتك.',
-        app_mo_frame_tagline: 'اصنع منشورات مميزة بضغطة واحدة.',
-        app_kinto_tagline: 'تتبع مصاريفك بالذكاء الاصطناعي.',
-        app_restopass_tagline: 'مطعمك رقمي في 5 دقائق.',
-        app_booking_title: 'M أكاديمية',
-        app_booking_tagline: 'اختر موعدك بضغطة واحدة.',
-        booking_modal_title: 'M أكاديمية - حجز',
-        booking_modal_subtitle: 'اختر يوماً ووقتاً متاحاً.',
-        select_hour: 'اختر الساعة',
-        back: 'رجوع',
-        form_title: 'معلوماتك',
-        label_name: 'الاسم الأول',
-        label_phone: 'رقم واتساب',
-        label_email: 'البريد الإلكتروني (اختياري)',
-        form_disclaimer: 'تأكد من صحة رقمك لتلقي رابط الدفع وتفاصيل الدرس.',
-        btn_confirm: 'تأكيد الحجز',
-        success_title: 'تم استلام طلبك!',
-        success_desc: 'شكراً لك! سنرسل لك رابط الدفع وتفاصيل الوصول إلى الدرس عبر الواتساب والبريد الإلكتروني.',
-        legend_available: 'يوم متاح',
-        legend_full: 'ممتلئ / لا توجد دروس',
-        btn_close: 'إغلاق',
-        status_booking: 'حجز أونلاين',
-        status_bot: 'بوت Telegram',
-        contact_title: 'لنعمل معاً',
-        contact_subtitle: 'لديك فكرة مشروع؟ تواصل معي.',
-        modal_features: 'المميزات',
-        modal_download: 'تحميل',
-        modal_legal: 'معلومات قانونية',
-        modal_privacy: 'سياسة الخصوصية',
-        modal_terms: 'شروط الاستخدام',
-        footer_rights: 'جميع الحقوق محفوظة.',
-        faq_title: 'الأسئلة الشائعة',
-        faq_q1: 'كيف أحمّل تطبيق Zikr؟',
-        faq_a1: 'Zikr متاح على App Store. ابحث عن "Zikr" أو انقر على زر App Store في صفحة التطبيق.',
-        faq_q2: 'هل M App وLocsy متاحان؟',
-        faq_a2: 'سيتم إطلاق M App وLocsy في 2026. ترقّب الإعلانات للحصول على الوصول المبكر.',
-        faq_q3: 'كيف أتواصل معك؟',
-        faq_a3: 'راسلني على contact@mohameds.net أو تابعني على Instagram لآخر الأخبار.',
-        faq_q4: 'هل تقبل مشاريع freelance؟',
-        faq_a4: 'نعم! أنا منفتح على التعاون والمشاريع المستقلة. تواصل معي مباشرة.',
-        faq_btn: 'الأسئلة الشائعة',
+        hero_desc: 'مطوّر متميز يصنع تجارب موبايل وSaaS مبتكرة.',
+        hero_cta_apps: 'اكتشف مشاريعي',
+        portfolio_title: 'المنظومة الرقمية',
+        portfolio_subtitle: 'حلول موبايل، ذكاء اصطناعي ومنصات SaaS.',
+        timeline_title: 'مسيرة متميزة',
+        status_available: 'متاح', status_new: 'جديد',
+        footer_rights: 'جميع الحقوق محفوظة.'
     }
 };
 
 let currentLang = 'fr';
 
-function getPreferredLanguage() {
-    // 1. Check localStorage
-    const savedLang = localStorage.getItem('preferredLang');
-    if (savedLang && ['en', 'fr', 'ar'].includes(savedLang)) {
-        return savedLang;
-    }
-
-    // 2. Check browser language
-    const browserLang = navigator.language || navigator.userLanguage;
-    if (browserLang) {
-        const langCode = browserLang.split('-')[0].toLowerCase();
-        if (['en', 'fr', 'ar'].includes(langCode)) {
-            return langCode;
-        }
-    }
-
-    // 3. Default to fr
-    return 'fr';
-}
-
+// --- Core Functions ---
 function setLanguage(lang) {
     currentLang = lang;
     document.documentElement.lang = lang;
     document.documentElement.dir = lang === 'ar' ? 'rtl' : 'ltr';
     
-    // Update active button
     document.querySelectorAll('.lang-btn').forEach(btn => {
         btn.classList.toggle('active', btn.textContent.toLowerCase() === lang);
     });
 
-    // Update all elements with data-i18n
     const t = translations[lang];
     document.querySelectorAll('[data-i18n]').forEach(el => {
         const key = el.getAttribute('data-i18n');
-        if (t[key]) {
-            if (el.tagName === 'INPUT' || el.tagName === 'TEXTAREA') {
-                el.placeholder = t[key];
-            } else {
-                el.innerHTML = t[key];
-            }
-        }
+        if (t[key]) el.innerHTML = t[key];
     });
-
-    // Save preference
-    localStorage.setItem('preferredLang', lang);
-
-    // Specific updates for hardcoded IDs if needed
-    if (document.getElementById('hero-title')) document.getElementById('hero-title').innerHTML = t.hero_title;
-    if (document.getElementById('hero-desc')) document.getElementById('hero-desc').textContent = t.hero_desc;
-
-    // Re-initialize text reveals after translation
-    if (typeof initAdvancedVisuals === 'function') {
-        initAdvancedVisuals();
-    }
 }
 
-// --- Three.js Plexus Effect ---
+// --- Elite Visuals (Three.js Plexus) ---
 let scene, camera, renderer, particles, lines;
-const MAX_PARTICLES = 150;
-const MIN_DISTANCE = 2.5;
+const MAX_PARTICLES = 160;
 
 function initThree() {
     const container = document.getElementById('canvas-container');
     if (!container) return;
-    
-    try {
-        scene = new THREE.Scene();
-        camera = new THREE.PerspectiveCamera(75, window.innerWidth / window.innerHeight, 0.1, 1000);
-        camera.position.z = 8;
 
-        renderer = new THREE.WebGLRenderer({ alpha: true, antialias: true });
-        renderer.setSize(window.innerWidth, window.innerHeight);
-        renderer.setPixelRatio(Math.min(window.devicePixelRatio, 2));
-        container.appendChild(renderer.domElement);
+    scene = new THREE.Scene();
+    camera = new THREE.PerspectiveCamera(60, window.innerWidth / window.innerHeight, 0.1, 1000);
+    camera.position.z = 10;
 
-        // Particles
-        const geometry = new THREE.BufferGeometry();
-        const positions = new Float32Array(MAX_PARTICLES * 3);
-        const velocities = [];
+    renderer = new THREE.WebGLRenderer({ alpha: true, antialias: true });
+    renderer.setSize(window.innerWidth, window.innerHeight);
+    renderer.setPixelRatio(Math.min(window.devicePixelRatio, 2));
+    container.appendChild(renderer.domElement);
+
+    const geometry = new THREE.BufferGeometry();
+    const positions = new Float32Array(MAX_PARTICLES * 3);
+    const velocities = [];
+
+    for (let i = 0; i < MAX_PARTICLES; i++) {
+        positions[i * 3] = (Math.random() - 0.5) * 25;
+        positions[i * 3 + 1] = (Math.random() - 0.5) * 25;
+        positions[i * 3 + 2] = (Math.random() - 0.5) * 25;
+        velocities.push(new THREE.Vector3((Math.random()-0.5)*0.015, (Math.random()-0.5)*0.015, (Math.random()-0.5)*0.015));
+    }
+
+    geometry.setAttribute('position', new THREE.BufferAttribute(positions, 3));
+    const material = new THREE.PointsMaterial({ size: 0.1, color: 0x10b981, transparent: true, opacity: 0.6 });
+    particles = new THREE.Points(geometry, material);
+    scene.add(particles);
+
+    const lineGeometry = new THREE.BufferGeometry();
+    const linePositions = new Float32Array(MAX_PARTICLES * MAX_PARTICLES * 6);
+    lineGeometry.setAttribute('position', new THREE.BufferAttribute(linePositions, 3));
+    const lineMat = new THREE.LineBasicMaterial({ color: 0x8b5cf6, transparent: true, opacity: 0.1 });
+    lines = new THREE.LineSegments(lineGeometry, lineMat);
+    scene.add(lines);
+
+    function animate() {
+        requestAnimationFrame(animate);
+        const pos = particles.geometry.attributes.position.array;
+        let lineIdx = 0;
 
         for (let i = 0; i < MAX_PARTICLES; i++) {
-            positions[i * 3] = (Math.random() - 0.5) * 20;
-            positions[i * 3 + 1] = (Math.random() - 0.5) * 20;
-            positions[i * 3 + 2] = (Math.random() - 0.5) * 20;
-            velocities.push(new THREE.Vector3(
-                (Math.random() - 0.5) * 0.02,
-                (Math.random() - 0.5) * 0.02,
-                (Math.random() - 0.5) * 0.02
-            ));
-        }
+            pos[i*3] += velocities[i].x;
+            pos[i*3+1] += velocities[i].y;
+            pos[i*3+2] += velocities[i].z;
 
-        geometry.setAttribute('position', new THREE.BufferAttribute(positions, 3));
-        const material = new THREE.PointsMaterial({
-            size: 0.15,
-            color: document.body.classList.contains('light-mode') ? 0x64748b : 0x10b981,
-            transparent: true,
-            opacity: 0.8
-        });
+            if (Math.abs(pos[i*3]) > 12) velocities[i].x *= -1;
+            if (Math.abs(pos[i*3+1]) > 12) velocities[i].y *= -1;
+            if (Math.abs(pos[i*3+2]) > 12) velocities[i].z *= -1;
 
-        particles = new THREE.Points(geometry, material);
-        scene.add(particles);
-
-        // Lines (Plexus)
-        const lineGeometry = new THREE.BufferGeometry();
-        const linePositions = new Float32Array(MAX_PARTICLES * MAX_PARTICLES * 6);
-        lineGeometry.setAttribute('position', new THREE.BufferAttribute(linePositions, 3));
-        const lineMaterial = new THREE.LineBasicMaterial({
-            color: document.body.classList.contains('light-mode') ? 0x64748b : 0x10b981,
-            transparent: true,
-            opacity: 0.15
-        });
-        lines = new THREE.LineSegments(lineGeometry, lineMaterial);
-        scene.add(lines);
-
-        function animate() {
-            requestAnimationFrame(animate);
-            const pos = particles.geometry.attributes.position.array;
-            let lineIdx = 0;
-
-            for (let i = 0; i < MAX_PARTICLES; i++) {
-                // Update position
-                pos[i * 3] += velocities[i].x;
-                pos[i * 3 + 1] += velocities[i].y;
-                pos[i * 3 + 2] += velocities[i].z;
-
-                // Bounce
-                if (Math.abs(pos[i * 3]) > 10) velocities[i].x *= -1;
-                if (Math.abs(pos[i * 3 + 1]) > 10) velocities[i].y *= -1;
-                if (Math.abs(pos[i * 3 + 2]) > 10) velocities[i].z *= -1;
-
-                // Connection lines
-                for (let j = i + 1; j < MAX_PARTICLES; j++) {
-                    const dx = pos[i * 3] - pos[j * 3];
-                    const dy = pos[i * 3 + 1] - pos[j * 3 + 1];
-                    const dz = pos[i * 3 + 2] - pos[j * 3 + 2];
-                    const dist = Math.sqrt(dx * dx + dy * dy + dz * dz);
-
-                    if (dist < MIN_DISTANCE) {
-                        linePositions[lineIdx++] = pos[i * 3];
-                        linePositions[lineIdx++] = pos[i * 3 + 1];
-                        linePositions[lineIdx++] = pos[i * 3 + 2];
-                        linePositions[lineIdx++] = pos[j * 3];
-                        linePositions[lineIdx++] = pos[j * 3 + 1];
-                        linePositions[lineIdx++] = pos[j * 3 + 2];
-                    }
+            for (let j = i+1; j < MAX_PARTICLES; j++) {
+                const dx = pos[i*3]-pos[j*3], dy = pos[i*3+1]-pos[j*3+1], dz = pos[i*3+2]-pos[j*3+2];
+                if (Math.sqrt(dx*dx+dy*dy+dz*dz) < 3.5) {
+                    linePositions[lineIdx++] = pos[i*3]; linePositions[lineIdx++] = pos[i*3+1]; linePositions[lineIdx++] = pos[i*3+2];
+                    linePositions[lineIdx++] = pos[j*3]; linePositions[lineIdx++] = pos[j*3+1]; linePositions[lineIdx++] = pos[j*3+2];
                 }
             }
-
-            particles.geometry.attributes.position.needsUpdate = true;
-            lines.geometry.attributes.position.needsUpdate = true;
-            renderer.render(scene, camera);
         }
-        animate();
-
-        window.addEventListener('resize', () => {
-            camera.aspect = window.innerWidth / window.innerHeight;
-            camera.updateProjectionMatrix();
-            renderer.setSize(window.innerWidth, window.innerHeight);
-        });
-    } catch (e) {
-        console.error('Three.js failed:', e);
+        particles.geometry.attributes.position.needsUpdate = true;
+        lines.geometry.attributes.position.needsUpdate = true;
+        renderer.render(scene, camera);
     }
+    animate();
 }
 
-// Function to update particle color when theme changes
-function updateParticleColor() {
-    if (particles && particles.material) {
-        const isLight = document.body.classList.contains('light-mode');
-        particles.material.color.setHex(isLight ? 0x64748b : 0x10b981);
-        particles.material.blending = isLight ? THREE.NormalBlending : THREE.AdditiveBlending;
-    }
-}
+// --- GSAP Magic ---
+function initGSAP() {
+    gsap.registerPlugin(ScrollTrigger);
 
-// --- Advanced Visuals (3D Tilt, Smooth Scroll, Reveals) ---
-function initAdvancedVisuals() {
-    // 1. Text Reveal — animate the element as a whole using pure GSAP to avoid conflicts
-    const revealTexts = document.querySelectorAll(".reveal-text");
-    
-    revealTexts.forEach(text => {
-        if (!text.classList.contains('gsap-ready')) {
-            text.classList.add('gsap-ready');
-            gsap.from(text, {
-                scrollTrigger: { 
-                    trigger: text, 
-                    start: "top 95%" 
-                },
-                y: 30,
-                opacity: 0,
-                duration: 1,
-                ease: "expo.out",
-                clearProps: "all" // Cleans up inline styles after animation
-            });
-        }
+    // Hero Reveal
+    gsap.from(".hero h1, .hero p, .hero .hero-actions", {
+        y: 80, opacity: 0, duration: 1.5, stagger: 0.2, ease: "power4.out"
     });
 
-    // 2. 3D Tilt Effect
-    const tiltElements = document.querySelectorAll(".app-card, .skill-card, .about-image");
-    tiltElements.forEach(el => {
-        el.addEventListener("mousemove", (e) => {
-            const rect = el.getBoundingClientRect();
-            const x = e.clientX - rect.left;
-            const y = e.clientY - rect.top;
-            const centerX = rect.width / 2;
-            const centerY = rect.height / 2;
-            const rotateX = (y - centerY) / 10;
-            const rotateY = (centerX - x) / 10;
-
-            gsap.to(el, {
-                rotateX: rotateX,
-                rotateY: rotateY,
-                scale: 1.02,
-                duration: 0.5,
-                ease: "power2.out"
-            });
-        });
-
-        el.addEventListener("mouseleave", () => {
-            gsap.to(el, {
-                rotateX: 0,
-                rotateY: 0,
-                scale: 1,
-                duration: 0.8,
-                ease: "elastic.out(1, 0.3)"
-            });
-        });
+    // Bento Cards Entrance
+    gsap.from(".app-card", {
+        scrollTrigger: { trigger: ".apps-grid", start: "top 80%" },
+        y: 60, opacity: 0, duration: 1, stagger: 0.1, ease: "power3.out"
     });
 
-    // 3. Smooth Scroll Enhancement (Native feel but smoother)
-    gsap.config({ force3D: true });
-}
-
-// --- Interactive Animations (Parallax, Magnetic) ---
-function initInteractiveAnimations() {
-    const heroContent = document.querySelector("#hero .container");
-    const magneticBtns = document.querySelectorAll(".btn, .logo, .lang-btn, .theme-btn");
-
-    window.addEventListener("mousemove", (e) => {
-        const posX = e.clientX;
-        const posY = e.clientY;
-
-        // Hero Parallax (Refined)
-        if (heroContent && window.scrollY < 800) {
-            const xMove = (posX - window.innerWidth / 2) / 30;
-            const yMove = (posY - window.innerHeight / 2) / 30;
-            gsap.to(heroContent, {
-                x: xMove,
-                y: yMove,
-                rotateX: -yMove / 2,
-                rotateY: xMove / 2,
-                duration: 1.2,
-                ease: "power2.out"
-            });
-        }
-
-        // Magnetic Buttons
-        magneticBtns.forEach(btn => {
-            const rect = btn.getBoundingClientRect();
-            const btnX = rect.left + rect.width / 2;
-            const btnY = rect.top + rect.height / 2;
-            const dist = Math.hypot(posX - btnX, posY - btnY);
-
-            if (dist < 80) {
-                const xMove = (posX - btnX) * 0.3;
-                const yMove = (posY - btnY) * 0.3;
-                gsap.to(btn, { x: xMove, y: yMove, duration: 0.4, ease: "power2.out" });
-            } else {
-                gsap.to(btn, { x: 0, y: 0, duration: 0.4, ease: "power2.out" });
-            }
+    // Mouse Glow for Bento Cards
+    document.querySelectorAll(".app-card").forEach(card => {
+        card.addEventListener("mousemove", e => {
+            const rect = card.getBoundingClientRect();
+            card.style.setProperty("--x", `${((e.clientX - rect.left) / rect.width) * 100}%`);
+            card.style.setProperty("--y", `${((e.clientY - rect.top) / rect.height) * 100}%`);
         });
     });
 }
 
-// --- Initialization ---
-document.addEventListener('DOMContentLoaded', () => {
-    // Stage GSAP Plugins
-    if (typeof gsap !== 'undefined' && typeof ScrollTrigger !== 'undefined') {
-        gsap.registerPlugin(ScrollTrigger);
-    }
-
-    initThree();
-    initInteractiveAnimations();
-    initAdvancedVisuals();
-
-    // Initialize Language
-    setLanguage(getPreferredLanguage());
-
-    // Theme Toggle
-    const themeBtn = document.getElementById('theme-toggle');
-    themeBtn.addEventListener('click', () => {
-        document.body.classList.toggle('light-mode');
-        const isLight = document.body.classList.contains('light-mode');
-        themeBtn.innerHTML = isLight ? '<i class="fas fa-sun"></i>' : '<i class="fas fa-moon"></i>';
-        updateParticleColor();
-    });
-
-    // GSAP Scroll Animations
-    gsap.from(".hero-content > *", {
-        y: 60,
-        opacity: 0,
-        duration: 1.2,
-        stagger: 0.2,
-        ease: "power4.out"
-    });
-
-    // Sections reveal with skew effect
-    gsap.utils.toArray('section').forEach(section => {
-        if (section.id === 'hero') return;
-        gsap.from(section.querySelectorAll('.container > *'), {
-            scrollTrigger: {
-                trigger: section,
-                start: "top 85%"
-            },
-            y: 50,
-            skewY: 2,
-            scale: 0.98,
-            opacity: 0,
-            duration: 1.2,
-            stagger: 0.15,
-            ease: "power4.out"
-        });
-    });
-
-    // Subtle float animation for app cards
-    gsap.to('.app-card', {
-        y: -5,
-        duration: 2,
-        repeat: -1,
-        yoyo: true,
-        ease: "sine.inOut",
-        stagger: {
-            amount: 0.5,
-            from: "random"
-        }
-    });
-
-    // Scroll Animations for app cards
-    if (typeof gsap !== 'undefined' && typeof ScrollTrigger !== 'undefined') {
-        gsap.from('.app-card', {
-            scrollTrigger: {
-                trigger: '.apps-grid',
-                start: 'top 85%',
-                once: true // Ensure it only fires once and stays visible
-            },
-            y: 40,
-            opacity: 0,
-            duration: 1,
-            stagger: 0.15,
-            ease: 'power3.out',
-            clearProps: 'all' // Clean up styles after animation
-        });
-    }
-
-    // Active Nav Tracking
-    const sections = document.querySelectorAll('section');
-    const navLinks = document.querySelectorAll('.nav-links a');
-
-    window.addEventListener('scroll', () => {
-        let current = "";
-        sections.forEach(section => {
-            const sectionTop = section.offsetTop;
-            if (pageYOffset >= (sectionTop - 300)) {
-                current = section.getAttribute('id');
-            }
-        });
-
-        navLinks.forEach(link => {
-            link.classList.remove('active');
-            const href = link.getAttribute('href').substring(1);
-            if (href === current) link.classList.add('active');
-        });
-    });
-
-    // Event Listeners for modal
-    const closeModalBtn = document.getElementById('close-modal');
-    if (closeModalBtn) {
-        closeModalBtn.addEventListener('click', closeModal);
-    }
-    
-    const closeBookingBtn = document.getElementById('close-booking');
-    if (closeBookingBtn) {
-        closeBookingBtn.addEventListener('click', closeBookingModal);
-    }
-
-    window.addEventListener('click', (e) => {
-        if (e.target.classList.contains('modal')) {
-            closeModal();
-            closeBookingModal();
-        }
-    });
-
-    // --- Booking System Logic ---
-    let bookingFirestore;
-
-    // Real Firebase Config
-    const firebaseConfig = {
-        apiKey: "AIzaSyDpZNOqxUfG7KZo2g3-7Py254P2GDSzRjo",
-        authDomain: "mohameds-booking.firebaseapp.com",
-        projectId: "mohameds-booking",
-        storageBucket: "mohameds-booking.firebasestorage.app",
-        messagingSenderId: "547186990707",
-        appId: "1:547186990707:web:8e273902d7f3bf2781d406",
-        measurementId: "G-G2HMBCFESR"
-    };
-
-    // Initialize Firebase
-    if (window.firebaseSDK) {
-        const { initializeApp, getFirestore } = window.firebaseSDK;
-        try {
-            const app = initializeApp(firebaseConfig);
-            bookingFirestore = getFirestore(app);
-            console.log("Firebase initialized for Booking System");
-        } catch (e) {
-            console.error("Firebase init error:", e.message);
-        }
-    }
-
-    // ... (logic moved to global scope) ...
-});
-
-// --- GLOBAL MODAL CONTROLLERS ---
+// --- Modals ---
 window.openAppModal = function(appId) {
     const app = apps[appId];
     if (!app) return;
-    const modalData = document.getElementById('modal-data');
-    const t = translations[currentLang];
-    const tagline = typeof app.tagline === 'object' ? app.tagline[currentLang] : app.tagline;
-    const description = typeof app.description === 'object' ? app.description[currentLang] : app.description;
-    const features = typeof app.features === 'object' ? app.features[currentLang] : app.features;
-
-    modalData.innerHTML = `
-        <div class="modal-grid">
-            <div class="modal-info">
-                <div class="modal-header-box">
-                    <div class="modal-app-icon" style="background: ${app.gradient};">
-                        ${app.iconUrl ? `<img src="${app.iconUrl}" alt="${app.name}">` : `<span style="font-size:2.5rem;">${app.icon}</span>`}
-                    </div>
-                    <div>
-                        <h2 class="modal-app-title">${app.name}</h2>
-                        <p class="modal-app-tagline">${tagline}</p>
-                    </div>
-                </div>
-                <p class="modal-description">${description}</p>
-                <div class="modal-features-section">
-                    <h3 class="modal-features-title">${t.modal_features}</h3>
-                    <div class="modal-features-list">
-                        ${features.map(f => `<div class="modal-feature-item"><i class="fas fa-check-circle"></i><span>${f}</span></div>`).join('')}
-                    </div>
-                </div>
-                <div class="modal-actions">
-                    ${app.telegram ? `<a href="${app.telegram}" target="_blank" class="btn btn-primary"><i class="fab fa-telegram"></i> Telegram</a>` : `
-                    ${(app.appStore && app.appStore !== '#') ? `<a href="${app.appStore}" target="_blank" class="btn btn-primary"><i class="fab fa-apple"></i> App Store</a>` : ''}
-                    ${(app.playStore && app.playStore !== '#') ? `<a href="${app.playStore}" target="_blank" class="btn glass"><i class="fab fa-google-play"></i> Play Store</a>` : ''}`}
+    const modal = document.getElementById('app-modal');
+    document.getElementById('modal-data').innerHTML = `
+        <div class="modal-header">
+            <h2 style="font-size:3rem;">${app.name}</h2>
+            <p style="color:var(--text-muted);">${app.tagline[currentLang]}</p>
+        </div>
+        <div style="display:grid; grid-template-columns:1.5fr 1fr; gap:3rem;">
+            <div>
+                <p style="margin-bottom:2rem; font-size:1.1rem; line-height:1.8;">${app.description[currentLang]}</p>
+                <div class="features">
+                    <h4 style="margin-bottom:1rem;">Features</h4>
+                    <ul style="list-style:none; display:grid; grid-template-columns:1fr 1fr; gap:0.5rem;">
+                        ${app.features[currentLang].map(f => `<li style="display:flex; align-items:center; gap:0.5rem;"><i class="fas fa-check-circle" style="color:var(--primary);"></i> ${f}</li>`).join('')}
+                    </ul>
                 </div>
             </div>
-            <div class="modal-mockups">
-                ${app.screenshots.map(s => `<div class="iphone-device"><div class="iphone-notch"></div><img src="${s}" class="iphone-screen"></div>`).join('')}
+            <div style="background:var(--bg-deep); border-radius:24px; padding:2rem; text-align:center;">
+                <img src="${app.iconUrl}" style="width:120px; border-radius:24px; margin-bottom:2rem;">
+                <div class="btns" style="display:flex; flex-direction:column; gap:1rem;">
+                    ${app.appStore ? `<a href="${app.appStore}" class="btn btn-primary">App Store</a>` : ''}
+                    ${app.playStore ? `<a href="${app.playStore}" class="btn glass">Play Store</a>` : ''}
+                    <button class="btn glass" onclick="closeModal()">Close</button>
+                </div>
             </div>
-        </div>`;
-    document.getElementById('app-modal').classList.add('active');
-    document.body.style.overflow = 'hidden';
-};
-
-window.closeModal = function() {
-    document.getElementById('app-modal').classList.remove('active');
-    document.body.style.overflow = 'auto';
-};
-
-window.openFAQ = function() {
-    document.getElementById('faq-modal').classList.add('active');
-    document.body.style.overflow = 'hidden';
-};
-window.closeFAQ = function() {
-    document.getElementById('faq-modal').classList.remove('active');
-    document.body.style.overflow = 'auto';
-};
-window.toggleFAQ = function(btn) {
-    const item = btn.parentElement;
-    const isOpen = item.classList.contains('open');
-    document.querySelectorAll('.faq-item').forEach(i => i.classList.remove('open'));
-    if (!isOpen) item.classList.add('open');
-};
-window.toggleMobileMenu = function() {
-    document.getElementById('nav-links').classList.toggle('open');
-    document.getElementById('hamburger').classList.toggle('open');
-};
-window.closeMobileMenu = function() {
-    document.getElementById('nav-links').classList.remove('open');
-    document.getElementById('hamburger').classList.remove('open');
-};
-
-// --- FIREBASE SYNC ---
-// Helper: génère YYYY-MM-DD en heure locale (évite le décalage UTC de toISOString)
-function localDateStr(date) {
-    const y = date.getFullYear();
-    const m = String(date.getMonth() + 1).padStart(2, '0');
-    const d = String(date.getDate()).padStart(2, '0');
-    return `${y}-${m}-${d}`;
-}
-
-window.M_ACADEMIE_STATE = {
-    currentCalendarDate: new Date(),
-    selectedBookingDate: null,
-    selectedBookingSlot: null,
-    disabledDays: [],
-    defaultHours: [9, 10, 11, 12, 13, 14, 15, 16, 17, 18, 19, 20],
-    dayConfigs: {}
-};
-
-function initAvailability() {
-    if (window.firebaseSDK && window.firebaseApp) {
-        const { getFirestore, collection, onSnapshot, doc } = window.firebaseSDK;
-        const db = getFirestore(window.firebaseApp);
-
-        // Jours entièrement bloqués
-        onSnapshot(collection(db, "disabled_days"), (snapshot) => {
-            window.M_ACADEMIE_STATE.disabledDays = snapshot.docs.map(doc => doc.id);
-            if (document.getElementById('booking-modal')?.classList.contains('active')) {
-                window.renderCalendar();
-            }
-        });
-
-        // Heures bloquées par jour — temps réel, changes admin visibles immédiatement
-        onSnapshot(collection(db, "day_configs"), (snapshot) => {
-            window.M_ACADEMIE_STATE.dayConfigs = {};
-            snapshot.docs.forEach(d => {
-                window.M_ACADEMIE_STATE.dayConfigs[d.id] = d.data().disabled_hours || [];
-            });
-            // Si un jour est déjà sélectionné, on re-render les créneaux
-            if (window.M_ACADEMIE_STATE.selectedBookingDate &&
-                document.getElementById('booking-modal')?.classList.contains('active')) {
-                window.renderSlots(window.M_ACADEMIE_STATE.selectedBookingDate);
-            }
-        });
-
-        onSnapshot(doc(db, "config", "slots"), (docSnap) => {
-            if (docSnap.exists()) {
-                window.M_ACADEMIE_STATE.defaultHours = docSnap.data().hours.sort((a,b) => a-b);
-            }
-        });
-    }
-}
-
-document.addEventListener('DOMContentLoaded', () => {
-    initAvailability();
-});
-
-// --- GLOBAL BOOKING CONTROLLERS ---
-window.openBookingModal = function() {
-    console.log("Opening M Académie Modal...");
-    const modal = document.getElementById('booking-modal');
-    if (!modal) return;
+        </div>
+    `;
     modal.classList.add('active');
-    document.body.style.overflow = 'hidden';
-    
-    document.getElementById('slot-selection-view').style.display = 'block';
-    document.getElementById('booking-form-view').style.display = 'none';
-    document.getElementById('booking-success-view').style.display = 'none';
-    
-    window.M_ACADEMIE_STATE.selectedBookingDate = null;
-    window.M_ACADEMIE_STATE.selectedBookingSlot = null;
-    window.renderCalendar();
 };
 
-window.closeBookingModal = function() {
-    if (window.M_ACADEMIE_STATE.unsubscribeDayListener) {
-        window.M_ACADEMIE_STATE.unsubscribeDayListener();
-        window.M_ACADEMIE_STATE.unsubscribeDayListener = null;
-    }
-    const modal = document.getElementById('booking-modal');
-    if (modal) modal.classList.remove('active');
-    document.body.style.overflow = 'auto';
-};
+window.closeModal = () => document.getElementById('app-modal').classList.remove('active');
 
-window.renderCalendar = function() {
-    const grid = document.getElementById('calendar-grid');
-    const monthDisplay = document.getElementById('current-month-display');
-    if (!grid || !monthDisplay) return;
-    grid.innerHTML = '';
-    
-    // Safety check
-    if (!window.M_ACADEMIE_STATE || !window.M_ACADEMIE_STATE.currentCalendarDate) {
-        console.error("M_ACADEMIE_STATE not initialized");
-        return;
-    }
+// --- Initialization ---
+document.addEventListener("DOMContentLoaded", () => {
+    initThree();
+    initGSAP();
+    setLanguage('fr');
 
-    const year = window.M_ACADEMIE_STATE.currentCalendarDate.getFullYear();
-    const month = window.M_ACADEMIE_STATE.currentCalendarDate.getMonth();
-    const monthYear = new Intl.DateTimeFormat(currentLang, { month: 'long', year: 'numeric' }).format(window.M_ACADEMIE_STATE.currentCalendarDate);
-    monthDisplay.textContent = monthYear.charAt(0).toUpperCase() + monthYear.slice(1);
-    
-    // Header days: L M M J V S D (Monday start)
-    const dayNames = currentLang === 'ar' ? ['ن','ث','ر','خ','ج','س','ح'] : ['L','M','M','J','V','S','D'];
-    dayNames.forEach(name => {
-        const hCell = document.createElement('div');
-        hCell.className = 'calendar-day-header';
-        hCell.textContent = name;
-        hCell.style.fontSize = '0.75rem';
-        hCell.style.fontWeight = '900';
-        hCell.style.color = 'var(--primary)';
-        hCell.style.textAlign = 'center';
-        hCell.style.paddingBottom = '10px';
-        hCell.style.opacity = '0.7';
-        grid.appendChild(hCell);
+    window.addEventListener("scroll", () => {
+        document.getElementById('navbar').classList.toggle('scrolled', window.scrollY > 50);
     });
-
-    // ISOLATED OFFSET CALCULATION
-    const renderYear = window.M_ACADEMIE_STATE.currentCalendarDate.getFullYear();
-    const renderMonth = window.M_ACADEMIE_STATE.currentCalendarDate.getMonth();
-    const firstDayDate = new Date(renderYear, renderMonth, 1, 12, 0, 0);
-    const dayOfWeek = firstDayDate.getDay(); // 0 is Sun, 1 is Mon...
-    const startingDay = (dayOfWeek + 6) % 7; // Map to Mon=0, Tue=1...
-    
-    const daysInMonth = new Date(renderYear, renderMonth + 1, 0).getDate();
-
-    for (let i = 0; i < startingDay; i++) {
-        const empty = document.createElement('div');
-        empty.className = 'calendar-day empty';
-        grid.appendChild(empty);
-    }
-
-    const today = new Date();
-    today.setHours(0,0,0,0);
-
-    for (let d = 1; d <= daysInMonth; d++) {
-        const date = new Date(year, month, d);
-        const dayKey = localDateStr(date);
-        const el = document.createElement('div');
-        el.className = 'calendar-day';
-        el.textContent = d;
-        if (date < today || window.M_ACADEMIE_STATE.disabledDays.includes(dayKey)) {
-            el.classList.add('disabled');
-        } else {
-            el.classList.add('available');
-            el.onclick = () => window.handleDayClick(date, el);
-        }
-        if (window.M_ACADEMIE_STATE.selectedBookingDate && date.getTime() === window.M_ACADEMIE_STATE.selectedBookingDate.getTime()) el.classList.add('selected');
-        grid.appendChild(el);
-    }
-};
-
-window.handleDayClick = function(date, el) {
-    window.M_ACADEMIE_STATE.selectedBookingDate = date;
-    document.querySelectorAll('.calendar-day').forEach(d => d.classList.remove('selected'));
-    el.classList.add('selected');
-    const dateStr = new Intl.DateTimeFormat(currentLang, { weekday: 'long', day: 'numeric', month: 'long' }).format(date);
-    document.getElementById('selected-date-display').textContent = dateStr;
-    window.renderSlots(date);
-};
-
-window.renderSlots = async function(date) {
-    const container = document.getElementById('slots-grid');
-    if (!container) return;
-    container.innerHTML = '<div style="color:rgba(255,255,255,0.4); text-align:center; padding:1.5rem; font-size:0.85rem;">Chargement des créneaux...</div>';
-
-    const dateStr = localDateStr(date);
-    const allHours = window.M_ACADEMIE_STATE.defaultHours;
-    // day_configs en temps réel depuis le state (mis à jour par onSnapshot dans initAvailability)
-    const disabledHours = window.M_ACADEMIE_STATE.dayConfigs[dateStr] || [];
-    let paidCountPerHour = {};
-
-    if (window.firebaseSDK && window.firebaseApp) {
-        const { getFirestore, collection, query, where, getDocs } = window.firebaseSDK;
-        const db = getFirestore(window.firebaseApp);
-
-        // Compter les réservations PAID par heure (filtre status côté client)
-        try {
-            const snap = await getDocs(query(collection(db, "bookings"), where("date", "==", dateStr)));
-            snap.forEach(docSnap => {
-                const data = docSnap.data();
-                if (data.status === 'paid') {
-                    const h = parseInt(data.time);
-                    paidCountPerHour[h] = (paidCountPerHour[h] || 0) + 1;
-                }
-            });
-        } catch (e) { console.warn("bookings count error:", e); }
-    }
-
-    container.innerHTML = '';
-
-    allHours.forEach(hour => {
-        const isAdminDisabled = disabledHours.includes(hour);
-        const paidCount = paidCountPerHour[hour] || 0;
-        const isFull = paidCount >= 8;
-        const slot = document.createElement('div');
-        slot.className = 'time-slot glass';
-
-        if (isAdminDisabled || isFull) {
-            slot.textContent = isFull ? `${hour}:00 - ${hour+1}:00 (Complet)` : `${hour}:00 - ${hour+1}:00`;
-            slot.style.opacity = '0.35';
-            slot.style.cursor = 'not-allowed';
-            slot.style.textDecoration = 'line-through';
-        } else {
-            slot.textContent = `${hour}:00 - ${hour+1}:00`;
-            slot.onclick = () => window.handleSlotClick(`${hour}:00`);
-        }
-        container.appendChild(slot);
-    });
-};
-
-window.handleSlotClick = function(time) {
-    window.M_ACADEMIE_STATE.selectedBookingSlot = time;
-    document.getElementById('slot-selection-view').style.display = 'none';
-    document.getElementById('booking-form-view').style.display = 'block';
-};
-
-window.prevMonth = function() {
-    const d = window.M_ACADEMIE_STATE.currentCalendarDate;
-    window.M_ACADEMIE_STATE.currentCalendarDate = new Date(d.getFullYear(), d.getMonth() - 1, 1);
-    window.renderCalendar();
-};
-window.nextMonth = function() {
-    const d = window.M_ACADEMIE_STATE.currentCalendarDate;
-    window.M_ACADEMIE_STATE.currentCalendarDate = new Date(d.getFullYear(), d.getMonth() + 1, 1);
-    window.renderCalendar();
-};
-window.backToSlots = function() {
-    document.getElementById('slot-selection-view').style.display = 'block';
-    document.getElementById('booking-form-view').style.display = 'none';
-};
-
-window.submitBooking = async (e) => {
-    e.preventDefault();
-    console.log("Submitting booking...");
-
-    if (!window.M_ACADEMIE_STATE.selectedBookingDate || !window.M_ACADEMIE_STATE.selectedBookingSlot) {
-        alert("Erreur: Date ou heure non sélectionnée.");
-        return;
-    }
-
-    const name = document.getElementById('student-name').value;
-    let phone = document.getElementById('student-phone').value;
-    // Clean phone: keep only numbers and plus
-    phone = phone.replace(/[^0-9+]/g, '');
-    
-    if (phone.length < 8) {
-        alert("Numéro de téléphone invalide.");
-        return;
-    }
-
-    const email = document.getElementById('student-email').value;
-    
-    const bookingData = {
-        date: localDateStr(window.M_ACADEMIE_STATE.selectedBookingDate),
-        time: window.M_ACADEMIE_STATE.selectedBookingSlot,
-        studentName: name,
-        studentPhone: phone,
-        studentEmail: email,
-        status: 'pending',
-        createdAt: new Date().toISOString()
-    };
-
-    console.log("Saving to Firestore:", bookingData);
-
-    // Firebase Save
-    if (window.firebaseSDK) {
-        try {
-            // Need to get db from a global or previous init
-            // For now use the initialized app in admin or similar
-            const { getFirestore, collection, addDoc } = window.firebaseSDK;
-            // Since script.js initializes apps/logic, we assume firebase is ready
-            // Re-initialize if needed or use existing reference
-            const app = window.firebaseApp; // Assume it was set or we set it now
-            if (app) {
-                const db = getFirestore(app);
-                await addDoc(collection(db, "bookings"), bookingData);
-                
-                // --- SUCCESS UI ---
-                const formView = document.getElementById('booking-form-view');
-                const successView = document.getElementById('booking-success-view');
-                if (formView) formView.style.display = 'none';
-                if (successView) successView.style.display = 'block';
-            }
-        } catch (err) {
-            console.error("Firestore error:", err);
-            alert("Erreur lors de l'envoi de la réservation. Vérifiez votre connexion.");
-        }
-    }
-
-    // Show Success UI
-    document.getElementById('booking-form-view').style.display = 'none';
-    document.getElementById('booking-success-view').style.display = 'block';
-};
+});

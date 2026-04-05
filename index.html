@@ -3,43 +3,34 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Mohamed Sayed | Développeur</title>
+    <title>Mohamed Sayed | Elite Developer</title>
     <link rel="icon" type="image/png" href="assets/images/favicon-premium.png">
-    <link rel="apple-touch-icon" href="assets/images/favicon-premium.png">
     
-    <!-- Fonts -->
+    <!-- Fonts - Outfit for headlines, Inter for UI -->
     <link rel="preconnect" href="https://fonts.googleapis.com">
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600&family=Outfit:wght@700;800&display=swap" rel="stylesheet">
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600&family=Outfit:wght@600;700;800;900&display=swap" rel="stylesheet">
     
     <!-- Icons -->
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.1/css/all.min.css">
     
     <!-- Styles -->
-    <link rel="stylesheet" href="style.css?v=2">
+    <link rel="stylesheet" href="style.css?v=100">
 </head>
 <body>
-    <!-- 3D Background -->
+    <div class="noise"></div>
     <div id="canvas-container"></div>
 
-    <!-- Noise Texture Overlay -->
-    <div class="noise"></div>
-
-    <!-- Navigation -->
     <nav id="navbar">
         <div class="container">
             <a href="#" class="logo">
                 <div class="logo-icon">M</div>
                 <span>Mohamed</span>
             </a>
-            <!-- Hamburger (mobile only) -->
-            <button class="hamburger" id="hamburger" onclick="toggleMobileMenu()" aria-label="Menu">
-                <span></span><span></span><span></span>
-            </button>
-            <ul class="nav-links" id="nav-links">
-                <li><a href="#hero" class="active" data-i18n="nav_home" onclick="closeMobileMenu()">Accueil</a></li>
-                <li><a href="#portfolio" data-i18n="nav_apps" onclick="closeMobileMenu()">Mes Apps</a></li>
-                <li><a href="#contact" data-i18n="nav_contact" onclick="closeMobileMenu()">Contact</a></li>
+            <ul class="nav-links">
+                <li><a href="#hero" class="active" data-i18n="nav_home">Accueil</a></li>
+                <li><a href="#portfolio" data-i18n="nav_apps">Projets</a></li>
+                <li><a href="#contact" data-i18n="nav_contact">Contact</a></li>
             </ul>
             <div class="nav-controls">
                 <div class="lang-switcher">
@@ -54,479 +45,161 @@
         </div>
     </nav>
 
-    <!-- Hero Section -->
-    <section class="hero" id="hero">
-        <div class="container">
+    <main>
+        <!-- Hero Section -->
+        <section class="hero" id="hero">
             <div class="hero-content">
-                <h1 id="hero-title" data-i18n="hero_title">Inspirer le futur par le <span class="gradient-text">code et l'IA</span></h1>
-                <p id="hero-desc" data-i18n="hero_desc">Développeur passionné par la création d'expériences innovantes. Découvrez mes projets Zikr, M App et Locsy lancés en 2026.</p>
+                <h1 data-i18n="hero_title">Inspirer le futur par le <span class="gradient-text">code et l'IA</span></h1>
+                <p data-i18n="hero_desc">Développeur Elite créant des expériences mobiles et SaaS innovantes.</p>
                 <div class="hero-actions">
-                    <a href="#portfolio" class="btn btn-primary" data-i18n="hero_cta_apps">Voir mes apps</a>
+                    <a href="#portfolio" class="btn btn-primary" data-i18n="hero_cta_apps">Explorer mes projets</a>
+                    <a href="#contact" class="btn glass" data-i18n="nav_contact">Me contacter</a>
                 </div>
             </div>
-            </div>
-        </div>
-    </section>
+        </section>
 
-    <!-- About Section -->
-    <section class="about" id="about">
-        <div class="container">
-            <div class="about-grid">
-                <div class="about-text">
-                    <h2 class="gradient-text reveal-text" data-i18n="about_title">Passionné par l'innovation</h2>
-                    <p data-i18n="about_p1">Je suis Mohamed Sayed, un développeur dédié à la création d'expériences utilisateur exceptionnelles. Mon approche combine rigueur technique et créativité pour donner vie à des idées ambitieuses.</p>
+        <!-- Portfolio Bento Grid -->
+        <section class="portfolio" id="portfolio">
+            <div class="container">
+                <div class="section-title">
+                    <h2 data-i18n="portfolio_title">Ecosystème Digital</h2>
+                    <p data-i18n="portfolio_subtitle">Solutions mobiles, IA et plateformes SaaS.</p>
+                </div>
+                
+                <div class="apps-grid">
+                    <!-- Zikr -->
+                    <div class="app-card" onclick="openAppModal('zikr')">
+                        <div class="app-card-hero">
+                            <div class="card-mockups">
+                                <div class="iphone-device card-mini"><img src="assets/images/zikr_screen_1.png" class="iphone-screen"></div>
+                                <div class="iphone-device card-mini"><img src="assets/images/zikr_screen_1.png" class="iphone-screen"></div>
+                                <div class="iphone-device card-mini"><img src="assets/images/zikr_screen_1.png" class="iphone-screen"></div>
+                            </div>
+                        </div>
+                        <div class="app-card-content">
+                            <h3>Zikr</h3>
+                            <span class="status-badge" data-i18n="status_available">Mars 2026</span>
+                        </div>
+                    </div>
 
-                </div>
-                <div class="about-stats" style="display: grid; grid-template-columns: 1fr 1fr; gap: 1rem;">
-                    <div class="stat-card glass" style="text-align: center; padding: 2rem; border-radius: 1.5rem;">
-                        <span style="font-size: 2.5rem; font-weight: 800; color: var(--primary);">5</span>
-                        <p data-i18n="about_stat_apps">Apps Lancées</p>
+                    <!-- M App -->
+                    <div class="app-card" onclick="openAppModal('m_app')">
+                        <div class="app-card-hero">
+                            <div class="card-mockups">
+                                <div class="iphone-device card-mini"><img src="assets/images/m_screen_1.png" class="iphone-screen"></div>
+                                <div class="iphone-device card-mini"><img src="assets/images/m_screen_1.png" class="iphone-screen"></div>
+                                <div class="iphone-device card-mini"><img src="assets/images/m_screen_1.png" class="iphone-screen"></div>
+                            </div>
+                        </div>
+                        <div class="app-card-content">
+                            <h3>M App</h3>
+                            <span class="status-badge" data-i18n="status_new">New</span>
+                        </div>
                     </div>
-                    <div class="stat-card glass" style="text-align: center; padding: 2rem; border-radius: 1.5rem;">
-                        <span style="font-size: 2.5rem; font-weight: 800; color: var(--secondary);">2026</span>
-                        <p data-i18n="about_stat_year">Année Clé</p>
-                    </div>
-                </div>
-            </div>
-        </div>
-    </section>
 
-    <!-- Skills Section -->
-    <section class="skills" id="skills">
-        <div class="container">
-            <div class="section-title">
-                <h2 data-i18n="skills_title" class="reveal-text">Mes Compétences</h2>
-            </div>
-            <div class="skills-grid">
-                <div class="skill-card glass">
-                    <i class="fas fa-code"></i>
-                    <h3 data-i18n="skill_dev_title">Développement</h3>
-                    <p data-i18n="skill_dev_desc">Swift, Flutter, Node.js</p>
-                </div>
-                <div class="skill-card glass">
-                    <i class="fas fa-brain"></i>
-                    <h3 data-i18n="skill_ai_title">Intelligence Artificielle</h3>
-                    <p data-i18n="skill_ai_desc">Gemini AI, Prompt Engineering</p>
-                </div>
-                <div class="skill-card glass">
-                    <i class="fas fa-rocket"></i>
-                    <h3 data-i18n="skill_prod_title">Produit</h3>
-                    <p data-i18n="skill_prod_desc">UX Design, Lancement App</p>
-                </div>
-            </div>
-        </div>
-    </section>
+                    <!-- Locsy -->
+                    <div class="app-card" onclick="openAppModal('locsy')">
+                        <div class="app-card-hero">
+                            <div class="card-mockups">
+                                <div class="iphone-device card-mini"><img src="assets/images/locsy_s1_final.png" class="iphone-screen"></div>
+                                <div class="iphone-device card-mini"><img src="assets/images/locsy_s1_final.png" class="iphone-screen"></div>
+                                <div class="iphone-device card-mini"><img src="assets/images/locsy_s1_final.png" class="iphone-screen"></div>
+                            </div>
+                        </div>
+                        <div class="app-card-content">
+                            <h3>Locsy</h3>
+                            <span class="status-badge" data-i18n="status_available">Available</span>
+                        </div>
+                    </div>
 
-    <!-- Experience Section (Timeline) -->
-    <section class="portfolio" id="experience" style="padding-bottom: 0;">
-        <div class="container">
-            <div class="section-title">
-                <h2 data-i18n="timeline_title" class="reveal-text">Parcours 2026</h2>
-                <p data-i18n="timeline_subtitle">Une année d'innovation intense.</p>
-            </div>
-            <div class="timeline">
-                <div class="timeline-item">
-                    <div class="timeline-content">
-                        <span class="timeline-date" data-i18n="timeline_locsy_date">Mars 2026</span>
-                        <h3 data-i18n="timeline_locsy_title">Lancement de "Locsy"</h3>
-                        <p data-i18n="timeline_locsy_p">Application de planification de voyages intelligente utilisant l'IA Gemini.</p>
+                    <!-- Kinto -->
+                    <div class="app-card" onclick="openAppModal('kinto')">
+                        <div class="app-card-hero">
+                            <div class="card-mockups">
+                                <div class="iphone-device card-mini"><img src="assets/images/kinto-screen1.png" class="iphone-screen"></div>
+                                <div class="iphone-device card-mini"><img src="assets/images/kinto-screen2.png" class="iphone-screen"></div>
+                                <div class="iphone-device card-mini"><img src="assets/images/kinto-screen3.png" class="iphone-screen"></div>
+                            </div>
+                        </div>
+                        <div class="app-card-content">
+                            <h3>Kinto</h3>
+                            <span class="status-badge" data-i18n="status_new">IA Finance</span>
+                        </div>
                     </div>
-                </div>
-                <div class="timeline-item">
-                    <div class="timeline-content">
-                        <span class="timeline-date" data-i18n="timeline_zikr_date">Mars 2026</span>
-                        <h3 data-i18n="timeline_zikr_title">Lancement de "Zikr"</h3>
-                        <p data-i18n="timeline_zikr_p">App spirituelle complète avec Coran, Qibla et Imam IA.</p>
-                    </div>
-                </div>
-                <div class="timeline-item">
-                    <div class="timeline-content">
-                        <span class="timeline-date" data-i18n="timeline_m_date">Bientôt</span>
-                        <h3 data-i18n="timeline_m_title">Lancement de "M App"</h3>
-                        <p data-i18n="timeline_m_p">Réseau social dynamique axé sur les Reels et la messagerie instantanée.</p>
-                    </div>
-                </div>
-                <div class="timeline-item">
-                    <div class="timeline-content">
-                        <span class="timeline-date" data-i18n="timeline_kinto_date">Avril 2026</span>
-                        <h3 data-i18n="timeline_kinto_title">Lancement de "Kinto"</h3>
-                        <p data-i18n="timeline_kinto_p">App de finance personnelle avec scanner de reçus IA et gestion de budget.</p>
-                    </div>
-                </div>
-                <div class="timeline-item">
-                    <div class="timeline-content">
-                        <span class="timeline-date" data-i18n="timeline_restopass_date">Mai 2026</span>
-                        <h3 data-i18n="timeline_restopass_title">Lancement de "RestoPass"</h3>
-                        <p data-i18n="timeline_restopass_p">Solution de digitalisation pour restaurants : Menu QR, Fidélité & Wallet.</p>
-                    </div>
-                </div>
-            </div>
-        </div>
-    </section>
 
-    <!-- Portfolio Section -->
-    <section class="portfolio" id="portfolio">
-        <div class="container">
-            <div class="section-title">
-                <h2 data-i18n="portfolio_title" class="reveal-text">Mes Applications</h2>
-                <p data-i18n="portfolio_subtitle">Découvrez mes créations originales de 2026.</p>
-            </div>
-            
-            <div class="apps-grid">
-                <!-- Zikr Card -->
-                <div class="app-card glass" onclick="openAppModal('zikr')">
-                    <div class="app-card-hero card-zikr">
-                        <div class="card-mockups">
-                            <div class="iphone-device card-mini">
-                                <div class="iphone-notch"></div>
-                                <img src="assets/images/zikr_screen_1.png" class="iphone-screen">
-                            </div>
-                            <div class="iphone-device card-mini">
-                                <div class="iphone-notch"></div>
-                                <img src="assets/images/zikr_screen_1.png" class="iphone-screen">
-                            </div>
-                            <div class="iphone-device card-mini">
-                                <div class="iphone-notch"></div>
-                                <img src="assets/images/zikr_screen_1.png" class="iphone-screen">
+                    <!-- RestoPass -->
+                    <div class="app-card" onclick="openAppModal('restopass')">
+                        <div class="app-card-hero">
+                            <div class="card-mockups">
+                                <div class="iphone-device card-mini"><img src="assets/images/restopass_s1.png" class="iphone-screen"></div>
+                                <div class="iphone-device card-mini"><img src="assets/images/restopass_s2.png" class="iphone-screen"></div>
+                                <div class="iphone-device card-mini"><img src="assets/images/restopass_s3.png" class="iphone-screen"></div>
                             </div>
                         </div>
-                        <div class="icon-box-mini">
-                            <img src="assets/images/zikr-icon.png" alt="Zikr Icon">
+                        <div class="app-card-content">
+                            <h3>RestoPass</h3>
+                            <span class="status-badge">SaaS 🍴</span>
                         </div>
                     </div>
-                    <div class="app-card-content">
-                        <h3>Zikr</h3>
-                        <p class="tagline" data-i18n="app_zikr_tagline">Votre compagnon spirituel quotidien.</p>
-                        <span class="status-badge status-live" data-i18n="status_available">Mars 2026</span>
-                    </div>
-                </div>
 
-                <!-- M App Card -->
-                <div class="app-card glass" onclick="openAppModal('m_app')">
-                    <div class="app-card-hero card-mapp">
-                        <div class="card-mockups">
-                            <div class="iphone-device card-mini">
-                                <div class="iphone-notch"></div>
-                                <img src="assets/images/m_screen_1.png" class="iphone-screen">
-                            </div>
-                            <div class="iphone-device card-mini">
-                                <div class="iphone-notch"></div>
-                                <img src="assets/images/m_screen_1.png" class="iphone-screen">
-                            </div>
-                            <div class="iphone-device card-mini">
-                                <div class="iphone-notch"></div>
-                                <img src="assets/images/m_screen_1.png" class="iphone-screen">
+                    <!-- M Académie -->
+                    <div class="app-card" onclick="openBookingModal()">
+                        <div class="app-card-hero">
+                            <div class="card-mockups">
+                                <div class="iphone-device card-mini"><img src="assets/images/cal_elite_1.png" class="iphone-screen"></div>
+                                <div class="iphone-device card-mini"><img src="assets/images/cal_elite_2.png" class="iphone-screen"></div>
+                                <div class="iphone-device card-mini"><img src="assets/images/cal_elite_3.png" class="iphone-screen"></div>
                             </div>
                         </div>
-                        <div class="icon-box-mini">
-                            <img src="assets/images/m-icon-dark.png" alt="M App Icon">
+                        <div class="app-card-content">
+                            <h3>M Académie</h3>
+                            <span class="status-badge" data-i18n="status_booking">Booking</span>
                         </div>
-                    </div>
-                    <div class="app-card-content">
-                        <h3>M App</h3>
-                        <p class="tagline" data-i18n="app_m_tagline">Social, Vidéos & Reels en temps réel.</p>
-                        <span class="status-badge status-dev" data-i18n="status_new">Bientôt</span>
-                    </div>
-                </div>
-
-                <!-- Locsy Card -->
-                <div class="app-card glass" onclick="openAppModal('locsy')">
-                    <div class="app-card-hero card-locsy">
-                        <div class="card-mockups">
-                            <div class="iphone-device card-mini">
-                                <div class="iphone-notch"></div>
-                                <img src="assets/images/locsy_s1_final.png" class="iphone-screen">
-                            </div>
-                            <div class="iphone-device card-mini">
-                                <div class="iphone-notch"></div>
-                                <img src="assets/images/locsy_s1_final.png" class="iphone-screen">
-                            </div>
-                            <div class="iphone-device card-mini">
-                                <div class="iphone-notch"></div>
-                                <img src="assets/images/locsy_s1_final.png" class="iphone-screen">
-                            </div>
-                        </div>
-                        <div class="icon-box-mini">
-                            <img src="assets/images/locsy-icon-dark.png" alt="Locsy Icon">
-                        </div>
-                    </div>
-                    <div class="app-card-content">
-                        <h3>Locsy</h3>
-                        <p class="tagline" data-i18n="app_locsy_tagline">L'IA qui réinvente vos voyages.</p>
-                        <span class="status-badge status-live" data-i18n="status_available">Mars 2026</span>
-                    </div>
-                </div>
-
-                <!-- Kinto Card -->
-                <div class="app-card glass" onclick="openAppModal('kinto')">
-                    <div class="app-card-hero" style="background: linear-gradient(135deg, #7C6AF7, #5B4BD4);">
-                        <div class="card-mockups">
-                            <div class="iphone-device card-mini">
-                                <div class="iphone-notch"></div>
-                                <img src="assets/images/kinto-screen1.png" class="iphone-screen">
-                            </div>
-                            <div class="iphone-device card-mini">
-                                <div class="iphone-notch"></div>
-                                <img src="assets/images/kinto-screen2.png" class="iphone-screen">
-                            </div>
-                            <div class="iphone-device card-mini">
-                                <div class="iphone-notch"></div>
-                                <img src="assets/images/kinto-screen3.png" class="iphone-screen">
-                            </div>
-                        </div>
-                        <div class="icon-box-mini">
-                            <img src="assets/images/kinto-icon.png" alt="Kinto Icon">
-                        </div>
-                    </div>
-                    <div class="app-card-content">
-                        <h3>Kinto</h3>
-                        <p class="tagline" data-i18n="app_kinto_tagline">Gérez vos dépenses avec l'IA.</p>
-                        <span class="status-badge status-dev" data-i18n="status_new">Bientôt</span>
-                    </div>
-                </div>
-
-                <!-- Mo Frame Bot Card -->
-                <div class="app-card glass" onclick="openAppModal('mo_frame')" style="cursor:pointer;">
-                    <div class="app-card-hero card-moframe" style="background: linear-gradient(135deg, #7c3aed, #4f46e5);">
-                        <div class="card-mockups">
-                            <div class="iphone-device card-mini">
-                                <div class="iphone-notch"></div>
-                                <img src="assets/images/mo_frame_s1_final.png" class="iphone-screen">
-                            </div>
-                            <div class="iphone-device card-mini">
-                                <div class="iphone-notch"></div>
-                                <img src="assets/images/mo_frame_s2_final.png" class="iphone-screen">
-                            </div>
-                            <div class="iphone-device card-mini">
-                                <div class="iphone-notch"></div>
-                                <img src="assets/images/mo_frame_s3_final.png" class="iphone-screen">
-                            </div>
-                        </div>
-                        <div class="icon-box-mini">
-                            <img src="assets/images/mo-frame-icon.png" alt="Mo Frame Icon">
-                        </div>
-                    </div>
-                    <div class="app-card-content">
-                        <h3>Mo Frame</h3>
-                        <p class="tagline" data-i18n="app_mo_frame_tagline">Créez des posts stylés en un clic.</p>
-                        <span class="status-badge status-live" data-i18n="status_bot">Bot Telegram</span>
-                    </div>
-                </div>
-
-                <!-- RestoPass Card -->
-                <div class="app-card glass" onclick="openAppModal('restopass')">
-                    <div class="app-card-hero" style="background: linear-gradient(135deg, #f97316, #ea580c);">
-                        <div class="card-mockups">
-                            <div class="iphone-device card-mini">
-                                <div class="iphone-notch"></div>
-                                <img src="assets/images/restopass_s1.png" class="iphone-screen">
-                            </div>
-                            <div class="iphone-device card-mini">
-                                <div class="iphone-notch"></div>
-                                <img src="assets/images/restopass_s2.png" class="iphone-screen">
-                            </div>
-                            <div class="iphone-device card-mini">
-                                <div class="iphone-notch"></div>
-                                <img src="assets/images/restopass_s3.png" class="iphone-screen">
-                            </div>
-                        </div>
-                        <div class="icon-box-mini">
-                            <img src="assets/images/restopass-icon.png" alt="RestoPass Icon">
-                        </div>
-                    </div>
-                    <div class="app-card-content">
-                        <h3>RestoPass</h3>
-                        <p class="tagline" data-i18n="app_restopass_tagline">Votre restaurant digitalisé en 5 minutes.</p>
-                        <span class="status-badge status-live" style="background: rgba(249, 115, 22, 0.2); color: #f97316; border: 1px solid rgba(249, 115, 22, 0.3);" data-i18n="status_available">Mai 2026</span>
-                    </div>
-                </div>
-
-                <!-- Assistant Cours (Web Booking) -->
-                <div class="app-card glass" onclick="openBookingModal()" style="cursor:pointer;">
-                    <div class="app-card-hero" style="background: linear-gradient(135deg, #25D366, #128C7E);">
-                        <div class="card-mockups">
-                            <div class="iphone-device card-mini">
-                                <div class="iphone-notch"></div>
-                                <img src="assets/images/cal_elite_1.png" class="iphone-screen">
-                            </div>
-                            <div class="iphone-device card-mini">
-                                <div class="iphone-notch"></div>
-                                <img src="assets/images/cal_elite_2.png" class="iphone-screen">
-                            </div>
-                            <div class="iphone-device card-mini">
-                                <div class="iphone-notch"></div>
-                                <img src="assets/images/cal_elite_3.png" class="iphone-screen">
-                            </div>
-                        </div>
-                        <div class="icon-box-mini">
-                            <img src="assets/images/whatsapp-bot-icon.png" alt="Course Assistant Icon">
-                        </div>
-                    </div>
-                    <div class="app-card-content">
-                        <h3 data-i18n="app_booking_title">M Académie</h3>
-                        <p class="tagline" data-i18n="app_booking_tagline">Choisissez votre créneau en un clic.</p>
-                        <span class="status-badge status-live" style="background: rgba(37, 211, 102, 0.2); color: #25D366; border: 1px solid rgba(37, 211, 102, 0.3);" data-i18n="status_booking">Réservation en ligne</span>
                     </div>
                 </div>
             </div>
-        </div>
-    </section>
+        </section>
 
-    <!-- Contact Section -->
-    <section class="portfolio" id="contact" style="background: rgba(16, 185, 129, 0.03); border-radius: 4rem 4rem 0 0;">
-        <div class="container" style="text-align: center;">
-            <div class="section-title">
-                <h2 data-i18n="contact_title">Travaillons ensemble</h2>
-                <p data-i18n="contact_subtitle">Une idée de projet ? Contactez-moi.</p>
-            </div>
-            <div style="display: flex; justify-content: center; gap: 2rem; flex-wrap: wrap; margin-top: 3rem;">
-                <a href="mailto:contact@mohameds.net" class="btn btn-primary">
-                    <i class="fas fa-envelope"></i> contact@mohameds.net
-                </a>
-                <button class="btn glass" onclick="openFAQ()" style="cursor:pointer;">
-                    <i class="fas fa-question-circle"></i> <span data-i18n="faq_btn">FAQ</span>
-                </button>
-                <a href="https://www.instagram.com/mohamedsayedh8?igsh=MWQyd2dsbDV5NDJnaw%3D%3D&utm_source=qr" target="_blank" class="btn glass">
-                    <i class="fab fa-instagram"></i> Instagram
-                </a>
-            </div>
-        </div>
-    </section>
-
-    <!-- FAQ Modal -->
-    <div class="modal" id="faq-modal">
-        <div class="modal-content glass" style="max-width: 680px;">
-            <button class="close-modal" onclick="closeFAQ()">&times;</button>
-            <h2 style="font-size: 1.8rem; margin-bottom: 2rem;" data-i18n="faq_title">Questions fréquentes</h2>
-            <div id="faq-data">
-                <div class="faq-item">
-                    <button class="faq-q" onclick="toggleFAQ(this)">
-                        <span data-i18n="faq_q1"></span>
-                        <i class="fas fa-chevron-down"></i>
-                    </button>
-                    <div class="faq-a"><p data-i18n="faq_a1"></p></div>
+        <!-- Timeline Section -->
+        <section class="about" id="about">
+            <div class="container">
+                <div class="section-title">
+                    <h2 data-i18n="timeline_title">Parcours Elite</h2>
                 </div>
-                <div class="faq-item">
-                    <button class="faq-q" onclick="toggleFAQ(this)">
-                        <span data-i18n="faq_q2"></span>
-                        <i class="fas fa-chevron-down"></i>
-                    </button>
-                    <div class="faq-a"><p data-i18n="faq_a2"></p></div>
-                </div>
-                <div class="faq-item">
-                    <button class="faq-q" onclick="toggleFAQ(this)">
-                        <span data-i18n="faq_q3"></span>
-                        <i class="fas fa-chevron-down"></i>
-                    </button>
-                    <div class="faq-a"><p data-i18n="faq_a3"></p></div>
-                </div>
-                <div class="faq-item">
-                    <button class="faq-q" onclick="toggleFAQ(this)">
-                        <span data-i18n="faq_q4"></span>
-                        <i class="fas fa-chevron-down"></i>
-                    </button>
-                    <div class="faq-a"><p data-i18n="faq_a4"></p></div>
+                <div class="timeline">
+                    <div class="timeline-item">
+                        <div class="timeline-content">
+                            <span class="timeline-date" data-i18n="timeline_restopass_date">Mai 2026</span>
+                            <h3 data-i18n="timeline_restopass_title">Launch RestoPass</h3>
+                            <p data-i18n="timeline_restopass_p">Solution SaaS globale.</p>
+                        </div>
+                    </div>
+                    <!-- Other items handled by logic or static for simplicity -->
                 </div>
             </div>
-        </div>
-    </div>
+        </section>
+    </main>
 
-    <!-- Main App Modal -->
+    <!-- Modals -->
     <div class="modal" id="app-modal">
-        <div class="modal-content glass">
-            <button class="close-modal" id="close-modal" onclick="closeModal()">&times;</button>
-            <div id="modal-data">
-                <!-- Contenu dynamique via JS -->
-            </div>
-        </div>
+        <div class="modal-content" id="modal-data"></div>
     </div>
-
-    <footer style="padding: 4rem 0; text-align: center; background: var(--bg);">
-        <div class="container">
-            <p>&copy; 2026 Mohamed. <span data-i18n="footer_rights">Tous droits réservés.</span></p>
-        </div>
-    </footer>
 
     <!-- Booking Modal -->
     <div class="modal" id="booking-modal">
-        <div class="modal-content glass" style="max-width: 900px;">
-            <button class="close-modal" id="close-booking" onclick="closeBookingModal()">&times;</button>
-            <div class="booking-container">
-                <div class="booking-header">
-                    <h2 id="booking-title" data-i18n="booking_modal_title">M Académie - Réservation</h2>
-                    <p data-i18n="booking_modal_subtitle">Choisissez un jour et une heure disponible.</p>
-                </div>
-                
-                <div class="booking-grid">
-                    <!-- Calendar Side -->
-                    <div class="calendar-section">
-                        <div class="calendar-nav">
-                            <button id="prev-month" onclick="prevMonth()"><i class="fas fa-chevron-left"></i></button>
-                            <h3 id="current-month-display"></h3>
-                            <button id="next-month" onclick="nextMonth()"><i class="fas fa-chevron-right"></i></button>
-                        </div>
-                        <div class="calendar-grid" id="calendar-grid">
-                            <!-- Days will be injected here -->
-                        </div>
-                        <div class="calendar-legend" style="display: flex; gap: 1.5rem; margin-top: 1.5rem; font-size: 0.8rem; justify-content: center; padding: 0.5rem; background: rgba(255,255,255,0.03); border-radius: 0.8rem;">
-                            <div style="display: flex; align-items: center; gap: 0.5rem;">
-                                <span style="width: 10px; height: 10px; background: #10b981; border-radius: 50%;"></span>
-                                <span data-i18n="legend_available">Jour disponible</span>
-                            </div>
-                            <div style="display: flex; align-items: center; gap: 0.5rem;">
-                                <span style="width: 10px; height: 10px; background: rgba(255,255,255,0.1); border-radius: 50%;"></span>
-                                <span data-i18n="legend_full">Complet / Pas de cours</span>
-                            </div>
-                        </div>
-                    </div>
-
-                    <!-- Details Side -->
-                    <div class="booking-details" id="booking-details">
-                        <div id="slot-selection-view">
-                            <h3 id="selected-date-display" data-i18n="select_hour">Sélectionnez une heure</h3>
-                            <div class="slots-grid" id="slots-grid">
-                                <!-- Slots injected here -->
-                            </div>
-                        </div>
-
-                        <div id="booking-form-view" style="display: none;">
-                            <button class="back-btn" id="back-to-slots" onclick="backToSlots()"><i class="fas fa-arrow-left"></i> <span data-i18n="back">Retour</span></button>
-                            <h3 data-i18n="form_title">Vos informations</h3>
-                            <form id="booking-form" onsubmit="submitBooking(event)">
-                                <div class="form-group">
-                                    <label for="student-name" data-i18n="label_name">Prénom</label>
-                                    <input type="text" id="student-name" required placeholder="Ex: Mohamed">
-                                </div>
-                                <div class="glass-input-group">
-                                    <label for="student-phone"><i class="fas fa-phone"></i> Numéro WhatsApp</label>
-                                    <input type="tel" id="student-phone" placeholder="06 12 34 56 78" 
-                                           inputmode="numeric" pattern="[0-9\s+]*" required 
-                                           oninput="this.value = this.value.replace(/[^0-9+]/g, '')">
-                                </div>
-                                <div class="form-group">
-                                    <label for="student-email" data-i18n="label_email">Email (Optionnel)</label>
-                                    <input type="email" id="student-email" placeholder="votre@email.com">
-                                </div>
-                                <p class="form-disclaimer" data-i18n="form_disclaimer">Vérifiez bien votre numéro pour recevoir le lien de paiement Revolut et l'accès au cours.</p>
-                                <button type="submit" class="btn btn-primary w-100" id="confirm-booking-btn">
-                                    <span data-i18n="btn_confirm">Confirmer la réservation</span>
-                                </button>
-                            </form>
-                        </div>
-
-                        <div id="booking-success-view" style="display: none; text-align: center; padding: 2rem 0;">
-                            <div class="success-icon"><i class="fas fa-check-circle"></i></div>
-                            <h2 data-i18n="success_title">Demande reçue !</h2>
-                            <p data-i18n="success_desc">Merci ! Nous allons vous envoyer par WhatsApp et par mail un lien pour procéder au paiement ainsi que les informations pour accéder au cours.</p>
-                            <button class="btn glass" onclick="closeBookingModal()" data-i18n="btn_close">Fermer</button>
-                        </div>
-                    </div>
-                </div>
+        <div class="modal-content" style="max-width: 1000px; padding: 2rem;">
+            <button class="btn glass" onclick="closeBookingModal()" style="position: absolute; top: 1rem; right: 1rem;">&times;</button>
+            <div id="booking-root">
+                <!-- React/JS booking logic -->
             </div>
         </div>
     </div>
 
-    <!-- Firebase SDK -->
+    <footer style="padding: 5rem 0; text-align: center; opacity: 0.6;">
+        <p>&copy; 2026 Mohamed Sayed. <span data-i18n="footer_rights">All Rights Reserved.</span></p>
+    </footer>
+
+    <!-- Firebase -->
     <script type="module">
       import { initializeApp } from "https://www.gstatic.com/firebasejs/10.7.1/firebase-app.js";
       import { getFirestore, collection, addDoc, onSnapshot, query, where, orderBy, doc, getDoc, getDocs, setDoc, deleteDoc, updateDoc } from "https://www.gstatic.com/firebasejs/10.7.1/firebase-firestore.js";
@@ -550,7 +223,10 @@
       };
     </script>
 
-    <!-- Custom script with cache-buster -->
-    <script type="module" src="script.js?v=49"></script>
+    <!-- GSAP & Core Scripts -->
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/gsap/3.12.5/gsap.min.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/gsap/3.12.5/ScrollTrigger.min.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/three.js/r128/three.min.js"></script>
+    <script type="module" src="script.js?v=200"></script>
 </body>
 </html>
