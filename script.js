@@ -14,6 +14,7 @@ const apps = {
             ar: ['القرآن بالتجويد والصوت', 'أوقات الصلاة والقبلة', 'أذكار وأدعية تفاعلية', 'واجهة متميزة']
         },
         appStore: 'https://apps.apple.com/fr/app/zikr/id6759991511',
+        googlePlay: '#', // TODO: Add Google Play link
         screenshots: ['assets/images/zikr_screen_1.png', 'assets/images/zikr_screen_1.png', 'assets/images/zikr_screen_1.png'],
         color: '#10b981'
     },
@@ -75,16 +76,17 @@ const apps = {
         screenshots: ['assets/images/mo_frame_s1_final.png'],
         color: '#7c3aed'
     },
-    restopass: {
-        id: 'restopass', icon: '🍴', iconUrl: 'assets/images/restopass-icon.png', name: 'RestoPass',
+    restofid: {
+        id: 'restofid', icon: '🍴', iconUrl: 'assets/images/restopass-icon.png', name: 'Restofid.com',
         tagline: { fr: 'Votre restaurant digitalisé en 5 min.', en: 'Your restaurant digitized in 5 min.', ar: 'مطعمك رقمي في 5 دقائق.' },
         description: {
-            fr: 'RestoPass est une solution SaaS complète pour la restauration moderne. Digitalisez votre menu avec un QR code interactif, fidélisez vos clients avec des cartes Apple & Google Wallet.',
-            en: 'RestoPass is a complete SaaS solution for modern dining. Digitize your menu with interactive QR codes, build customer loyalty with Apple & Google Wallet cards.',
-            ar: 'RestoPass هو حل SaaS كامل للمطاعم الحديثة.'
+            fr: 'Restofid.com est une solution SaaS complète pour la restauration moderne. Digitalisez votre menu avec un QR code interactif, fidélisez vos clients avec des cartes Apple & Google Wallet.',
+            en: 'Restofid.com is a complete SaaS solution for modern dining. Digitize your menu with interactive QR codes, build customer loyalty with Apple & Google Wallet cards.',
+            ar: 'Restofid.com هو حل SaaS كامل للمطاعم الحديثة.'
         },
         features: { fr: ['Menu QR Code', 'Fidélité Wallet', 'Dashboard Analytics'], en: ['QR Code Menu', 'Wallet Loyalty', 'Analytics Dashboard'], ar: ['قائمة QR', 'ولاء المحفظة', 'لوحة التحليلات'] },
         screenshots: ['assets/images/restopass_s1.png', 'assets/images/restopass_s2.png'],
+        website: 'https://restofid.com',
         color: '#f97316'
     }
 };
@@ -108,7 +110,7 @@ const translations = {
         timeline_locsy_title: 'Launch Locsy', timeline_locsy_p: 'Application de voyage immersive.',
         timeline_zikr_title: 'Launch Zikr', timeline_zikr_p: 'App spirituelle iOS complète (SwiftUI).',
         timeline_kinto_title: 'Launch Kinto', timeline_kinto_p: 'Gestion de budget intelligente & Scanner de reçus.',
-        timeline_restopass_title: 'Launch RestoPass', timeline_restopass_p: 'SaaS RESTO : Menu QR & Wallet.',
+        timeline_restopass_title: 'Launch Restofid.com', timeline_restopass_p: 'SaaS RESTO : Menu QR & Wallet.',
         timeline_m_title: 'Launch M App', timeline_m_p: 'Réseau social dynamique (Expo/Supabase).',
         contact_title: 'Travaillons ensemble', contact_subtitle: 'Une idée de projet ? Contactez-moi.',
         footer_rights: 'Tous droits réservés.'
@@ -130,7 +132,7 @@ const translations = {
         timeline_locsy_date: 'March 2026', timeline_locsy_title: 'Launch Locsy', timeline_locsy_p: 'Immersive travel application.',
         timeline_zikr_date: 'March 2026', timeline_zikr_title: 'Launch Zikr', timeline_zikr_p: 'Full spiritual iOS app (SwiftUI).',
         timeline_kinto_date: 'April 2026', timeline_kinto_title: 'Launch Kinto', timeline_kinto_p: 'Smart budget & Receipt scanner.',
-        timeline_restopass_date: 'May 2026', timeline_restopass_title: 'Launch RestoPass', timeline_restopass_p: 'RESTO SaaS: QR Menu & Wallet.',
+        timeline_restopass_date: 'May 2026', timeline_restopass_title: 'Launch Restofid.com', timeline_restopass_p: 'RESTO SaaS: QR Menu & Wallet.',
         timeline_m_date: 'Soon', timeline_m_title: 'Launch M App', timeline_m_p: 'Dynamic social network.',
         contact_title: 'Let\'s work together', contact_subtitle: 'Have a project in mind? Contact me.',
         footer_rights: 'All rights reserved.'
@@ -152,7 +154,7 @@ const translations = {
         timeline_locsy_date: 'مارس 2026', timeline_locsy_title: 'إطلاق Locsy', timeline_locsy_p: 'تطبيق سفر غامر.',
         timeline_zikr_date: 'مارس 2026', timeline_zikr_title: 'إطلاق Zikr', timeline_zikr_p: 'تطبيق روحي كامل لنظام iOS.',
         timeline_kinto_date: 'أبريل 2026', timeline_kinto_title: 'إطلاق Kinto', timeline_kinto_p: 'ميزانية ذكية وماسح فواتير.',
-        timeline_restopass_date: 'مايو 2026', timeline_restopass_title: 'إطلاق RestoPass', timeline_restopass_p: 'نظام SaaS للمطاعم.',
+        timeline_restopass_date: 'مايو 2026', timeline_restopass_title: 'إطلاق Restofid.com', timeline_restopass_p: 'نظام SaaS للمطاعم.',
         timeline_m_date: 'قريباً', timeline_m_title: 'إطلاق M App', timeline_m_p: 'شبكة اجتماعية ديناميكية.',
         contact_title: 'لنعمل معاً', contact_subtitle: 'لديك فكرة مشروع؟ تواصل معي.',
         footer_rights: 'جميع الحقوق محفوظة.'
@@ -201,8 +203,11 @@ window.openAppModal = function(appId) {
                 <div style="display:flex; gap:1rem; overflow-x:auto; padding-bottom:1rem;">
                     ${app.screenshots.map(s => `<img src="${s}" style="width:200px; border-radius:20px; border:2px solid var(--border);">`).join('')}
                 </div>
-                <div style="display:flex; gap:1rem;">
-                    ${app.appStore ? `<a href="${app.appStore}" class="btn btn-primary">App Store</a>` : ''}
+                <div style="display:flex; gap:1rem; flex-wrap:wrap;">
+                    ${app.appStore ? `<a href="${app.appStore}" class="btn btn-primary" target="_blank"><i class="fab fa-apple"></i> App Store</a>` : ''}
+                    ${app.googlePlay ? `<a href="${app.googlePlay}" class="btn btn-primary" target="_blank"><i class="fab fa-google-play"></i> Google Play</a>` : ''}
+                    ${app.website ? `<a href="${app.website}" class="btn btn-primary" target="_blank"><i class="fas fa-globe"></i> Website</a>` : ''}
+                    ${app.telegram ? `<a href="${app.telegram}" class="btn btn-primary" target="_blank"><i class="fab fa-telegram"></i> Telegram</a>` : ''}
                     <button class="btn glass" onclick="closeModal()">Close</button>
                 </div>
             </div>
