@@ -279,17 +279,26 @@ function initThree() {
 
 // --- GSAP Magic ---
 function initGSAP() {
+    if (typeof gsap === 'undefined' || typeof ScrollTrigger === 'undefined') return;
     gsap.registerPlugin(ScrollTrigger);
 
-    // Hero Reveal
+    // Hero Reveal (Fast)
     gsap.from(".hero h1, .hero p, .hero .hero-actions", {
-        y: 80, opacity: 0, duration: 1.5, stagger: 0.2, ease: "power4.out"
+        y: 40, opacity: 0, duration: 1, stagger: 0.1, ease: "power2.out"
     });
 
-    // Bento Cards Entrance
+    // Bento Cards Entrance (More reliable)
     gsap.from(".app-card", {
-        scrollTrigger: { trigger: ".apps-grid", start: "top 80%" },
-        y: 60, opacity: 0, duration: 1, stagger: 0.1, ease: "power3.out"
+        scrollTrigger: { 
+            trigger: ".apps-grid", 
+            start: "top 95%", // Start much earlier
+            toggleActions: "play none none none" 
+        },
+        y: 30, 
+        opacity: 0, 
+        duration: 0.8, 
+        stagger: 0.05, 
+        ease: "power2.out"
     });
 
     // Mouse Glow for Bento Cards
