@@ -181,8 +181,8 @@ const translations = {
 
 let currentLang = 'fr';
 
-// --- Core Functions ---
-function setLanguage(lang) {
+// --- Core Functions (Expose to window for HTML access) ---
+window.setLanguage = function(lang) {
     currentLang = lang;
     document.documentElement.lang = lang;
     document.documentElement.dir = lang === 'ar' ? 'rtl' : 'ltr';
@@ -196,7 +196,17 @@ function setLanguage(lang) {
         const key = el.getAttribute('data-i18n');
         if (t[key]) el.innerHTML = t[key];
     });
-}
+};
+
+window.toggleTheme = function() {
+    document.body.classList.toggle('light-mode');
+    const isLight = document.body.classList.contains('light-mode');
+    const themeBtn = document.getElementById('theme-toggle');
+    if (themeBtn) {
+        themeBtn.innerHTML = isLight ? '<i class="fas fa-sun"></i>' : '<i class="fas fa-moon"></i>';
+    }
+    if (typeof updateParticleColor === 'function') updateParticleColor();
+};
 
 // --- Elite Visuals (Three.js Plexus) ---
 let scene, camera, renderer, particles, lines;
