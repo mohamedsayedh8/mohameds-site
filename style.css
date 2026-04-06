@@ -355,33 +355,16 @@ section { padding: 8rem 0; }
   position: absolute;
   top: 1rem;
   right: 1rem;
-  width: 38px;
-  height: 38px;
-  border-radius: 10px;
-  background: rgba(255, 255, 255, 0.12);
-  backdrop-filter: blur(16px) saturate(180%);
-  border: 1px solid rgba(255, 255, 255, 0.2);
-  display: flex; align-items: center; justify-content: center;
-  padding: 0.5rem;
-  z-index: 20;
-  box-shadow: 0 8px 32px rgba(0,0,0,0.4), 0 0 10px var(--glow-color);
-  transition: var(--transition-smooth);
-}
-
-.card-icon-floating {
-  position: absolute;
-  top: 1rem;
-  right: 1rem;
-  width: 44px;
-  height: 44px;
-  border-radius: 12px;
+  width: 54px;
+  height: 54px;
+  border-radius: 14px;
   background: rgba(255, 255, 255, 0.1);
   backdrop-filter: blur(12px) saturate(160%);
   border: 1px solid rgba(255, 255, 255, 0.15);
   display: flex; align-items: center; justify-content: center;
-  padding: 0.5rem;
+  padding: 0.6rem;
   z-index: 20;
-  box-shadow: 0 12px 40px rgba(0,0,0,0.5), 0 0 12px var(--glow-color);
+  box-shadow: 0 15px 45px rgba(0,0,0,0.5), 0 0 15px var(--glow-color);
   transition: var(--transition-smooth);
 }
 
