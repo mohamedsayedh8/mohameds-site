@@ -149,7 +149,8 @@ const translations = {
         timeline_restopass_title: 'Launch Restofid.com', timeline_restopass_p: 'SaaS RESTO : Menu QR & Wallet.',
         timeline_m_title: 'Launch M App', timeline_m_p: 'Réseau social dynamique (Expo/Supabase).',
         contact_title: 'Travaillons ensemble', contact_subtitle: 'Une idée de projet ? Contactez-moi.',
-        footer_rights: 'Tous droits réservés.'
+        footer_rights: 'Tous droits réservés.',
+        type_app: 'App', type_site: 'Site', type_bot: 'Bot'
     },
     en: {
         nav_home: 'Home', nav_about: 'About', nav_apps: 'Projects', nav_contact: 'Contact',
@@ -171,7 +172,8 @@ const translations = {
         timeline_restopass_date: 'May 2026', timeline_restopass_title: 'Launch Restofid.com', timeline_restopass_p: 'RESTO SaaS: QR Menu & Wallet.',
         timeline_m_date: 'Soon', timeline_m_title: 'Launch M App', timeline_m_p: 'Dynamic social network.',
         contact_title: 'Let\'s work together', contact_subtitle: 'Have a project in mind? Contact me.',
-        footer_rights: 'All rights reserved.'
+        footer_rights: 'All rights reserved.',
+        type_app: 'App', type_site: 'Site', type_bot: 'Bot'
     },
     ar: {
         nav_home: 'الرئيسية', nav_about: 'عني', nav_apps: 'مشاريعي', nav_contact: 'تواصل',
@@ -193,7 +195,8 @@ const translations = {
         timeline_restopass_date: 'مايو 2026', timeline_restopass_title: 'إطلاق Restofid.com', timeline_restopass_p: 'نظام SaaS للمطاعم.',
         timeline_m_date: 'قريباً', timeline_m_title: 'إطلاق M App', timeline_m_p: 'شبكة اجتماعية ديناميكية.',
         contact_title: 'لنعمل معاً', contact_subtitle: 'لديك فكرة مشروع؟ تواصل معي.',
-        footer_rights: 'جميع الحقوق محفوظة.'
+        footer_rights: 'جميع الحقوق محفوظة.',
+        type_app: 'تطبيق', type_site: 'موقع', type_bot: 'بوت'
     }
 };
 
