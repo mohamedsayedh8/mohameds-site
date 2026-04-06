@@ -325,7 +325,7 @@ section { padding: 8rem 0; }
 .app-card[data-app="m_app"] { --glow-color: var(--mapp-color); }
 .app-card[data-app="locsy"] { --glow-color: var(--locsy-color); }
 .app-card[data-app="kinto"] { --glow-color: var(--kinto-color); }
-.app-card[data-app="restofid"] { --glow-color: var(--restopass-color); }
+.app-card[data-app="tap0"] { --glow-color: var(--restopass-color); }
 .app-card[data-app="mo_frame"] { --glow-color: var(--secondary); }
 .app-card[data-app="academy"] { --glow-color: var(--academy-color); }
 

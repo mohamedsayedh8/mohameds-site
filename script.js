@@ -104,25 +104,25 @@ const apps = {
         screenshots: ['assets/images/mo_frame_s1_final.png'],
         color: '#7c3aed'
     },
-    restofid: {
-        id: 'restofid', icon: '🍴', iconUrl: 'assets/images/restopass-icon.png', name: 'Restofid.com',
+    tap0: {
+        id: 'tap0', icon: '🍴', iconUrl: 'assets/images/restopass-icon.png', name: 'Tap0.fr',
         tagline: { 
             fr: 'Votre restaurant digitalisé en 5 min.', 
             en: 'Your restaurant digitized in 5 min.', 
             ar: 'مطعمك رقمي بالكامل في 5 دقائق.' 
         },
         description: {
-            fr: 'Restofid.com est une solution SaaS complète pour la restauration moderne. Digitalisez votre menu avec un QR code interactif et fidélisez vos clients avec des cartes Apple & Google Wallet.',
-            en: 'Restofid.com is a complete SaaS solution for modern dining. Digitize your menu with interactive QR codes and build customer loyalty with Apple & Google Wallet cards.',
-            ar: 'Restofid.com هو حل SaaS كامل للمطاعم الحديثة. قم برقمنة قائمتك باستخدام رمز QR تفاعلي وابنِ ولاء عملائك باستخدام بطاقات المحفظة من Apple و Google.'
+            fr: 'Tap0.fr est une solution SaaS complète pour digitaliser tous types de commerces. Gérez votre catalogue, fidélisez vos clients avec des cartes Apple & Google Wallet et suivez vos performances en temps réel.',
+            en: 'Tap0.fr is a complete SaaS solution to digitize all types of businesses. Manage your catalog, build customer loyalty with Apple & Google Wallet cards, and track performance in real-time.',
+            ar: 'Tap0.fr هو حل SaaS كامل لرقمنة جميع أنواع الأنشطة التجارية. أدر منتجاتك، وابنِ ولاء عملائك باستخدام بطاقات المحفظة من Apple و Google، وتابع أداءك في الوقت الفعلي.'
         },
         features: { 
-            fr: ['Menu QR Code Interactif', 'Fidélité Apple/Google Wallet', 'Dashboard Analytics complet'], 
-            en: ['Interactive QR Code Menu', 'Apple/Google Wallet Loyalty', 'Full Analytics Dashboard'], 
-            ar: ['قائمة رماز استجابة سريع تفاعلية', 'نظام ولاء المحفظة الذكي', 'لوحة تحليلات شاملة'] 
+            fr: ['Gestion de Catalogue Universelle', 'Fidélité Apple/Google Wallet', 'Dashboard Analytics & Ventes'], 
+            en: ['Universal Catalog Management', 'Apple/Google Wallet Loyalty', 'Sales & Analytics Dashboard'], 
+            ar: ['إدارة شاملة للمنتجات', 'نظام ولاء المحفظة الذكي', 'لوحة تحليلات ومبيعات متقدمة'] 
         },
-        screenshots: ['assets/images/restopass_s1.png', 'assets/images/restopass_s2.png'],
-        website: 'https://restofid.com',
+        screenshots: ['assets/images/tap0_s1.png', 'assets/images/tap0_s2.png', 'assets/images/tap0_s3.png'],
+        website: 'https://tap0.fr',
         color: '#f97316'
     }
 };
@@ -146,7 +146,7 @@ const translations = {
         timeline_locsy_title: 'Launch Locsy', timeline_locsy_p: 'Application de voyage immersive.',
         timeline_zikr_title: 'Launch Zikr', timeline_zikr_p: 'App spirituelle iOS complète (SwiftUI).',
         timeline_kinto_title: 'Launch Kinto', timeline_kinto_p: 'Gestion de budget intelligente & Scanner de reçus.',
-        timeline_restopass_title: 'Launch Restofid.com', timeline_restopass_p: 'SaaS RESTO : Menu QR & Wallet.',
+        timeline_restopass_title: 'Launch Tap0.fr', timeline_restopass_p: 'SaaS Commerce : Gestion & Wallet.',
         timeline_m_title: 'Launch M App', timeline_m_p: 'Réseau social dynamique (Expo/Supabase).',
         contact_title: 'Travaillons ensemble', contact_subtitle: 'Une idée de projet ? Contactez-moi.',
         footer_rights: 'Tous droits réservés.',
@@ -177,7 +177,7 @@ const translations = {
         timeline_locsy_date: 'March 2026', timeline_locsy_title: 'Launch Locsy', timeline_locsy_p: 'Immersive travel application.',
         timeline_zikr_date: 'March 2026', timeline_zikr_title: 'Launch Zikr', timeline_zikr_p: 'Full spiritual iOS app (SwiftUI).',
         timeline_kinto_date: 'April 2026', timeline_kinto_title: 'Launch Kinto', timeline_kinto_p: 'Smart budget & Receipt scanner.',
-        timeline_restopass_date: 'May 2026', timeline_restopass_title: 'Launch Restofid.com', timeline_restopass_p: 'RESTO SaaS: QR Menu & Wallet.',
+        timeline_restopass_date: 'May 2026', timeline_restopass_title: 'Launch Tap0.fr', timeline_restopass_p: 'Commerce SaaS: Management & Wallet.',
         timeline_m_date: 'Soon', timeline_m_title: 'Launch M App', timeline_m_p: 'Dynamic social network.',
         contact_title: 'Let\'s work together', contact_subtitle: 'Have a project in mind? Contact me.',
         footer_rights: 'All rights reserved.',
@@ -208,7 +208,7 @@ const translations = {
         timeline_locsy_date: 'مارس 2026', timeline_locsy_title: 'إطلاق Locsy', timeline_locsy_p: 'تطبيق سفر غامر.',
         timeline_zikr_date: 'مارس 2026', timeline_zikr_title: 'إطلاق Zikr', timeline_zikr_p: 'تطبيق روحي كامل لنظام iOS.',
         timeline_kinto_date: 'أبريل 2026', timeline_kinto_title: 'إطلاق Kinto', timeline_kinto_p: 'ميزانية ذكية وماسح فواتير.',
-        timeline_restopass_date: 'مايو 2026', timeline_restopass_title: 'إطلاق Restofid.com', timeline_restopass_p: 'نظام SaaS للمطاعم.',
+        timeline_restopass_date: 'مايو 2026', timeline_restopass_title: 'إطلاق Tap0.fr', timeline_restopass_p: 'نظام SaaS للتجارة.',
         timeline_m_date: 'قريباً', timeline_m_title: 'إطلاق M App', timeline_m_p: 'شبكة اجتماعية ديناميكية.',
         contact_title: 'لنعمل معاً', contact_subtitle: 'لديك فكرة مشروع؟ تواصل معي.',
         footer_rights: 'جميع الحقوق محفوظة.',
