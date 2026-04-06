@@ -284,14 +284,19 @@ section { padding: 8rem 0; }
   display: flex; align-items: center; justify-content: center;
   background: radial-gradient(circle at 50% 50%, var(--glow-color), transparent 85%);
   overflow: hidden;
-  padding: 2rem 0;
+  padding: 4rem 0;
 }
 
 .card-mockups {
-  display: flex; gap: 2rem; perspective: 1200px;
+  display: flex; gap: 0rem; perspective: 1200px;
   transition: var(--transition-smooth);
   width: 100%; justify-content: center; align-items: center;
 }
+
+/* Fan animation on hover */
+.app-card:hover .iphone-device:nth-child(1) { transform: translateX(-20px) translateY(-5px) rotate(-6deg); }
+.app-card:hover .iphone-device:nth-child(2) { transform: translateX(20px) translateY(5px) rotate(6deg); z-index: 2; }
+.app-card:hover .iphone-device:only-child { transform: translateY(-10px) scale(1.05); }
 
 /* Scaled up for 2x2 cards */
 .app-card[style*="span 2"] .card-mockups {
@@ -302,24 +307,26 @@ section { padding: 8rem 0; }
   position: absolute;
   top: 1.2rem;
   right: 1.2rem;
-  width: 40px;
-  height: 40px;
-  border-radius: 10px;
-  background: rgba(255, 255, 255, 0.08);
-  backdrop-filter: blur(12px);
-  border: 1px solid rgba(255, 255, 255, 0.15);
+  width: 44px;
+  height: 44px;
+  border-radius: 12px;
+  background: rgba(255, 255, 255, 0.12);
+  backdrop-filter: blur(16px) saturate(180%);
+  border: 1px solid rgba(255, 255, 255, 0.25);
   display: flex; align-items: center; justify-content: center;
-  padding: 0.5rem;
-  z-index: 10;
-  box-shadow: 0 8px 32px rgba(0,0,0,0.4);
+  padding: 0.6rem;
+  z-index: 20;
+  box-shadow: 0 8px 32px rgba(0,0,0,0.4), 0 0 10px var(--glow-color);
+  transition: var(--transition-smooth);
 }
 
 .card-icon-floating img {
   width: 100%; height: 100%; object-fit: contain;
+  filter: drop-shadow(0 2px 4px rgba(0,0,0,0.2));
 }
 
 .card-icon-floating.mini {
-  width: 32px; height: 32px;
+  width: 36px; height: 36px;
   top: 1rem; right: 1rem;
 }
 
@@ -330,7 +337,7 @@ section { padding: 8rem 0; }
   border: 6px solid #1e293b; 
   box-shadow: 0 40px 100px -20px rgba(0,0,0,0.6), inset 0 0 15px rgba(255,255,255,0.05);
   position: relative; overflow: hidden;
-  transition: var(--transition-elastic);
+  transition: all 0.6s cubic-bezier(0.23, 1, 0.32, 1);
   z-index: 1;
 }
 
