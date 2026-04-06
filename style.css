@@ -299,7 +299,7 @@ section { padding: 8rem 0; }
   font-size: 0.6rem; font-weight: 800; text-transform: uppercase;
   background: var(--glow-color); color: #000;
   padding: 2px 10px; border-radius: 20px;
-  letter-spacing: 0.05em; margin-left: auto;
+  letter-spacing: 0.05em; margin-left: 0.7rem;
   box-shadow: 0 0 15px var(--glow-color);
 }
 .app-card-content .tagline { font-size: 0.85rem; line-height: 1.4; color: var(--text-muted); }
@@ -353,8 +353,8 @@ section { padding: 8rem 0; }
 
 .card-icon-floating {
   position: absolute;
-  top: 1rem;
-  right: 1rem;
+  bottom: 0.8rem;
+  right: 0.8rem;
   width: 54px;
   height: 54px;
   border-radius: 14px;
