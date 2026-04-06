@@ -583,6 +583,35 @@ body.light-mode .timeline-date {
   flex-direction: row-reverse;
 }
 
+.modal-close-icon {
+  position: absolute;
+  top: 1.5rem;
+  right: 2rem;
+  width: 44px;
+  height: 44px;
+  background: rgba(255, 255, 255, 0.05);
+  backdrop-filter: blur(12px);
+  border: 1px solid rgba(255, 255, 255, 0.15);
+  border-radius: 50%;
+  color: var(--text);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  font-size: 1.25rem;
+  cursor: pointer;
+  z-index: 100;
+  transition: all 0.4s cubic-bezier(0.23, 1, 0.32, 1);
+  box-shadow: 0 8px 32px rgba(0,0,0,0.3);
+}
+
+.modal-close-icon:hover {
+  background: var(--glow-color);
+  color: #000;
+  transform: rotate(90deg) scale(1.1);
+  border-color: var(--glow-color);
+  box-shadow: 0 0 20px var(--glow-color);
+}
+
 /* Footer & About Grid Adjustment */
 .about-stats { margin-top: 1rem; }
 

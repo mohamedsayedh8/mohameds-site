@@ -226,6 +226,7 @@ window.openAppModal = function(appId) {
     if (!app) return;
     const modal = document.getElementById('app-modal');
     document.getElementById('modal-data').innerHTML = `
+        <button class="modal-close-icon" onclick="closeModal()"><i class="fas fa-times"></i></button>
         <div class="modal-grid">
             <div class="modal-left">
                 <img src="${app.iconUrl}" class="modal-app-icon" style="box-shadow:0 10px 30px -5px ${app.color}55;">
@@ -253,7 +254,6 @@ window.openAppModal = function(appId) {
                     ${app.googlePlay ? `<a href="${app.googlePlay}" class="btn btn-primary" target="_blank"><i class="fab fa-google-play"></i> Play Store</a>` : ''}
                     ${app.website ? `<a href="${app.website}" class="btn btn-primary" target="_blank"><i class="fas fa-globe"></i> Website</a>` : ''}
                     ${app.telegram ? `<a href="${app.telegram}" class="btn btn-primary" target="_blank"><i class="fab fa-telegram"></i> Telegram</a>` : ''}
-                    <button class="btn glass" onclick="closeModal()">Close</button>
                 </div>
             </div>
         </div>
