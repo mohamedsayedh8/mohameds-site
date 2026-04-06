@@ -612,6 +612,56 @@ body.light-mode .timeline-date {
   box-shadow: 0 0 20px var(--glow-color);
 }
 
+/* Public Booking Calendar & Slot Picker */
+.calendar-public-grid {
+    display: grid; grid-template-columns: repeat(7, 1fr); gap: 10px;
+}
+.calendar-day-header {
+    text-align: center; font-size: 0.7rem; font-weight: 800; color: var(--primary);
+    opacity: 0.5; padding: 10px 0; text-transform: uppercase;
+}
+.calendar-day-public {
+    aspect-ratio: 1/1; display: flex; align-items: center; justify-content: center;
+    border-radius: 12px; font-size: 0.9rem; font-weight: 700; cursor: pointer;
+    transition: 0.2s; background: rgba(255,255,255,0.03); border: 1px solid rgba(255,255,255,0.05);
+}
+.calendar-day-public:hover:not(.disabled) {
+    background: rgba(255, 255, 255, 0.1); transform: translateY(-2px); border-color: var(--primary);
+}
+.calendar-day-public.selected {
+    background: white; color: #0f172a; box-shadow: 0 0 15px rgba(255,255,255,0.3);
+}
+.calendar-day-public.disabled {
+    opacity: 0.15; cursor: not-allowed; background: transparent; text-decoration: line-through;
+}
+.calendar-day-public.today { border-color: var(--glow-color); color: var(--glow-color); }
+
+.slots-container-public {
+    display: grid; grid-template-columns: repeat(auto-fill, minmax(80px, 1fr));
+    gap: 10px; margin-top: 1.5rem;
+}
+.slot-pill-public {
+    padding: 10px; border-radius: 10px; text-align: center; font-weight: 800;
+    cursor: pointer; background: rgba(255,255,255,0.05); border: 1px solid rgba(255,255,255,0.1);
+    transition: 0.2s; font-size: 0.85rem;
+}
+.slot-pill-public:hover:not(.disabled) { background: rgba(255,255,255,0.15); }
+.slot-pill-public.selected {
+    background: var(--primary); color: white; box-shadow: 0 5px 15px rgba(59, 130, 246, 0.4);
+}
+.slot-pill-public.disabled { opacity: 0.15; cursor: not-allowed; text-decoration: line-through; }
+
+.booking-form-elite {
+    margin-top: 2rem; display: flex; flex-direction: column; gap: 1rem;
+    padding: 1.5rem; background: rgba(255,255,255,0.02); border-radius: 1.5rem;
+    border: 1px solid rgba(255,255,255,0.05);
+}
+.booking-form-elite input {
+    background: rgba(0,0,0,0.2); border: 1px solid rgba(255,255,255,0.1);
+    padding: 0.8rem 1.2rem; border-radius: 0.8rem; color: white; outline: none;
+}
+.booking-form-elite input:focus { border-color: var(--primary); }
+
 /* Footer & About Grid Adjustment */
 .about-stats { margin-top: 1rem; }
 

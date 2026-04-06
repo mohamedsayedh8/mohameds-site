@@ -151,6 +151,7 @@ const translations = {
         contact_title: 'Travaillons ensemble', contact_subtitle: 'Une idée de projet ? Contactez-moi.',
         footer_rights: 'Tous droits réservés.',
         type_app: 'App', type_site: 'Site', type_bot: 'Bot',
+        type_booking: 'Outil de Réservation',
         app_zikr_tagline: 'Votre compagnon spirituel quotidien.',
         app_m_tagline: 'Social, Vidéos & Reels.',
         app_locsy_tagline: 'Localisation en temps réel.',
@@ -181,6 +182,7 @@ const translations = {
         contact_title: 'Let\'s work together', contact_subtitle: 'Have a project in mind? Contact me.',
         footer_rights: 'All rights reserved.',
         type_app: 'App', type_site: 'Site', type_bot: 'Bot',
+        type_booking: 'Booking Tool',
         app_zikr_tagline: 'Your daily spiritual companion.',
         app_m_tagline: 'Social, Videos & Reels.',
         app_locsy_tagline: 'Real-time location.',
@@ -211,6 +213,7 @@ const translations = {
         contact_title: 'لنعمل معاً', contact_subtitle: 'لديك فكرة مشروع؟ تواصل معي.',
         footer_rights: 'جميع الحقوق محفوظة.',
         type_app: 'تطبيق', type_site: 'موقع', type_bot: 'بوت',
+        type_booking: 'أداة حجز',
         app_zikr_tagline: 'رفيقك الروحي اليومي الشامل.',
         app_m_tagline: 'تواصل، فيديوهات ومقاطع ريلز.',
         app_locsy_tagline: 'تحديد الموقع في الوقت الفعلي.',
@@ -285,6 +288,148 @@ window.openAppModal = function(appId) {
     modal.classList.add('active');
 };
 window.closeModal = () => document.getElementById('app-modal').classList.remove('active');
+
+// --- M Académie Booking Logic ---
+let selectedBookingDate = null;
+let selectedBookingSlot = null;
+let blockedDays = [];
+
+window.openBookingModal = () => {
+    document.getElementById('booking-modal').classList.add('active');
+    renderBookingCalendar();
+};
+
+window.closeBookingModal = () => {
+    document.getElementById('booking-modal').classList.remove('active');
+};
+
+async function renderBookingCalendar() {
+    const root = document.getElementById('booking-root');
+    if (!root) return;
+
+    // Load blocked days from Firebase
+    try {
+        const { getFirestore, collection, getDocs } = window.firebaseSDK;
+        const db = getFirestore(window.firebaseApp);
+        const snap = await getDocs(collection(db, "disabled_days"));
+        blockedDays = snap.docs.map(d => d.id);
+    } catch (e) { console.error("Load blocked days error:", e); }
+
+    const now = new Date();
+    const year = now.getFullYear();
+    const month = now.getMonth();
+    const firstDay = new Date(year, month, 1).getDay();
+    const daysInMonth = new Date(year, month + 1, 0).getDate();
+    const offset = (firstDay + 6) % 7;
+
+    const monthNames = { fr: ["Janvier", "Février", "Mars", "Avril", "Mai", "Juin", "Juillet", "Août", "Septembre", "Octobre", "Novembre", "Décembre"] };
+    
+    root.innerHTML = `
+        <div class="booking-container-elite">
+            <h2 style="margin-bottom: 2rem; font-size: 2rem;">🗓️ M Académie - ${monthNames.fr[month]} ${year}</h2>
+            <div class="calendar-public-grid">
+                ${['L','M','M','J','V','S','D'].map(d => `<div class="calendar-day-header">${d}</div>`).join('')}
+                ${Array(offset).fill('<div class="calendar-day-empty"></div>').join('')}
+                ${Array.from({length: daysInMonth}, (_, i) => {
+                    const day = i + 1;
+                    const dateKey = `${year}-${(month+1).toString().padStart(2,'0')}-${day.toString().padStart(2,'0')}`;
+                    const isBlocked = blockedDays.includes(dateKey);
+                    const isToday = now.getDate() === day;
+                    return `<div class="calendar-day-public ${isBlocked ? 'disabled' : ''} ${isToday ? 'today' : ''}" 
+                                 onclick="${isBlocked ? '' : `selectBookingDate('${dateKey}', this)`}">${day}</div>`;
+                }).join('')}
+            </div>
+            <div id="booking-slots-root"></div>
+            <div id="booking-form-root"></div>
+        </div>
+    `;
+}
+
+window.selectBookingDate = async (dateKey, el) => {
+    document.querySelectorAll('.calendar-day-public').forEach(d => d.classList.remove('selected'));
+    el.classList.add('selected');
+    selectedBookingDate = dateKey;
+    selectedBookingSlot = null;
+    
+    const slotsRoot = document.getElementById('booking-slots-root');
+    slotsRoot.innerHTML = '<p style="margin-top:2rem; opacity:0.5;">Chargement des horaires...</p>';
+    
+    // Load specific day config
+    let disabledSlots = [];
+    try {
+        const { getFirestore, doc, getDoc } = window.firebaseSDK;
+        const db = getFirestore(window.firebaseApp);
+        const snap = await getDoc(doc(db, "day_configs", dateKey));
+        if (snap.exists()) disabledSlots = snap.data().disabled_hours || [];
+    } catch (e) { console.error("Load slots error:", e); }
+
+    const hours = [9, 10, 11, 12, 13, 14, 15, 16, 17, 18, 19, 20];
+    slotsRoot.innerHTML = `
+        <h3 style="margin-top: 3rem; font-size: 1.2rem;">🕘 Choisir une heure</h3>
+        <div class="slots-container-public">
+            ${hours.map(h => {
+                const isDisabled = disabledSlots.includes(h);
+                return `<div class="slot-pill-public ${isDisabled ? 'disabled' : ''}" 
+                             onclick="${isDisabled ? '' : `selectBookingSlot(${h}, this)`}">${h}h00</div>`;
+            }).join('')}
+        </div>
+    `;
+};
+
+window.selectBookingSlot = (h, el) => {
+    document.querySelectorAll('.slot-pill-public').forEach(s => s.classList.remove('selected'));
+    el.classList.add('selected');
+    selectedBookingSlot = h;
+    
+    const formRoot = document.getElementById('booking-form-root');
+    formRoot.innerHTML = `
+        <div class="booking-form-elite">
+            <h3 style="margin-bottom: 0.5rem;">✍️ Vos informations</h3>
+            <p style="font-size: 0.85rem; opacity: 0.6; margin-bottom: 1rem;">Pour confirmer votre réservation le ${selectedBookingDate} à ${selectedBookingSlot}h.</p>
+            <input type="text" id="booking-name" placeholder="Nom complet" required>
+            <input type="tel" id="booking-phone" placeholder="Numéro WhatsApp" required>
+            <button class="btn btn-primary" onclick="submitBooking()" id="submit-booking-btn">Confirmer la réservation</button>
+        </div>
+    `;
+};
+
+window.submitBooking = async () => {
+    const name = document.getElementById('booking-name').value;
+    const phone = document.getElementById('booking-phone').value;
+    const btn = document.getElementById('submit-booking-btn');
+
+    if (!name || !phone) return alert("Veuillez remplir tous les champs");
+    
+    try {
+        btn.disabled = true;
+        btn.textContent = "Envoi...";
+        const { getFirestore, collection, addDoc } = window.firebaseSDK;
+        const db = getFirestore(window.firebaseApp);
+        
+        await addDoc(collection(db, "bookings"), {
+            studentName: name,
+            studentPhone: phone,
+            date: selectedBookingDate,
+            time: `${selectedBookingSlot}h00`,
+            status: 'pending',
+            createdAt: new Date().toISOString()
+        });
+
+        document.getElementById('booking-root').innerHTML = `
+            <div style="text-align: center; padding: 5rem 2rem;">
+                <div style="font-size: 4rem; margin-bottom: 1.5rem;">✅</div>
+                <h2 style="font-size: 2.5rem; margin-bottom: 1rem;">Réservation réussie !</h2>
+                <p style="opacity: 0.7;">Merci ${name}, votre créneau le ${selectedBookingDate} à ${selectedBookingSlot}h est réservé. Je vous contacterai bientôt sur WhatsApp.</p>
+                <button class="btn glass" style="margin-top: 2rem;" onclick="closeBookingModal()">Fermer</button>
+            </div>
+        `;
+    } catch (e) {
+        console.error("Submit error:", e);
+        alert("Erreur lors de la réservation. Veuillez réessayer.");
+        btn.disabled = false;
+        btn.textContent = "Confirmer la réservation";
+    }
+};
 
 // --- 3D Background (Elite Grid Sweeps) ---
 let scene, camera, renderer, grid, glow;
