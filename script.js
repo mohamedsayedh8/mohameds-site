@@ -150,7 +150,14 @@ const translations = {
         timeline_m_title: 'Launch M App', timeline_m_p: 'Réseau social dynamique (Expo/Supabase).',
         contact_title: 'Travaillons ensemble', contact_subtitle: 'Une idée de projet ? Contactez-moi.',
         footer_rights: 'Tous droits réservés.',
-        type_app: 'App', type_site: 'Site', type_bot: 'Bot'
+        type_app: 'App', type_site: 'Site', type_bot: 'Bot',
+        app_zikr_tagline: 'Votre compagnon spirituel quotidien.',
+        app_m_tagline: 'Social, Vidéos & Reels.',
+        app_locsy_tagline: 'Localisation en temps réel.',
+        app_kinto_tagline: 'Finances & Budgets.',
+        app_restopass_tagline: 'Votre restaurant digitalisé en 5 min.',
+        app_moframe_tagline: 'Assistant Multi-plateforme.',
+        app_academy_tagline: 'Formation et Coaching.'
     },
     en: {
         nav_home: 'Home', nav_about: 'About', nav_apps: 'Projects', nav_contact: 'Contact',
@@ -173,7 +180,14 @@ const translations = {
         timeline_m_date: 'Soon', timeline_m_title: 'Launch M App', timeline_m_p: 'Dynamic social network.',
         contact_title: 'Let\'s work together', contact_subtitle: 'Have a project in mind? Contact me.',
         footer_rights: 'All rights reserved.',
-        type_app: 'App', type_site: 'Site', type_bot: 'Bot'
+        type_app: 'App', type_site: 'Site', type_bot: 'Bot',
+        app_zikr_tagline: 'Your daily spiritual companion.',
+        app_m_tagline: 'Social, Videos & Reels.',
+        app_locsy_tagline: 'Real-time location.',
+        app_kinto_tagline: 'Finances & Budgets.',
+        app_restopass_tagline: 'Your restaurant digitized in 5 min.',
+        app_moframe_tagline: 'Multi-platform Assistant.',
+        app_academy_tagline: 'Training and Coaching.'
     },
     ar: {
         nav_home: 'الرئيسية', nav_about: 'عني', nav_apps: 'مشاريعي', nav_contact: 'تواصل',
@@ -196,7 +210,14 @@ const translations = {
         timeline_m_date: 'قريباً', timeline_m_title: 'إطلاق M App', timeline_m_p: 'شبكة اجتماعية ديناميكية.',
         contact_title: 'لنعمل معاً', contact_subtitle: 'لديك فكرة مشروع؟ تواصل معي.',
         footer_rights: 'جميع الحقوق محفوظة.',
-        type_app: 'تطبيق', type_site: 'موقع', type_bot: 'بوت'
+        type_app: 'تطبيق', type_site: 'موقع', type_bot: 'بوت',
+        app_zikr_tagline: 'رفيقك الروحي اليومي الشامل.',
+        app_m_tagline: 'تواصل، فيديوهات ومقاطع ريلز.',
+        app_locsy_tagline: 'تحديد الموقع في الوقت الفعلي.',
+        app_kinto_tagline: 'المالية والميزانيات.',
+        app_restopass_tagline: 'مطعمك رقمي في 5 دقائق.',
+        app_moframe_tagline: 'مساعد متعدد المنصات.',
+        app_academy_tagline: 'التدريب والكوتشينج.'
     }
 };
 
