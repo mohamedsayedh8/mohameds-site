@@ -2,50 +2,62 @@
 const apps = {
     zikr: {
         id: 'zikr', icon: '📿', iconUrl: 'assets/images/zikr-icon.png', name: 'Zikr',
-        tagline: { fr: 'Votre compagnon spirituel quotidien.', en: 'Your daily spiritual companion.', ar: 'رفيقك الروحي اليومي.' },
+        tagline: { 
+            fr: 'Votre compagnon spirituel quotidien.', 
+            en: 'Your daily spiritual companion.', 
+            ar: 'رفيقك الروحي اليومي الشامل.' 
+        },
         description: {
             fr: 'Lancée en Mars 2026. Une application d\'élite conçue avec SwiftUI, offrant une expérience complète : Coran avec Tajweed, Adhkar avec compteur et horaires de prière précis.',
-            en: 'Launched in March 2026. An elite application designed with SwiftUI, offering a complete experience: Quran with Tajweed, Adhkar with counter and precise prayer times.',
-            ar: 'تم إطلاقه في مارس 2026. تطبيق متميز مصمم باستخدام SwiftUI.'
+            en: 'Launched in March 2026. An elite application designed with SwiftUI, offering a complete experience: Quran with Tajweed, Adhkar with counter, and precise prayer times.',
+            ar: 'تم إطلاقه في مارس 2026. تطبيق متميز مصمم باستخدام SwiftUI، يقدم تجربة شاملة: القرآن الكريم مع التجويد، الأذكار مع عداد إلكتروني، وأوقات صلاة دقيقة.'
         },
         features: {
             fr: ['Coran avec Tajweed & Audio', 'Horaires de prière & Qibla', 'Adhkar & Douas interactifs', 'Interface Premium'],
             en: ['Quran with Tajweed & Audio', 'Prayer Times & Qibla', 'Interactive Adhkar & Duas', 'Premium Interface'],
-            ar: ['القرآن بالتجويد والصوت', 'أوقات الصلاة والقبلة', 'أذكار وأدعية تفاعلية', 'واجهة متميزة']
+            ar: ['القرآن بالتجويد والصوت', 'أوقات الصلاة والقبلة', 'أذكار وأدعية تفاعلية', 'واجهة متميزة واحترافية']
         },
         appStore: 'https://apps.apple.com/fr/app/zikr/id6759991511',
-        googlePlay: '#', // TODO: Add Google Play link
+        googlePlay: '#',
         screenshots: ['assets/images/zikr_screen_1.png', 'assets/images/zikr_screen_1.png', 'assets/images/zikr_screen_1.png'],
         color: '#10b981'
     },
     m_app: {
         id: 'm_app', icon: '🎵', iconUrl: 'assets/images/m-icon-dark.png', name: 'M App',
-        tagline: { fr: 'Vivez l\'instant présent en 2026.', en: 'Live the moment in 2026.', ar: 'عش اللحظة في عام 2026.' },
+        tagline: { 
+            fr: 'Vivez l\'instant présent en 2026.', 
+            en: 'Live the moment in 2026.', 
+            ar: 'عش اللحظة في عام 2026.' 
+        },
         description: {
-            fr: 'Un réseau social fluide et moderne (Expo/Supabase) axé sur l\'instant présent. Partagez vos moments, appelez vos proches et découvrez du contenu captivant.',
-            en: 'A smooth and modern social network (Expo/Supabase) focused on the instant. Share your moments, call your loved ones, and discover captivating content.',
-            ar: 'شبكة اجتماعية سريعة وحديثة (Expo/Supabase) تركز على اللحظة. شارك لحظاتك، اتصل بأحبائك واكتشف محتوى جذاباً.'
+            fr: 'Un réseau social fluide et moderne (Expo/Supabase) axé sur l\'instant présent. Partagez vos moments, appelez vos proches et découvrez du contenu captivant avec une interface ultra-rapide.',
+            en: 'A smooth and modern social network (Expo/Supabase) focused on the instant. Share your moments, call your loved ones, and discover captivating content with an ultra-fast interface.',
+            ar: 'شبكة اجتماعية سريعة وحديثة (Expo/Supabase) تركز على اللحظة. شارك لحظاتك، اتصل بأحبائك واكتشف محتوى جذاباً بواجهة مستخدم متطورة.'
         },
         features: {
             fr: ['Appels Audio/Vidéo HD', 'Partage de Moments (Vidéos)', 'Messagerie instantanée', 'Histoires & Actus quotidiennes'],
             en: ['HD Audio/Video Calls', 'Moment Sharing (Videos)', 'Instant Messaging', 'Daily Stories & News'],
-            ar: ['مكالمات صوت وفيديو HD', 'مشاركة اللحظات (فيديو)', 'رسائل فورية', 'قصص وأخبار يومية']
+            ar: ['مكالمات صوت وفيديو HD', 'مشاركة اللحظات (فيديو)', 'رسائل فورية آمنة', 'قصص وأخبار يومية متجددة']
         },
         screenshots: ['assets/images/m_screen_1.png', 'assets/images/m_screen_1.png'],
         color: '#3b82f6'
     },
     locsy: {
         id: 'locsy', icon: '📍', iconUrl: 'assets/images/locsy-icon-dark.png', name: 'Locsy',
-        tagline: { fr: 'L\'exploration urbaine réinventée.', en: 'Urban exploration reinvented.', ar: 'إعادة ابتكار الاستكشاف الحضري.' },
+        tagline: { 
+            fr: 'L\'exploration urbaine réinventée.', 
+            en: 'Urban exploration reinvented.', 
+            ar: 'إعادة ابتكار استكشاف المدن.' 
+        },
         description: {
-            fr: 'Locsy transforme vos explorations. Que vous soyez touriste ou local, redécouvrez la ville via des parcours uniques générés sur-mesure.',
-            en: 'Locsy transforms your explorations. Whether you are a tourist or a local, rediscover the city through unique tailor-made journeys.',
-            ar: 'يستخدم Locsy لتحويل استكشافاتك.'
+            fr: 'Locsy transforme vos explorations. Que vous soyez touriste ou local, redécouvrez la ville via des parcours uniques générés sur-mesure grâce à l\'IA.',
+            en: 'Locsy transforms your explorations. Whether you are a tourist or a local, rediscover the city through unique tailor-made journeys powered by AI.',
+            ar: 'يقوم Locsy بتحويل استكشافاتك. سواء كنت سائحاً أو مواطناً، اكتشف المدينة من جديد عبر مسارات فريدة مصممة خصيصاً لك باستخدام الذكاء الاصطناعي.'
         },
         features: {
             fr: ['Itinéraires Smart', 'Spots Secrets', 'Guide Vocal', 'Cartes 3D'],
             en: ['Smart Routes', 'Secret Spots', 'Voice Guide', '3D Maps'],
-            ar: ['مسارات ذكية', 'أماكن سرية', 'دليل صوتي', 'خرائط ثلاثية الأبعاد']
+            ar: ['مسارات ذكية ومخصصة', 'أماكن سرية مميزة', 'دليل صوتي تفاعلي', 'خرائط ثلاثية الأبعاد']
         },
         appStore: 'https://apps.apple.com/fr/app/locsy/id6760738424',
         screenshots: ['assets/images/locsy_s1_final.png'],
@@ -53,38 +65,62 @@ const apps = {
     },
     kinto: {
         id: 'kinto', icon: '💰', iconUrl: 'assets/images/kinto-icon.png', name: 'Kinto',
-        tagline: { fr: 'Gérez vos dépenses intelligemment.', en: 'Track your spending smartly.', ar: 'تتبع مصاريفك بذكاء.' },
+        tagline: { 
+            fr: 'Gérez vos dépenses intelligemment.', 
+            en: 'Track your spending smartly.', 
+            ar: 'تتبع مصاريفك بذكاء وسهولة.' 
+        },
         description: {
-            fr: 'Kinto est une application de gestion financière personnelle avancée. Scannez vos reçus automatiquement, suivez vos dépenses par catégorie.',
-            en: 'Kinto is an advanced personal finance app. Automatically scan receipts, track expenses by category.',
-            ar: 'تطبيق إدارة مالية شخصية متطور.'
+            fr: 'Kinto est une application de gestion financière personnelle avancée. Scannez vos reçus automatiquement et suivez vos dépenses par catégorie pour optimiser votre budget.',
+            en: 'Kinto is an advanced personal finance app. Automatically scan receipts and track expenses by category to optimize your budget.',
+            ar: 'تطبيق إدارة مالية شخصية متطور. قم بمسح الفواتير تلقائياً وتتبع مصروفاتك حسب الفئة لتحسين ميزانيتك الشهرية.'
         },
         features: {
-             fr: ['Scanner Rapide', 'Budget Mensuel', 'Suivi de Revenus', 'Objectifs'],
-             en: ['Quick Scanner', 'Monthly Budget', 'Income Tracking', 'Goals'],
-             ar: ['ماسح سريع', 'ميزانية شهرية', 'تتبع الدخل', 'أهداف']
+             fr: ['Scanner Rapide', 'Budget Mensuel', 'Suivi de Revenus', 'Objectifs de dépense'],
+             en: ['Quick Scanner', 'Monthly Budget', 'Income Tracking', 'Spending Goals'],
+             ar: ['ماسح فواتير سريع', 'ميزانية شهرية ذكية', 'تتبع شامل للدخل', 'أهداف مالية مخصصة']
         },
         screenshots: ['assets/images/kinto-screen1.png', 'assets/images/kinto-screen2.png'],
         color: '#8b5cf6'
     },
     mo_frame: {
         id: 'mo_frame', icon: '🖼️', iconUrl: 'assets/images/mo-frame-icon.png', name: 'Mo Frame',
-        tagline: { fr: 'Créez des posts stylés en un clic.', en: 'Create styled posts in one click.', ar: 'اصنع منشورات مميزة بضغطة واحدة.' },
-        description: { fr: 'Un bot Telegram qui transforme vos textes et photos en posts stylés professionnels.', en: 'A Telegram bot that transforms your text and photos into professional styled posts.', ar: 'بوت Telegram يحول نصوصك وصورك إلى منشورات احترافية.' },
-        features: { fr: ['Styles Dark/Light', 'Personnalisation Profile'], en: ['Dark/Light Styles', 'Profile Customization'], ar: ['أنماط داكنة/فاتحة', 'تخصيص الملف الشخصي'] },
+        tagline: { 
+            fr: 'Créez des posts stylés en un clic.', 
+            en: 'Create styled posts in one click.', 
+            ar: 'اصنع منشورات مميزة بضغطة واحدة.' 
+        },
+        description: { 
+            fr: 'Un bot Telegram puissant qui transforme vos textes et photos en posts stylés et professionnels pour vos réseaux sociaux.', 
+            en: 'A powerful Telegram bot that transforms your text and photos into professional styled posts for your social media.', 
+            ar: 'بوت Telegram قوي يحول نصوصك وصورك إلى منشورات احترافية وأنيقة لشبكات التواصل الاجتماعي الخاصة بك.' 
+        },
+        features: { 
+            fr: ['Styles Dark/Light', 'Personnalisation du Profile', 'Export HD Rapide'], 
+            en: ['Dark/Light Styles', 'Profile Customization', 'Fast HD Export'], 
+            ar: ['أنماط داكنة وفاتحة', 'تخصيص الملف الشخصي', 'تصدير عالي الجودة وسريع'] 
+        },
         telegram: 'https://t.me/Moframe_bot',
         screenshots: ['assets/images/mo_frame_s1_final.png'],
         color: '#7c3aed'
     },
     restofid: {
         id: 'restofid', icon: '🍴', iconUrl: 'assets/images/restopass-icon.png', name: 'Restofid.com',
-        tagline: { fr: 'Votre restaurant digitalisé en 5 min.', en: 'Your restaurant digitized in 5 min.', ar: 'مطعمك رقمي في 5 دقائق.' },
-        description: {
-            fr: 'Restofid.com est une solution SaaS complète pour la restauration moderne. Digitalisez votre menu avec un QR code interactif, fidélisez vos clients avec des cartes Apple & Google Wallet.',
-            en: 'Restofid.com is a complete SaaS solution for modern dining. Digitize your menu with interactive QR codes, build customer loyalty with Apple & Google Wallet cards.',
-            ar: 'Restofid.com هو حل SaaS كامل للمطاعم الحديثة.'
+        tagline: { 
+            fr: 'Votre restaurant digitalisé en 5 min.', 
+            en: 'Your restaurant digitized in 5 min.', 
+            ar: 'مطعمك رقمي بالكامل في 5 دقائق.' 
         },
-        features: { fr: ['Menu QR Code', 'Fidélité Wallet', 'Dashboard Analytics'], en: ['QR Code Menu', 'Wallet Loyalty', 'Analytics Dashboard'], ar: ['قائمة QR', 'ولاء المحفظة', 'لوحة التحليلات'] },
+        description: {
+            fr: 'Restofid.com est une solution SaaS complète pour la restauration moderne. Digitalisez votre menu avec un QR code interactif et fidélisez vos clients avec des cartes Apple & Google Wallet.',
+            en: 'Restofid.com is a complete SaaS solution for modern dining. Digitize your menu with interactive QR codes and build customer loyalty with Apple & Google Wallet cards.',
+            ar: 'Restofid.com هو حل SaaS كامل للمطاعم الحديثة. قم برقمنة قائمتك باستخدام رمز QR تفاعلي وابنِ ولاء عملائك باستخدام بطاقات المحفظة من Apple و Google.'
+        },
+        features: { 
+            fr: ['Menu QR Code Interactif', 'Fidélité Apple/Google Wallet', 'Dashboard Analytics complet'], 
+            en: ['Interactive QR Code Menu', 'Apple/Google Wallet Loyalty', 'Full Analytics Dashboard'], 
+            ar: ['قائمة رماز استجابة سريع تفاعلية', 'نظام ولاء المحفظة الذكي', 'لوحة تحليلات شاملة'] 
+        },
         screenshots: ['assets/images/restopass_s1.png', 'assets/images/restopass_s2.png'],
         website: 'https://restofid.com',
         color: '#f97316'
@@ -190,22 +226,31 @@ window.openAppModal = function(appId) {
     if (!app) return;
     const modal = document.getElementById('app-modal');
     document.getElementById('modal-data').innerHTML = `
-        <div style="display:grid; grid-template-columns:1fr 1fr; gap:3rem; padding-top:2rem;">
-            <div>
-                <img src="${app.iconUrl}" style="width:100px; border-radius:22px; margin-bottom:1.5rem; box-shadow:0 10px 30px -5px ${app.color}55;">
-                <h2 style="font-size:3.5rem; margin-bottom:1rem;">${app.name}</h2>
-                <p style="font-size:1.2rem; line-height:1.8; opacity:0.8; margin-bottom:2rem;">${app.description[currentLang]}</p>
-                <div style="display:flex; flex-direction:column; gap:0.8rem;">
-                    ${app.features[currentLang].map(f => `<div style="display:flex; align-items:center; gap:0.8rem; font-weight:500;"><i class="fas fa-check-circle" style="color:${app.color}"></i> ${f}</div>`).join('')}
+        <div class="modal-grid">
+            <div class="modal-left">
+                <img src="${app.iconUrl}" class="modal-app-icon" style="box-shadow:0 10px 30px -5px ${app.color}55;">
+                <h2 class="modal-app-name">${app.name}</h2>
+                <p class="modal-app-description">${app.description[currentLang]}</p>
+                <div class="modal-features">
+                    ${app.features[currentLang].map(f => `
+                        <div class="feature-item">
+                            <i class="fas fa-check-circle" style="color:${app.color}"></i>
+                            <span>${f}</span>
+                        </div>
+                    `).join('')}
                 </div>
             </div>
-            <div style="display:flex; flex-direction:column; gap:2rem;">
-                <div style="display:flex; gap:1rem; overflow-x:auto; padding-bottom:1rem;">
-                    ${app.screenshots.map(s => `<img src="${s}" style="width:200px; border-radius:20px; border:2px solid var(--border);">`).join('')}
+            <div class="modal-right">
+                <div class="modal-mockups-scroll">
+                    ${app.screenshots.map(s => `
+                        <div class="iphone-device">
+                            <img src="${s}" class="iphone-screen">
+                        </div>
+                    `).join('')}
                 </div>
-                <div style="display:flex; gap:1rem; flex-wrap:wrap;">
+                <div class="modal-actions">
                     ${app.appStore ? `<a href="${app.appStore}" class="btn btn-primary" target="_blank"><i class="fab fa-apple"></i> App Store</a>` : ''}
-                    ${app.googlePlay ? `<a href="${app.googlePlay}" class="btn btn-primary" target="_blank"><i class="fab fa-google-play"></i> Google Play</a>` : ''}
+                    ${app.googlePlay ? `<a href="${app.googlePlay}" class="btn btn-primary" target="_blank"><i class="fab fa-google-play"></i> Play Store</a>` : ''}
                     ${app.website ? `<a href="${app.website}" class="btn btn-primary" target="_blank"><i class="fas fa-globe"></i> Website</a>` : ''}
                     ${app.telegram ? `<a href="${app.telegram}" class="btn btn-primary" target="_blank"><i class="fab fa-telegram"></i> Telegram</a>` : ''}
                     <button class="btn glass" onclick="closeModal()">Close</button>
