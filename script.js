@@ -105,7 +105,7 @@ const apps = {
         color: '#7c3aed'
     },
     tap0: {
-        id: 'tap0', icon: '🍴', iconUrl: 'assets/images/restopass-icon.png', name: 'Tap0.fr',
+        id: 'tap0', icon: '🍴', iconUrl: 'assets/images/tap0-icon.png', name: 'Tap0.fr',
         tagline: { 
             fr: 'Votre restaurant digitalisé en 5 min.', 
             en: 'Your restaurant digitized in 5 min.', 
