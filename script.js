@@ -327,19 +327,23 @@ async function renderBookingCalendar() {
     root.innerHTML = `
         <div class="booking-container-elite">
             <h2 style="margin-bottom: 2rem; font-size: 2rem;">🗓️ M Académie - ${monthNames.fr[month]} ${year}</h2>
-            <div class="calendar-public-grid">
-                ${['L','M','M','J','V','S','D'].map(d => `<div class="calendar-day-header">${d}</div>`).join('')}
-                ${Array(offset).fill('<div class="calendar-day-empty"></div>').join('')}
-                ${Array.from({length: daysInMonth}, (_, i) => {
-                    const day = i + 1;
-                    const dateKey = `${year}-${(month+1).toString().padStart(2,'0')}-${day.toString().padStart(2,'0')}`;
-                    const isBlocked = blockedDays.includes(dateKey);
-                    const isToday = now.getDate() === day;
-                    return `<div class="calendar-day-public ${isBlocked ? 'disabled' : ''} ${isToday ? 'today' : ''}" 
-                                 onclick="${isBlocked ? '' : `selectBookingDate('${dateKey}', this)`}">${day}</div>`;
-                }).join('')}
+            <div class="booking-calendar-row">
+                <div class="booking-calendar-col">
+                    <div class="calendar-public-grid">
+                        ${['L','M','M','J','V','S','D'].map(d => `<div class="calendar-day-header">${d}</div>`).join('')}
+                        ${Array(offset).fill('<div class="calendar-day-empty"></div>').join('')}
+                        ${Array.from({length: daysInMonth}, (_, i) => {
+                            const day = i + 1;
+                            const dateKey = `${year}-${(month+1).toString().padStart(2,'0')}-${day.toString().padStart(2,'0')}`;
+                            const isBlocked = blockedDays.includes(dateKey);
+                            const isToday = now.getDate() === day;
+                            return `<div class="calendar-day-public ${isBlocked ? 'disabled' : ''} ${isToday ? 'today' : ''}"
+                                         onclick="${isBlocked ? '' : `selectBookingDate('${dateKey}', this)`}">${day}</div>`;
+                        }).join('')}
+                    </div>
+                </div>
+                <div id="booking-slots-root" style="padding-top: 0.5rem;"></div>
             </div>
-            <div id="booking-slots-root"></div>
             <div id="booking-form-root"></div>
         </div>
     `;
@@ -365,7 +369,7 @@ window.selectBookingDate = async (dateKey, el) => {
 
     const hours = [9, 10, 11, 12, 13, 14, 15, 16, 17, 18, 19, 20];
     slotsRoot.innerHTML = `
-        <h3 style="margin-top: 3rem; font-size: 1.2rem;">🕘 Choisir une heure</h3>
+        <h3 style="margin-bottom: 1rem; font-size: 1.1rem;">🕘 Choisir une heure</h3>
         <div class="slots-container-public">
             ${hours.map(h => {
                 const isDisabled = disabledSlots.includes(h);

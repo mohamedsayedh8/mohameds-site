@@ -613,6 +613,28 @@ body.light-mode .timeline-date {
 }
 
 /* Public Booking Calendar & Slot Picker */
+.booking-calendar-row {
+    display: flex;
+    gap: 2rem;
+    align-items: flex-start;
+}
+.booking-calendar-col {
+    flex: 0 0 auto;
+    width: 100%;
+    max-width: 320px;
+}
+#booking-slots-root {
+    flex: 1;
+    min-width: 180px;
+}
+@media (max-width: 640px) {
+    .booking-calendar-row {
+        flex-direction: column;
+    }
+    .booking-calendar-col {
+        max-width: 100%;
+    }
+}
 .calendar-public-grid {
     display: grid; grid-template-columns: repeat(7, 1fr); gap: 10px;
 }
@@ -637,8 +659,8 @@ body.light-mode .timeline-date {
 .calendar-day-public.today { border-color: var(--glow-color); color: var(--glow-color); }
 
 .slots-container-public {
-    display: grid; grid-template-columns: repeat(auto-fill, minmax(80px, 1fr));
-    gap: 10px; margin-top: 1.5rem;
+    display: grid; grid-template-columns: repeat(auto-fill, minmax(72px, 1fr));
+    gap: 8px;
 }
 .slot-pill-public {
     padding: 10px; border-radius: 10px; text-align: center; font-weight: 800;
