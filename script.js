@@ -105,11 +105,11 @@ const apps = {
         color: '#7c3aed'
     },
     tap0: {
-        id: 'tap0', icon: '🍴', iconUrl: 'assets/images/tap0-icon.png', name: 'Tap0.fr',
-        tagline: { 
-            fr: 'Votre restaurant digitalisé en 5 min.', 
-            en: 'Your restaurant digitized in 5 min.', 
-            ar: 'مطعمك رقمي بالكامل في 5 دقائق.' 
+        id: 'tap0', icon: '🏪', iconUrl: 'assets/images/tap0-icon.png', name: 'Tap0.fr',
+        tagline: {
+            fr: 'Votre commerce digitalisé en 5 min.',
+            en: 'Your business digitized in 5 min.',
+            ar: 'رقمن تجارتك في 5 دقائق.'
         },
         description: {
             fr: 'Tap0.fr est une solution SaaS complète pour digitaliser tous types de commerces. Gérez votre catalogue, fidélisez vos clients avec des cartes Apple & Google Wallet et suivez vos performances en temps réel.',
@@ -156,7 +156,7 @@ const translations = {
         app_m_tagline: 'Social, Vidéos & Reels.',
         app_locsy_tagline: 'Localisation en temps réel.',
         app_kinto_tagline: 'Finances & Budgets.',
-        app_restopass_tagline: 'Votre restaurant digitalisé en 5 min.',
+        app_restopass_tagline: 'Votre commerce digitalisé en 5 min.',
         app_moframe_tagline: 'Assistant Multi-plateforme.',
         app_academy_tagline: 'Formation et Coaching.'
     },
@@ -187,7 +187,7 @@ const translations = {
         app_m_tagline: 'Social, Videos & Reels.',
         app_locsy_tagline: 'Real-time location.',
         app_kinto_tagline: 'Finances & Budgets.',
-        app_restopass_tagline: 'Your restaurant digitized in 5 min.',
+        app_restopass_tagline: 'Your business digitized in 5 min.',
         app_moframe_tagline: 'Multi-platform Assistant.',
         app_academy_tagline: 'Training and Coaching.'
     },
@@ -218,7 +218,7 @@ const translations = {
         app_m_tagline: 'تواصل، فيديوهات ومقاطع ريلز.',
         app_locsy_tagline: 'تحديد الموقع في الوقت الفعلي.',
         app_kinto_tagline: 'المالية والميزانيات.',
-        app_restopass_tagline: 'مطعمك رقمي في 5 دقائق.',
+        app_restopass_tagline: 'رقمن تجارتك في 5 دقائق.',
         app_moframe_tagline: 'مساعد متعدد المنصات.',
         app_academy_tagline: 'التدريب والكوتشينج.'
     }
