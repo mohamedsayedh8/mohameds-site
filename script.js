@@ -502,7 +502,7 @@ function initGSAP() {
     });
 
     // Bento Glow Interaction
-    document.querySelectorAll(".app-card").forEach(card => {
+    document.querySelectorAll(".proj-card").forEach(card => {
         card.addEventListener("mousemove", e => {
             const rect = card.getBoundingClientRect();
             card.style.setProperty("--x", `${(e.clientX - rect.left)}px`);
