@@ -18,7 +18,7 @@ const apps = {
             ar: ['القرآن بالتجويد والصوت', 'أوقات الصلاة والقبلة', 'أذكار وأدعية تفاعلية', 'واجهة متميزة واحترافية']
         },
         appStore: 'https://apps.apple.com/fr/app/zikr/id6759991511',
-        googlePlay: '#',
+        googlePlay: 'https://play.google.com/store/apps/details?id=com.mohamed.zikr',
         screenshots: ['assets/images/zikr_screen_1.png', 'assets/images/zikr_screen_1.png', 'assets/images/zikr_screen_1.png'],
         color: '#10b981'
     },
