@@ -51,8 +51,8 @@
                     <h2>3. Compte utilisateur — Stockage sécurisé</h2>
                     <p>Si vous créez un compte, vos données sont stockées dans notre base de données sécurisée (Supabase / PostgreSQL) avec chiffrement au repos et en transit (TLS 1.3). Vos données financières ne sont jamais partagées, vendues ou utilisées à des fins publicitaires.</p>
 
-                    <h2>4. Scanner de reçus IA (Anthropic)</h2>
-                    <p>Kinto utilise l'intelligence artificielle pour automatiser la saisie des dépenses. Lorsque vous utilisez le scanner, les images de vos reçus sont transmises de manière sécurisée à <strong>Anthropic (Claude API)</strong> pour l'extraction d'informations. Le traitement est instantané : Anthropic ne conserve pas ces images et ne les utilise pas pour entraîner ses modèles d'IA ou à des fins publicitaires. Nous veillons à ce que nos partenaires offrent un niveau de protection des données équivalent aux nôtres.</p>
+                    <h2>4. Scanner de reçus IA (Google Gemini)</h2>
+                    <p>Kinto utilise l'intelligence artificielle pour automatiser la saisie des dépenses. Lorsque vous utilisez le scanner, les images de vos reçus sont transmises de manière sécurisée à <strong>Google (Gemini AI)</strong> pour l'extraction d'informations. Le traitement est instantané : Google ne conserve pas ces images à des fins persistantes et ne les utilise pas pour entraîner ses modèles d'IA ou à des fins publicitaires. Nous veillons à ce que nos partenaires offrent un niveau de protection des données équivalent aux nôtres.</p>
 
                     <h2>5. Abonnement Premium</h2>
                     <p>Les paiements sont gérés exclusivement via Apple App Store ou Google Play. Nous ne collectons ni ne stockons vos informations bancaires ou de carte de crédit. Les reçus d'abonnement sont fournis par Apple/Google.</p>
@@ -61,7 +61,7 @@
                     <p>Nous ne vendons, ne louons et ne partageons jamais vos données personnelles avec des tiers à des fins commerciales. Les seuls accès tiers sont :</p>
                     <ul>
                         <li><strong>Supabase</strong> : hébergement base de données (serveurs UE)</li>
-                        <li><strong>Anthropic (Claude API)</strong> : analyse de reçus et extraction de données (sans stockage persistant ni entraînement)</li>
+                        <li><strong>Google (Gemini AI)</strong> : analyse de reçus et extraction de données (sans stockage persistant ni entraînement)</li>
                         <li><strong>Apple / Google</strong> : gestion des achats in-app</li>
                     </ul>
 
@@ -100,7 +100,7 @@
                     <ul>
                         <li><strong>Account (optional)</strong>: email and full name if you create an account. The app works entirely without an account.</li>
                         <li><strong>Financial transactions</strong>: amounts, categories, descriptions, dates — entered manually or via receipt scan. This data belongs entirely to you.</li>
-                        <li><strong>Receipt photos</strong>: When you use the AI scan feature, the receipt image is securely transmitted to Anthropic, Inc. for analysis. No image is stored permanently on our servers or by Anthropic.</li>
+                        <li><strong>Receipt photos</strong>: When you use the AI scan feature, the receipt image is securely transmitted to Google (Gemini AI) for analysis. No image is stored permanently on our servers or by Google for this purpose.</li>
                         <li><strong>Budget and goal data</strong>: configured by you, stored locally (guest mode) or in our secure database (account).</li>
                         <li><strong>Preferences</strong>: language, currency, theme — stored locally on your device.</li>
                     </ul>
@@ -111,13 +111,13 @@
                     <h2>3. User Account — Secure Storage</h2>
                     <p>If you create an account, your data is stored in our secure database (Supabase / PostgreSQL) with encryption at rest and in transit (TLS 1.3). Your financial data is never shared, sold, or used for advertising.</p>
 
-                    <h2>4. AI Receipt Scanner (Anthropic)</h2>
-                    <p>Kinto uses artificial intelligence to automate expense entry. When you use the scanner, your receipt photo is securely sent to <strong>Anthropic, Inc.</strong> (api.anthropic.com), a third-party AI service, to extract details such as amount, merchant, and date. Processing is instantaneous: Anthropic does not retain these images and does not use them to train AI models or for advertising purposes. <strong>The app requires your explicit consent before sending any image to Anthropic.</strong> You may decline this data sharing and still use manual expense entry.</p>
+                    <h2>4. AI Receipt Scanner (Google Gemini)</h2>
+                    <p>Kinto uses artificial intelligence to automate expense entry. When you use the scanner, your receipt photo is securely sent to <strong>Google (Gemini AI)</strong>, a third-party AI service, to extract details such as amount, merchant, and date. Processing is instantaneous: Google does not retain these images for this purpose and does not use them to train AI models or for advertising. <strong>The app requires your explicit consent before sending any image to Google.</strong> You may decline this data sharing and still use manual expense entry.</p>
 
                     <h2>5. Third-Party Services</h2>
                     <ul>
                         <li><strong>Supabase</strong>: database hosting (EU servers)</li>
-                        <li><strong>Anthropic, Inc. (Claude API)</strong>: receipt analysis and data extraction (no persistent storage, no model training)</li>
+                        <li><strong>Google (Gemini AI)</strong>: receipt analysis and data extraction (no persistent storage, no model training)</li>
                         <li><strong>Apple / Google</strong>: in-app purchase management</li>
                     </ul>
 
